@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CommandeConverter {
     private final UserConverter userConverter;
-    private final ProduitAlimentaireConverter produitAlimentaireConverter;
+    private final ProduitsConverter produitAlimentaireConverter;
 
-    public CommandeConverter(UserConverter userConverter, ProduitAlimentaireConverter produitAlimentaireConverter) {
+    public CommandeConverter(UserConverter userConverter, ProduitsConverter produitAlimentaireConverter) {
         this.userConverter = userConverter;
         this.produitAlimentaireConverter = produitAlimentaireConverter;
     }

@@ -5,17 +5,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.UUID;
+
 
 @Entity
 @Getter
 @Setter
-public class Client extends User {
+public class Client extends Users {
 
 
     private LocalDate dateOfBirth;
     private String adresse;
-
+    private String nomPrenom;
     @Column(name = "CNI")
     private String numeroCNI;
 
@@ -44,4 +44,11 @@ public class Client extends User {
     }
 
 
+    public String getNomPrenom() {
+        return nomPrenom;
+    }
+
+    public void setNomPrenom(String nomPrenom) {
+        this.nomPrenom = nomPrenom;
+    }
 }

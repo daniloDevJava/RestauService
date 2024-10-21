@@ -19,6 +19,7 @@ public class LivraisonConverter {
         livraison.setFraisLivraison(livraisonDto.getFraisLivraison());
         livraison.setTimeLivraison(livraisonDto.getTimeLivraison());
         livraison.setNumeroLivreur(livraisonDto.getNumeroLivreur());
+        livraison.setEtatLivraison(livraisonDto.getEtatLivraison());
         livraison.setCommande(commandeConverter.toEntity(livraisonDto.getCommandeDto()));
         return livraison;
     }

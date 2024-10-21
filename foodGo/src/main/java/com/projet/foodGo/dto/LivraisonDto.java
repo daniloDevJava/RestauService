@@ -1,6 +1,7 @@
 package com.projet.foodGo.dto;
 
 
+import com.projet.foodGo.model.enumType.LivraisonState;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +16,7 @@ public class LivraisonDto {
     private UUID id;
 
     private float timeLivraison;
-
+    private LivraisonState etatLivraison;
     private Double fraisLivraison;
     private String numeroLivreur;
     private CommandeDto commandeDto;
@@ -58,5 +59,13 @@ public class LivraisonDto {
 
     public void setCommandeDto(CommandeDto commandeDto) {
         this.commandeDto = commandeDto;
+    }
+
+    public LivraisonState getEtatLivraison() {
+        return etatLivraison;
+    }
+
+    public void setEtatLivraison(LivraisonState etatLivraison) {
+        this.etatLivraison = etatLivraison;
     }
 }

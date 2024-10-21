@@ -1,12 +1,5 @@
 package com.projet.foodGo.dto;
 
-
-/*mport lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;*/
-
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +13,7 @@ public class UserDto {
 
     protected UUID id;
 
-    protected String nomEtPrenom;
+    protected String nom;
     protected String adresseMail;
     protected LocalDateTime createAt;
     protected LocalDateTime updateAt;
@@ -31,14 +24,6 @@ public class UserDto {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getNomEtPrenom() {
-        return nomEtPrenom;
-    }
-
-    public void setNomEtPrenom(String nomEtPrenom) {
-        this.nomEtPrenom = nomEtPrenom;
     }
 
     public LocalDateTime getCreateAt() {
@@ -66,5 +51,11 @@ public class UserDto {
     }
 
 
+    public String getNom() {
+        return nom;
+    }
 
+    public void setNom(String nom) {
+        this.nom=nom;
+    }
 }

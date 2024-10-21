@@ -10,7 +10,7 @@ public class AdminConverter {
         if(adminDto==null)
             return null;
         Admin admin=new Admin();
-        admin.setNomEtPrenom(adminDto.getNomEtPrenom());
+        admin.setNom(adminDto.getNom());
         admin.setAdresseMail(adminDto.getAdresseMail());
         admin.setEntryKey(adminDto.getEntryKey());
         return admin;
@@ -21,7 +21,7 @@ public class AdminConverter {
             return null;
         AdminDto adminDto=new AdminDto();
         adminDto.setId(admin.getId());
-        adminDto.setNomEtPrenom(admin.getNomEtPrenom());
+        adminDto.setNom(admin.getNom());
         adminDto.setAdresseMail(admin.getAdresseMail());
         adminDto.setEntryKey(admin.getEntryKey());
         return adminDto;

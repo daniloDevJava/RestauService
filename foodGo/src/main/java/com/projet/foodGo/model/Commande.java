@@ -22,7 +22,7 @@ public class Commande {
     private Double prixTotal;
 
     @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<ProduitAlimentaire> produits;
+    private List<Produits> produits;
 
     private boolean withLivraison;
 
@@ -31,7 +31,7 @@ public class Commande {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private Users user;
 
 
     @CreationTimestamp
@@ -49,11 +49,11 @@ public class Commande {
         this.prixTotal = prixTotal;
     }
 
-    public List<ProduitAlimentaire> getProduits() {
+    public List<Produits> getProduits() {
         return produits;
     }
 
-    public void setProduits(List<ProduitAlimentaire> produits) {
+    public void setProduits(List<Produits> produits) {
         this.produits = produits;
     }
 
@@ -72,11 +72,11 @@ public class Commande {
         this.idPrestataire=idPrestataire;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

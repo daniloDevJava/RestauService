@@ -13,7 +13,7 @@ import java.util.UUID;
 public class ClientDto extends UserDto {
 
     private UUID id;
-
+    private String Prenom;
     private LocalDate dateOfBirth;
     private String adresse;
 
@@ -49,5 +49,13 @@ public class ClientDto extends UserDto {
 
     public void setNumeroCNI(String numeroCNI) {
         this.numeroCNI = numeroCNI;
+    }
+
+    public String getPrenom() {
+        return Prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.Prenom = prenom;
     }
 }

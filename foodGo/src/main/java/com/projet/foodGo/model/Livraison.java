@@ -1,5 +1,6 @@
 package com.projet.foodGo.model;
 
+import com.projet.foodGo.model.enumType.LivraisonState;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class Livraison {
     private UUID id;
 
     private float timeLivraison;
-
+    private LivraisonState etatLivraison;
     private Double fraisLivraison;
     private String numeroLivreur;
 
@@ -96,5 +97,13 @@ public class Livraison {
 
     public void setCommande(Commande commande) {
         this.commande = commande;
+    }
+
+    public LivraisonState getEtatLivraison() {
+        return etatLivraison;
+    }
+
+    public void setEtatLivraison(LivraisonState etatLivraison) {
+        this.etatLivraison = etatLivraison;
     }
 }

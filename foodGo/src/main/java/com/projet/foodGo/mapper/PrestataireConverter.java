@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PrestataireConverter {
 
-    private  final ProduitAlimentaireConverter produitAlimentaireConverter;
+    private  final ProduitsConverter produitAlimentaireConverter;
 
-    public PrestataireConverter(ProduitAlimentaireConverter produitAlimentaireConverter) {
+    public PrestataireConverter(ProduitsConverter produitAlimentaireConverter) {
         this.produitAlimentaireConverter = produitAlimentaireConverter;
     }
 
@@ -18,7 +18,8 @@ public class PrestataireConverter {
             return null;
         Prestataire prestataire=new Prestataire();
         prestataire.setAdresseMail(prestataireDto.getAdresseMail());
-        prestataire.setNomEtPrenom(prestataireDto.getNomEtPrenom());
+        prestataire.setNom(prestataireDto.getNom());
+        prestataire.setNatureCompte(prestataireDto.getNatureCompte());
         prestataire.setListProduits(produitAlimentaireConverter.toEntityList(prestataireDto.getListProduits()));
         prestataire.setNoteMoyenne(prestataireDto.getNoteMoyenne());
         return prestataire;
@@ -27,11 +28,12 @@ public class PrestataireConverter {
         if(prestataire==null)
             return null;
         PrestataireDto prestataireDto=new PrestataireDto();
-        prestataireDto.setNomEtPrenom(prestataire.getNomEtPrenom());
+        prestataireDto.setNom(prestataire.getNom());
         prestataireDto.setAdresseMail(prestataire.getAdresseMail());
         prestataireDto.setNoteMoyenne(prestataire.getNoteMoyenne());
         prestataireDto.setCreateAt(prestataire.getCreateAt());
         prestataireDto.setUpdateAt(prestataire.getUpdateAt());
+        prestataireDto.setNatureCompte(prestataire.getNatureCompte());
         prestataireDto.setListProduits(produitAlimentaireConverter.toDtoList(prestataire.getListProduits()));
         return prestataireDto;
     }

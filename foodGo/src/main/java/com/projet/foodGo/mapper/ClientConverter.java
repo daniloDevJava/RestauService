@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 public class ClientConverter {
     public Client toEntity(ClientDto clientDto){
         Client client=new Client();
-        client.setNomEtPrenom(client.getNomEtPrenom());
         client.setAdresseMail(clientDto.getAdresseMail());
         client.setAdresse(clientDto.getAdresse());
         client.setNumeroCNI(clientDto.getNumeroCNI());
         client.setDateOfBirth(clientDto.getDateOfBirth());
+        client.setNomPrenom(clientDto.getNom()+" "+clientDto.getPrenom());
         return client;
     }
 
@@ -20,7 +20,6 @@ public class ClientConverter {
         ClientDto clientDto=new ClientDto();
         clientDto.setId(client.getId());
         clientDto.setAdresse(client.getAdresse());
-        clientDto.setNomEtPrenom(client.getNomEtPrenom());
         clientDto.setAdresseMail(client.getAdresseMail());
         clientDto.setDateOfBirth(client.getDateOfBirth());
         clientDto.setNumeroCNI(client.getNumeroCNI());

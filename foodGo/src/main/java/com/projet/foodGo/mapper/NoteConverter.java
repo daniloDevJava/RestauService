@@ -1,9 +1,7 @@
 package com.projet.foodGo.mapper;
 
 import com.projet.foodGo.dto.NoteDto;
-import com.projet.foodGo.dto.PrestataireDto;
 import com.projet.foodGo.model.Note;
-import com.projet.foodGo.model.Prestataire;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,10 +1,10 @@
 package com.projet.foodGo.dto;
 
-import com.projet.foodGo.model.ProduitAlimentaire;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -14,11 +14,11 @@ public class CommandeDto {
 
     private UUID id;
     private Double prixTotal;
-    private List<ProduitAlimentaireDto> produits;
+    private List<ProduitsDto> produits;
     private boolean withLivraison;
     private UUID idPrestataire;
     private UserDto user;
-
+    private Map<UUID,Integer> productValeur;
 
     public UUID getId() {
         return id;
@@ -36,11 +36,11 @@ public class CommandeDto {
         this.prixTotal = prixTotal;
     }
 
-    public List<ProduitAlimentaireDto> getProduits() {
+    public List<ProduitsDto> getProduits() {
         return produits;
     }
 
-    public void setProduits(List<ProduitAlimentaireDto> produits) {
+    public void setProduits(List<ProduitsDto> produits) {
         this.produits = produits;
     }
 
@@ -67,4 +67,5 @@ public class CommandeDto {
     public void setUser(UserDto user) {
         this.user = user;
     }
+
 }
