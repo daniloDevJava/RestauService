@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants Proches</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #restaurants p {
+            margin: 5px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Restaurants proches de chez vous</h1>
+    <button onclick="getLocation()">Trouver les restaurants</button>
+    <div id="restaurants"></div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showRestaurants, showError);
+            } else {
+                document.getElementById("restaurants").innerHTML = "La géolocalisation n'est pas supportée par ce navigateur.";
+            }
+        }
+
+        function showRestaurants(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Envoyer les coordonnées au serveur Flask pour récupérer les restaurants proches
+            fetch('/nearby-restaurants', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    latitude: latitude,
+                    longitude: longitude
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur de réseau : ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                let restaurantsDiv = document.getElementById("restaurants");
+                restaurantsDiv.innerHTML = "";  // Vider la div
+
+                // Vérifier s'il y a des restaurants à afficher
+                if (data.restaurants.length === 0) {
+                    restaurantsDiv.innerHTML = "Aucun restaurant trouvé à proximité.";
+                    return;
+                }
+
+                data.restaurants.forEach(restaurant => {
+                    let p = document.createElement("p");
+                    p.textContent = restaurant.name + " - Distance : " + restaurant.distance.toFixed(2) + " km";
+                    restaurantsDiv.appendChild(p);
+                });
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+                document.getElementById("restaurants").innerHTML = "Une erreur s'est produite lors de la récupération des restaurants.";
+            });
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("restaurants").innerHTML = "L'utilisateur a refusé la demande de géolocalisation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("restaurants").innerHTML = "Les informations de localisation ne sont pas disponibles.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("restaurants").innerHTML = "La demande de localisation a expiré.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("restaurants").innerHTML = "Une erreur inconnue s'est produite.";
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
