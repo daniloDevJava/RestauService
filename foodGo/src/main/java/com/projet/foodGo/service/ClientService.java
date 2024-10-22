@@ -12,6 +12,10 @@ public interface ClientService {
     List<ClientDto> getClients();
     ClientDto getClient(UUID id);
     ClientDto getClient(String nom);
-    ClientDto updateClient(ClientDto clientDto);
+    ClientDto updateClient(ClientDto clientDto, UUID client_id);
+    ClientDto updateAdresseMail(UUID client_id,ClientDto clientDto);
+    ClientDto updateAdresse(UUID client_id,ClientDto clientDto);
+    ClientDto updateDateOfBirth(UUID client_id,ClientDto clientDto);
     boolean deleteClient(UUID id);
+
 }

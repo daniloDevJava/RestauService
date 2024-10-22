@@ -16,7 +16,7 @@ public class ProduitsDto {
     private UUID id;
 
     private String libelle;
-
+    private String cheminVersImages;
     private int quantiteStock;
     private int prixUnitaire;
     private LocalDateTime createAt;

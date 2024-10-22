@@ -11,6 +11,6 @@ public interface ClientRepository extends JpaRepository<Client, UUID> {
 
     Optional<Client> findByIdAndDeleteAtIsNull(UUID uuid);
     List<Client> findByDeleteAtIsNull();
-    List<Client> findByNomPrenom();
+    Optional<Client> findByNomPrenom(String nomPremon);
 
 }

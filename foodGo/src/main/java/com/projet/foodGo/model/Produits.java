@@ -32,79 +32,8 @@ public class Produits {
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     private LocalDateTime createAt;
+    private String cheminVersImages;
     @UpdateTimestamp
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
-
-    public int getQuantiteStock() {
-        return quantiteStock;
-    }
-
-    public void setQuantiteStock(int quantiteStock) {
-        this.quantiteStock = quantiteStock;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-    public LocalDateTime createAt() {
-        return createAt;
-    }
-
-    public Produits setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-        return this;
-    }
-
-    public String getLibelle() {
-        return libelle;
-    }
-
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
-    }
-
-    public int getPrixUnitaire() {
-        return prixUnitaire;
-    }
-
-    public void setPrixUnitaire(int prixUnitaire) {
-        this.prixUnitaire = prixUnitaire;
-    }
-
-    public Prestataire getPrestataire() {
-        return prestataire;
-    }
-
-    public void setPrestataire(Prestataire prestataire) {
-        this.prestataire = prestataire;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public LocalDateTime getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(LocalDateTime deleteAt) {
-        this.deleteAt = deleteAt;
-    }
-
-    public TypeProduct getTypeProduct() {
-        return typeProduct;
-    }
-
-    public void setTypeProduct(TypeProduct typeProduct) {
-        this.typeProduct = typeProduct;
-    }
 }

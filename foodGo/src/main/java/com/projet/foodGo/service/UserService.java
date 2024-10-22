@@ -12,7 +12,6 @@ public interface UserService {
     UserDto createUser(UserDto userDto);
     List<UserDto> getAllUsers();
     UserDto getUser(UUID id);
-    UserDto getUser(String momEtPrenom);
     UserDto updateUser(UUID id,UserDto userDto);
     boolean deleteUser(UUID id);
 }

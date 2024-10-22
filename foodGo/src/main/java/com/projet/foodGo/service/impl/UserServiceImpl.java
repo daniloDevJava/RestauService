@@ -7,7 +7,9 @@ import com.projet.foodGo.repository.UserRepository;
 import com.projet.foodGo.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -37,21 +39,41 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUser(UUID id) {
-        return null;
+        Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalUsers.isPresent()){
+            Users users=optionalUsers.get();
+            return userConverter.toDto(users);
+        }
+        else
+            return null;
     }
 
-    @Override
-    public UserDto getUser(String momEtPrenom) {
-        return null;
-    }
 
     @Override
     public UserDto updateUser(UUID id, UserDto userDto) {
-        return null;
+        Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalUsers.isPresent())
+        {
+            Users users=optionalUsers.get();
+            users.setAdresseMail(userDto.getAdresseMail());
+            users.setNom(userDto.getNom());
+            return userConverter.toDto(userRepository.save(users));
+        }
+        else
+            return null;
     }
 
     @Override
     public boolean deleteUser(UUID id) {
-        return false;
+        Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalUsers.isPresent()){
+            Users users=optionalUsers.get();
+            users.setDeleteAt(LocalDateTime.now());
+            userRepository.save(users);
+            return true;
+        }
+        else
+            return false;
     }
+
 }

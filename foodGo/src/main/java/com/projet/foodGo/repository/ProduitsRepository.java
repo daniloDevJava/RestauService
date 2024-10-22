@@ -12,7 +12,7 @@ public interface ProduitsRepository extends JpaRepository<Produits, UUID> {
 
     Optional<Produits> findByIdAndDeleteAtIsNull(UUID uuid);
     List<Produits> findByDeleteAtIsNull();
-    List<Produits> findByPrestataireOrderByDeleteAtIsNull(Prestataire prestataire);
-    List<Produits> findByPrestataireOrderByDeleteAtIsNotNull(Prestataire prestataire);
+    List<Produits> findByPrestataireAndDeleteAtIsNull(Prestataire prestataire);
+    List<Produits> findByPrestataireAndDeleteAtIsNotNull(Prestataire prestataire);
     List<Produits> findByLibelleAndDeleteAtIsNull(String libelle);
 }
