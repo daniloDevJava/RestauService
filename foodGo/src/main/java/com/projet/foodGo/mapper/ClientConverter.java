@@ -19,6 +19,7 @@ public class ClientConverter {
     public ClientDto toDto(Client client){
         ClientDto clientDto=new ClientDto();
         clientDto.setId(client.getId());
+        clientDto.setNom(client.getNomPrenom());
         clientDto.setAdresse(client.getAdresse());
         clientDto.setAdresseMail(client.getAdresseMail());
         clientDto.setDateOfBirth(client.getDateOfBirth());

@@ -7,8 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.geo.Point;
 
-//import javax.xml.stream.Location;
 import java.util.List;
 
 @Entity
@@ -23,9 +23,8 @@ public class Prestataire extends Users {
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Produits> listProduits;
     private Double noteMoyenne;
-
-
-    //private Location geography;
+    @Column(nullable = false)
+    private Point geography;
 
 
 }

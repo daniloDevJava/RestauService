@@ -8,6 +8,7 @@ import com.projet.foodGo.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -45,7 +46,13 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientDto getClient(UUID id) {
-        return null;
+        Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalClient.isPresent()){
+            Client client= optionalClient.get();
+            return clientConverter.toDto(client);
+        }
+        else
+            return null;
     }
 
     /**
@@ -73,7 +80,8 @@ public class ClientServiceImpl implements ClientService {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
         if(optionalClient.isPresent()){
             Client client= optionalClient.get();
-            client.setAdresse(client.getAdresse());
+            client.setAdresse(clientDto.getAdresse());
+            client.setNomPrenom(clientDto.getNom());
             client.setNumeroCNI(clientDto.getNumeroCNI());
             client.setAdresseMail(clientDto.getAdresseMail());
             client.setDateOfBirth(clientDto.getDateOfBirth());
@@ -90,7 +98,14 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientDto updateAdresseMail(UUID client_id, ClientDto clientDto) {
-        return null;
+        Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setAdresseMail(clientDto.getAdresseMail());
+            return clientConverter.toDto(clientRepository.save(client));
+        }
+        else
+            return null;
     }
 
     /**
@@ -100,7 +115,14 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientDto updateAdresse(UUID client_id, ClientDto clientDto) {
-        return null;
+        Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setAdresse(clientDto.getAdresse());
+            return clientConverter.toDto(clientRepository.save(client));
+        }
+        else
+            return null;
     }
 
     /**
@@ -110,7 +132,14 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public ClientDto updateDateOfBirth(UUID client_id, ClientDto clientDto) {
-        return null;
+        Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setDateOfBirth(clientDto.getDateOfBirth());
+            return clientConverter.toDto(clientRepository.save(client));
+        }
+        else
+            return null;
     }
 
     /**
@@ -119,6 +148,14 @@ public class ClientServiceImpl implements ClientService {
      */
     @Override
     public boolean deleteClient(UUID id) {
-        return false;
+        Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalClient.isPresent()) {
+            Client client = optionalClient.get();
+            client.setDeleteAt(LocalDateTime.now());
+            clientRepository.save(client);
+            return true;
+        }
+        else
+            return false;
     }
 }

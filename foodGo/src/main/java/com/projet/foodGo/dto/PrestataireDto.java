@@ -19,7 +19,8 @@ public class PrestataireDto extends UserDto {
     private Double noteMoyenne;
     private NatureCompte natureCompte;
 
-    private Point geography;
+    private Double longitude;
+    private Double latitude;
 
 
 
