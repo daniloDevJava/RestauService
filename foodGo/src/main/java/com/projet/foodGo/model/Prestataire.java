@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.geo.Point;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,12 +17,10 @@ import java.util.List;
 @Setter
 public class Prestataire extends Users {
 
-    @Column(unique = true,nullable = false)
-    private String nom;
     private NatureCompte natureCompte;
 
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Produits> listProduits;
+    private List<Produits> listProduits= new ArrayList<>();
     private Double noteMoyenne;
     @Column(nullable = false)
     private Point geography;

@@ -14,6 +14,7 @@ public class UserDto {
     protected UUID id;
 
     protected String nom;
+    protected String motDePasse;
     protected String adresseMail;
     protected LocalDateTime createAt;
     protected LocalDateTime updateAt;

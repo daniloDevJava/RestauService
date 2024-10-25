@@ -13,5 +13,6 @@ public interface UserService {
     List<UserDto> getAllUsers();
     UserDto getUser(UUID id);
     UserDto updateUser(UUID id,UserDto userDto);
+    UserDto updateUserPassWord(UUID id,UserDto userDto,String oldPassWord);
     boolean deleteUser(UUID id);
 }

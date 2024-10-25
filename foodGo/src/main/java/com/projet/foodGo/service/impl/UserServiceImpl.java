@@ -63,6 +63,29 @@ public class UserServiceImpl implements UserService {
             return null;
     }
 
+    /**
+     * @param id 
+     * @param userDto
+     * @param oldPassWord
+     * @return
+     */
+    @Override
+    public UserDto updateUserPassWord(UUID id, UserDto userDto, String oldPassWord) {
+        Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);
+        if(optionalUsers.isPresent()) {
+            Users users = optionalUsers.get();
+            if(users.getMotDePasse().equals(oldPassWord))
+            {
+                users.setMotDePasse(userDto.getMotDePasse());
+                return userConverter.toDto(userRepository.save(users));
+            }
+            else
+                throw new IllegalArgumentException("Entrez d'abord le bon ancien mot de passe");
+        }
+        else
+            return null;
+    }
+
     @Override
     public boolean deleteUser(UUID id) {
         Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);

@@ -13,5 +13,6 @@ public interface AdminService {
     AdminDto getAdmin(String nom);
     List<AdminDto> getAll();
     AdminDto updateAdmin(UUID id,AdminDto adminDto);
+    AdminDto updateEntryKey(UUID id,AdminDto adminDto);
     boolean deleteAdmin(UUID id);
 }

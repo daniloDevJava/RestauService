@@ -11,6 +11,7 @@ public class UserConverter {
          Users user=new Users();
          user.setNom(userDto.getNom());
          user.setAdresseMail(userDto.getAdresseMail());
+         user.setMotDePasse(userDto.getMotDePasse());
          return user;
     }
     public UserDto toDto(Users user){

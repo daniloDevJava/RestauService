@@ -1,1 +1,12 @@
-{"id":"0ad3a500-282e-4067-9bae-fb673e894f18","nom":"CaramelleParty","adresseMail":"caramelobb@gmail.com","createAt":"2024-10-22T17:11:49.846852","updateAt":"2024-10-22T17:11:49.846962","listProduits":[],"noteMoyenne":null,"natureCompte":"STANDARD","longitude":4.00140222,"latitude":1.0}
+{
+"id":"0ad3a500-282e-4067-9baefb673e894f18",
+"nom":"CaramelleParty",
+"adresseMail":"caramelobb@gmail.com",
+"createAt":"2024-10-22T17:11:49.846852",
+"updateAt":"2024-10-22T17:11:49.846962",
+"listProduits":[],
+"noteMoyenne":null,
+"natureCompte":"STANDARD",
+"longitude":4.00140222,
+"latitude":1.0
+}

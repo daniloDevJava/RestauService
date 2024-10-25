@@ -13,6 +13,7 @@ public class AdminConverter {
         admin.setNom(adminDto.getNom());
         admin.setAdresseMail(adminDto.getAdresseMail());
         admin.setEntryKey(adminDto.getEntryKey());
+        admin.setMotDePasse(adminDto.getMotDePasse());
         return admin;
 
     }
@@ -24,6 +25,8 @@ public class AdminConverter {
         adminDto.setNom(admin.getNom());
         adminDto.setAdresseMail(admin.getAdresseMail());
         adminDto.setEntryKey(admin.getEntryKey());
+        adminDto.setCreateAt(admin.getCreateAt());
+        adminDto.setUpdateAt(admin.getUpdateAt());
         return adminDto;
     }
 }

@@ -82,6 +82,7 @@ public class ClientServiceImpl implements ClientService {
             Client client= optionalClient.get();
             client.setAdresse(clientDto.getAdresse());
             client.setNomPrenom(clientDto.getNom());
+            client.setMotDePasse(clientDto.getMotDePasse());
             client.setNumeroCNI(clientDto.getNumeroCNI());
             client.setAdresseMail(clientDto.getAdresseMail());
             client.setDateOfBirth(clientDto.getDateOfBirth());

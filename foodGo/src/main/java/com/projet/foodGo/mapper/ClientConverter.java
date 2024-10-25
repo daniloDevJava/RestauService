@@ -13,6 +13,8 @@ public class ClientConverter {
         client.setNumeroCNI(clientDto.getNumeroCNI());
         client.setDateOfBirth(clientDto.getDateOfBirth());
         client.setNomPrenom(clientDto.getNom()+" "+clientDto.getPrenom());
+        client.setNom(clientDto.getNom());
+        client.setMotDePasse(clientDto.getMotDePasse());
         return client;
     }
 

@@ -54,12 +54,12 @@ public class PrestataireController {
     }
 
     @GetMapping("/{nom}/get-by-name")
-    @Operation(description = "get a person")
+    @Operation(description = "get a prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "the found prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exists")
     })
-    public ResponseEntity<PrestataireDto> getPrestataire(@Parameter(description = "Nom de la personne") @PathVariable String nom) {
+    public ResponseEntity<PrestataireDto> getPrestataire(@Parameter(description = "Nom du prestataire") @PathVariable String nom) {
         PrestataireDto prestataireDto = prestataireService.getPrestataire(nom);
         if (prestataireDto != null)
             return new ResponseEntity<>(prestataireDto, HttpStatus.OK);

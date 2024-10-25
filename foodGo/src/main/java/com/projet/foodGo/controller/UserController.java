@@ -67,6 +67,31 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PutMapping("/{id}/update-password")
+    @Operation(description = "partial updating")
+    @ApiResponses(
+            value={
+                    @ApiResponse(responseCode = "200",description = "the password is up-to-date"),
+                    @ApiResponse(responseCode = "404",description = "the user doen't exists"),
+                    @ApiResponse(responseCode = "500",description = "the old password is not correct")
+            }
+    )
+    public ResponseEntity<String> updatePassWord(@Parameter(description = "id of user") @PathVariable UUID id,@RequestBody UserDto userDto,@Parameter(description = "The old password") @RequestParam String oldPassWord){
+        try{
+            UserDto userDto1=userService.getUser(id);
+            if(userDto1!=null) {
+                userService.updateUserPassWord(id,userDto,oldPassWord);
+                return new ResponseEntity<>("{\"message\" : \"Mot de passe mis a jour avec succes\"", HttpStatus.OK);
+            }
+            else
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        catch (IllegalArgumentException e){
+            System.err.printf("%s",e.getMessage());
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{id}")
     @Operation(description = "delete user")
     @ApiResponses(value = {

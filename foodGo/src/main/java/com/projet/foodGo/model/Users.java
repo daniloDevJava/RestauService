@@ -1,10 +1,7 @@
 package com.projet.foodGo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,18 +11,17 @@ import java.util.UUID;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 @Inheritance(strategy = InheritanceType.JOINED)
-@RequiredArgsConstructor
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
-
+    @Column(unique = true,nullable = false)
     protected String nom;
+    @Column(nullable = false)
+    protected String motDePasse;
     @Column(nullable = false,unique = true)
     protected String adresseMail;
 
