@@ -54,8 +54,10 @@ public class PrestataireConverter {
         prestataireDto.setLongitude(prestataire.getGeography().getX());
         prestataireDto.setLatitude(prestataire.getGeography().getY());
         prestataireDto.setMotDePasse(String.valueOf(prestataire.getMotDePasse().hashCode()));
-        for(Produits produits: prestataire.getListProduits())
-            listProduits.add(produits.getId());
+        for(Produits produits: prestataire.getListProduits()) {
+            if(produits.getDeleteAt()!=null)
+                listProduits.add(produits.getId());
+        }
         prestataireDto.setListProduits(listProduits);
         return prestataireDto;
     }

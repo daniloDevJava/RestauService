@@ -28,4 +28,8 @@ public class Images {
     @ManyToOne
     @JoinColumn(name = "produits_id",nullable = false)
     private Produits produit;
+
+    public void makeName(){
+        this.nom="IMG"+ 0 +id;
+    }
 }

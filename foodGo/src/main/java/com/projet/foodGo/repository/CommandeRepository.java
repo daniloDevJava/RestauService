@@ -11,4 +11,5 @@ public interface CommandeRepository extends JpaRepository<Commande, UUID> {
 
     Optional<Commande> findByIdAndDeleteAtIsNull(UUID uuid);
     List<Commande> findByDeleteAtIsNull();
+
 }

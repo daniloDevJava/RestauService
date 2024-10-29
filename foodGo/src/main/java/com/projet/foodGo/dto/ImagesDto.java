@@ -12,7 +12,7 @@ public class ImagesDto {
     private String chemin;
     private String nom;
 
-    private void makeName(){
+    public void makeName(){
         this.nom="IMG"+ 0 +id;
     }
 }

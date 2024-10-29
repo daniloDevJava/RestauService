@@ -9,6 +9,7 @@ import com.projet.foodGo.model.Produits;
 import com.projet.foodGo.repository.PrestataireRepository;
 import com.projet.foodGo.repository.ProduitsRepository;
 import com.projet.foodGo.service.PrestataireService;
+import com.projet.foodGo.service.ProduitsService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class PrestataireServiceImpl implements PrestataireService {
     private final PrestataireRepository prestataireRepository;
     private final PrestataireConverter prestataireConverter;
     private final ProduitsRepository produitsRepository;
+    private final ProduitsService produitsService;
 
     /**
      * @param prestataireDto 
@@ -183,6 +185,7 @@ public class PrestataireServiceImpl implements PrestataireService {
             Prestataire prestataire= optionalPrestataire.get();
             prestataire.setDeleteAt(LocalDateTime.now());
             prestataireRepository.save(prestataire);
+            produitsService.markAsProductDeleted(prestataire);
             return true;
         }
         else 

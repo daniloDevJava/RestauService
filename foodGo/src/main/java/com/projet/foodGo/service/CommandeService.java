@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Service
 public interface CommandeService {
-    CommandeDto createCommande(CommandeDto commandeDto);
+    CommandeDto createCommande(CommandeDto commandeDto, UUID user_id, UUID prestataireId);
     CommandeDto getCommande(UUID id);
     List<CommandeDto> getCommandes(UUID idPrestataire);
     List<CommandeDto> getCommandesByUser(UUID user_id);

@@ -173,6 +173,19 @@ public class ProduitsServiceImpl implements ProduitsService {
     }
 
     /**
+     * @param prestataire
+     */
+    @Override
+    public void markAsProductDeleted(Prestataire prestataire) {
+        List<Produits> produitsList=produitsRepository.findByPrestataireAndDeleteAtIsNull(prestataire);
+        for(Produits produits:produitsList){
+            produits.setDeleteAt(LocalDateTime.now());
+            produitsRepository.save(produits);
+        }
+
+    }
+
+    /**
      * @param id 
      * @return
      */

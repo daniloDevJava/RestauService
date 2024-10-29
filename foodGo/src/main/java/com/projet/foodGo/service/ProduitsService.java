@@ -1,6 +1,7 @@
 package com.projet.foodGo.service;
 
 import com.projet.foodGo.dto.ProduitsDto;
+import com.projet.foodGo.model.Prestataire;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +17,6 @@ public interface ProduitsService {
     ProduitsDto updateProduct(UUID id, ProduitsDto produitAlimentaireDto);
     List<ProduitsDto> getCorbeille(UUID prestataire_id);
     ProduitsDto updateQuantiteStock(UUID produit_id,ProduitsDto produitsDto);
+    void markAsProductDeleted(Prestataire prestataire);
     boolean deleteProduct(UUID id);
 }

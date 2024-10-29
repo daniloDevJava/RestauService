@@ -11,13 +11,12 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CommandeDto {
-
     private UUID id;
     private Double prixTotal;
-    private List<ProduitsDto> produits;
+    private List<UUID> produits;
+    private List<Integer> quantiteesCommandees;
     private boolean withLivraison;
     private UUID idPrestataire;
-    private UserDto user;
-    private Map<UUID,Integer> productsNumbers;
-
+    private UUID idUser;
+    private Map<UUID ,Integer> productQuantite;
 }
