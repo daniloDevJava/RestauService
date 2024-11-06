@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify,redirect, url_for, render_template
+from flask import Flask, request, jsonify
 import qrcode
 from io import BytesIO
 import base64
@@ -10,7 +10,10 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Fonction pour calculer la distance entre deux points géographiques
-def calculate_distance(lat1, lon1, lat2, lon2):
+'''
+    Elle prend en parametre les longitudes et latitudes des personnes
+'''
+def calculate_distance(lat1, lon1, lat2, lon2): 
     R = 6371  # Rayon de la Terre en kilomètres
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1)
@@ -39,6 +42,7 @@ def calculate_distance_endpoint():
     except KeyError:
         return jsonify({'error': 'Invalid input. Make sure lat1, lon1, lat2, and lon2 are provided.'}), 400
 
+# Route pour afficher les coordonnes geographique d'un quartier par son nom en utilisant l'api Nominatim
 @app.route('/quartier-coordonnees', methods=['POST'])
 def quartier_coordonnees():
     data = request.json
@@ -60,7 +64,7 @@ def quartier_coordonnees():
         
         # Faire la requête à l'API Nominatim avec un en-tête User-Agent
         headers = {
-            'User-Agent': 'ServiceResto/1.0'  # Remplacez par un nom d'application approprié
+            'User-Agent': 'ServiceResto/1.0'  # Nom et version de l'application
         }
         
         response = requests.get(url, params=params, headers=headers)
@@ -84,20 +88,25 @@ def quartier_coordonnees():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
 
-
 conn = psycopg2.connect("dbname=prosper user=prosper password=prosper host=localhost")
 cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-
-@app.route('/create_order', methods=['GET', 'POST'])
+# Route pour la creation d'un code qr
+@app.route('/create_order', methods=['POST'])
 def create_order():
-    if request.method == 'POST':
-        clientID = request.form['clientID']
-        prestataireID = request.form['prestataireID']
-        amount = request.form['amount']
+    '''
+        La fonction recupere les donnees necessaire pour la creation du code qr
+        - id du client
+        - id du prestataire
+        - montant de la commande
+    '''
+    try :
+        clientID = request.json['clientID']
+        prestataireID = request.json['prestataireID']
+        amount = request.json['amount']
 
         if not clientID or not prestataireID:
-            return jsonify({"error":"donnees errone"}),400
+            return jsonify({"error":"donnees erronees"}),400
 
         # Obtenir la date et l'heure actuelles
         current_datetime = datetime.now()
@@ -117,23 +126,31 @@ def create_order():
             (clientID, prestataireID, amount, qr_b64)
         )
         conn.commit()
-
+        # On renvois le code qr genere sous forme json
+        '''
+            Le code qr generer est sous forme de text
+        '''
         return jsonify({
             "code":qr_b64
             }),200
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
 
-    return render_template('create_order.html')
-
-
-@app.route('/show_qr', methods=['GET', 'POST'])
+# Route pour afficher les qr des commandes d'un client
+'''
+    Elle recupere l'id du client et affiche les codes qr associer aux commandes en cours 
+'''
+@app.route('/show_qr', methods=['POST'])
 def show_qr():
-    if request.method == 'POST':
-        user_id = request.form['ClientID']
-        cursor.execute("SELECT * FROM orders WHERE clientID = %s", (user_id,))
-        orders = cursor.fetchall()
-        return render_template('show_qr.html', orders=orders)
-    return render_template('affiche_qr.html')
-
+    try:
+        user_id = request.json['clientID']
+        cursor.execute("SELECT qr_code FROM orders WHERE clientID = %s", (user_id,))
+        qr_codes = cursor.fetchall()
+        return jsonify({
+            "qr_codes":qr_codes
+        }),200
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
 
 if __name__ == '__main__':
     app.run(host='192.168.123.91',debug=True,port=5000)
