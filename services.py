@@ -144,7 +144,7 @@ def create_order():
 def show_qr():
     try:
         user_id = request.json['clientID']
-        cursor.execute("SELECT qr_code FROM orders WHERE clientID = %s", (user_id,))
+        cursor.execute("SELECT qr_code FROM orders WHERE clientID = %s and etat = 'en cours'", (user_id,))
         qr_codes = cursor.fetchall()
         return jsonify({
             "qr_codes":qr_codes
