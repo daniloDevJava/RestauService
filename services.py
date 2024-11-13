@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 import qrcode
 from io import BytesIO
 import base64
@@ -91,6 +91,8 @@ def quartier_coordonnees():
 conn = psycopg2.connect("dbname=prosper user=prosper password=prosper host=localhost")
 cursor = conn.cursor(cursor_factory=RealDictCursor)
 
+from uuid import UUID
+
 # Route pour la creation d'un code qr
 @app.route('/create_order', methods=['POST'])
 def create_order():
@@ -107,6 +109,13 @@ def create_order():
 
         if not clientID or not prestataireID:
             return jsonify({"error":"donnees erronees"}),400
+
+        try:
+            UUID(clientID)  # Vérifie que clientID est un UUID valide
+            UUID(prestataireID)  # Vérifie que prestataireID est un UUID valide
+        except ValueError:
+            return jsonify({"error": "Les IDs doivent être des UUID valides."}), 400
+
 
         # Obtenir la date et l'heure actuelles
         current_datetime = datetime.now()
@@ -152,5 +161,45 @@ def show_qr():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
 
+
+'''
+    Affichage du code avec interface web
+'''
+@app.route('/show', methods=['GET', 'POST'])
+def show():
+    if request.method == 'POST':
+        user_id = request.form['clientid']
+        cursor.execute("SELECT * FROM orders WHERE clientid = %s", (user_id,))
+        orders = cursor.fetchall()
+        return render_template('show_qr.html', orders=orders)
+    return render_template('affiche_qr.html')
+
+
+'''
+    Verification d'un code qr
+'''
+
+@app.route('/scan_qr', methods=['POST', 'GET'])
+def scan_qr():
+    # Si la méthode est POST, traiter la donnée du QR code
+    if request.method == 'POST':
+        try:
+            # Essayer de récupérer les données envoyées en JSON
+            data = request.get_json()
+            qr_code = data.get('qr_code')
+
+            if qr_code:
+                # Si un QR code est trouvé, on le renvoie dans la réponse JSON
+                return jsonify({"qr_code": qr_code}), 200
+            else:
+                # Si aucun QR code n'est détecté, renvoyer une erreur
+                return jsonify({"qr_code": None, "message": "Aucun QR code détecté."}), 404
+        except Exception as e:
+            # En cas d'erreur interne, renvoyer un message d'erreur avec le code 500
+            return jsonify({"error": str(e)}), 500
+    else:
+        # Si la méthode est GET, afficher une page HTML pour vérifier le QR code
+        return render_template('verifier_qr.html')
+
 if __name__ == '__main__':
-    app.run(host='192.168.123.91',debug=True,port=5000)
+    app.run(host='0.0.0.0',debug=True,port=5000)
