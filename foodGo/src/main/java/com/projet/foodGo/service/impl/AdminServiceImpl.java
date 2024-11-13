@@ -15,21 +15,20 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Admin service.
+ */
 @Service
 @AllArgsConstructor
 public class AdminServiceImpl implements AdminService {
     private final AdminRepository adminRepository;
     private final AdminConverter adminConverter;
-    /**
-     * @param adminDto 
-     * @return
-     */
+
     @Override
     public AdminDto createAdmin(AdminDto adminDto) {
-        Random random=new Random();
         List<Admin> adminList=adminRepository.findByDeleteAtIsNull();
         if(adminList.isEmpty()) {
-            adminDto.setEntryKey(String.valueOf(random.nextGaussian()));
+            adminDto.setEntryKey(UUID.randomUUID());
             Admin admin=adminRepository.save(adminConverter.toEntity(adminDto));
             return adminConverter.toDto(admin);
         }
@@ -42,10 +41,6 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-    /**
-     * @param id 
-     * @return
-     */
     @Override
     public AdminDto getAdmin(UUID id) {
         Optional<Admin> optionalAdmin=adminRepository.findByIdAndDeleteAtIsNull(id);
@@ -57,10 +52,6 @@ public class AdminServiceImpl implements AdminService {
             return null;
     }
 
-    /**
-     * @param nom 
-     * @return
-     */
     @Override
     public AdminDto getAdmin(String nom) {
         Optional<Admin> optionalAdmin=adminRepository.findByNomAndDeleteAtIsNull(nom);
@@ -72,9 +63,6 @@ public class AdminServiceImpl implements AdminService {
             return null;
     }
 
-    /**
-     * @return 
-     */
     @Override
     public List<AdminDto> getAll() {
         List<Admin> adminList=adminRepository.findByDeleteAtIsNull();
@@ -83,11 +71,6 @@ public class AdminServiceImpl implements AdminService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param id 
-     * @param adminDto
-     * @return
-     */
     @Override
     public AdminDto updateAdmin(UUID id, AdminDto adminDto) {
         Optional<Admin> optionalAdmin=adminRepository.findByIdAndDeleteAtIsNull(id);
@@ -101,11 +84,6 @@ public class AdminServiceImpl implements AdminService {
             return null;
     }
 
-    /**
-     * @param id
-     * @param adminDto
-     * @return
-     */
     @Override
     public AdminDto updateEntryKey(UUID id, AdminDto adminDto) {
         List<Admin> adminList=adminRepository.findByDeleteAtIsNull();
@@ -129,10 +107,6 @@ public class AdminServiceImpl implements AdminService {
             return null;
     }
 
-    /**
-     * @param id 
-     * @return
-     */
     @Override
     public boolean deleteAdmin(UUID id) {
         Optional<Admin> optionalAdmin=adminRepository.findByIdAndDeleteAtIsNull(id);

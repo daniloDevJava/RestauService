@@ -21,7 +21,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping("/add")
-    @Operation(description = "add a admin")
+    @Operation(summary = "add a admin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "success"),
             @ApiResponse(responseCode = "400",description = "A field is missing"),
@@ -36,7 +36,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    @Operation(description = "Get Admin")
+    @Operation(summary = "Get Admin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found admin"),
             @ApiResponse(responseCode = "404",description = "Admin is not found")
@@ -50,7 +50,7 @@ public class AdminController {
     }
 
     @GetMapping("/{nom}/get-by-name")
-    @Operation(description = "Get Admin")
+    @Operation(summary = "Get Admin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found admin"),
             @ApiResponse(responseCode = "404",description = "Admin is not found")
@@ -64,14 +64,14 @@ public class AdminController {
     }
 
     @GetMapping("/all")
-    @Operation(description = "Get admins")
+    @Operation(summary = "Get admins")
     @ApiResponse(responseCode = "200",description = "The list of")
     public ResponseEntity<List<AdminDto>> getAdmins(){
         return new ResponseEntity<>(adminService.getAll(),HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    @Operation(description = "full updating of an admim")
+    @Operation(summary = "full updating of an admim")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the updating is okay"),
             @ApiResponse(responseCode = "404",description = "admin doesn't exist")
@@ -85,7 +85,7 @@ public class AdminController {
     }
 
     @PutMapping("/{id}/update-entryKey")
-    @Operation(description = "partial updating of an admim")
+    @Operation(summary = "partial updating of an admim")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the updating of entryKey is okay"),
             @ApiResponse(responseCode = "404",description = "admin doesn't exist"),
@@ -103,7 +103,7 @@ public class AdminController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "delete admin")
+    @Operation(summary = "delete admin")
     public ResponseEntity<String> deleteAdmin(@Parameter(description = "Id Of Admin") @PathVariable UUID id){
         if(adminService.deleteAdmin(id))
             return new ResponseEntity<>("{\"message\" : \"admin is deleted successfully\"}",HttpStatus.OK);

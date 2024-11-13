@@ -17,55 +17,9 @@ public class LivraisonDto {
 
     private float timeLivraison;
     private LivraisonState etatLivraison;
-    private Double fraisLivraison;
+    private double fraisLivraison;
     private String numeroLivreur;
-    private CommandeDto commandeDto;
+    private UUID commandeId;
 
-    public UUID getId() {
-        return id;
-    }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public float getTimeLivraison() {
-        return timeLivraison;
-    }
-
-    public void setTimeLivraison(float timeLivraison) {
-        this.timeLivraison = timeLivraison;
-    }
-
-    public Double getFraisLivraison() {
-        return fraisLivraison;
-    }
-
-    public void setFraisLivraison(Double fraisLivraison) {
-        this.fraisLivraison = fraisLivraison;
-    }
-
-    public String getNumeroLivreur() {
-        return numeroLivreur;
-    }
-
-    public void setNumeroLivreur(String numeroLivreur) {
-        this.numeroLivreur = numeroLivreur;
-    }
-
-    public CommandeDto getCommandeDto() {
-        return commandeDto;
-    }
-
-    public void setCommandeDto(CommandeDto commandeDto) {
-        this.commandeDto = commandeDto;
-    }
-
-    public LivraisonState getEtatLivraison() {
-        return etatLivraison;
-    }
-
-    public void setEtatLivraison(LivraisonState etatLivraison) {
-        this.etatLivraison = etatLivraison;
-    }
 }

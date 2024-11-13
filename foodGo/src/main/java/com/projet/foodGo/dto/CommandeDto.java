@@ -1,5 +1,6 @@
 package com.projet.foodGo.dto;
 
+import com.projet.foodGo.model.enumType.Etat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,10 +14,10 @@ import java.util.UUID;
 public class CommandeDto {
     private UUID id;
     private Double prixTotal;
-    private List<UUID> produits;
-    private List<Integer> quantiteesCommandees;
     private boolean withLivraison;
     private UUID idPrestataire;
     private UUID idUser;
     private Map<UUID ,Integer> productQuantite;
+    private Etat etat;
+    private UserDto userDto;
 }

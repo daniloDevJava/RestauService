@@ -1,12 +1,15 @@
 package com.projet.foodGo.model;
 
+import com.projet.foodGo.model.enumType.Etat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,18 +21,20 @@ public class Commande {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Etat etat;
     private Double prixTotal;
 
-    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Produits> produits;
-
+    private List<Integer> listQuantiteesCommandees =new ArrayList<>();
     private boolean withLivraison;
 
     @Column(nullable = false)
     private UUID idPrestataire;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
 
@@ -41,75 +46,5 @@ public class Commande {
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
 
-    public Double getPrixTotal() {
-        return prixTotal;
-    }
 
-    public void setPrixTotal(Double prixTotal) {
-        this.prixTotal = prixTotal;
-    }
-
-    public List<Produits> getProduits() {
-        return produits;
-    }
-
-    public void setProduits(List<Produits> produits) {
-        this.produits = produits;
-    }
-
-    public boolean isWithLivraison() {
-        return withLivraison;
-    }
-
-    public void setWithLivraison(boolean withLivraison) {
-        this.withLivraison = withLivraison;
-    }
-
-    public UUID getIdPrestataire() {
-        return idPrestataire;
-    }
-    public void setIdPrestataire(UUID idPrestataire){
-        this.idPrestataire=idPrestataire;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
-
-
-    public LocalDateTime getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDateTime createAt) {
-        this.createAt = createAt;
-    }
-
-    public LocalDateTime getUpdateAt() {
-        return updateAt;
-    }
-
-    public void setUpdateAt(LocalDateTime updateAt) {
-        this.updateAt = updateAt;
-    }
-
-    public LocalDateTime getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(LocalDateTime deleteAt) {
-        this.deleteAt = deleteAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 }

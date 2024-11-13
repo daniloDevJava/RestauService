@@ -22,7 +22,7 @@ public class UserController {
     public final UserService userService;
 
     @PostMapping("/add")
-    @Operation(description = "add a user")
+    @Operation(summary = "add a user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "success"),
             @ApiResponse(responseCode = "400",description = "un champ oublie,un en trop ...")
@@ -33,14 +33,14 @@ public class UserController {
     }
 
     @GetMapping("/all")
-    @Operation(description = "get all users")
+    @Operation(summary = "get all users")
     @ApiResponse(responseCode = "200",description = "the all list found")
     public ResponseEntity<List<UserDto>> getUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{user_id}")
-    @Operation(description = "get an user and details")
+    @Operation(summary = "get an user and details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found user"),
             @ApiResponse(responseCode = "404",description = "not user with this id")
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/{user_id}")
-    @Operation(description = "update user")
+    @Operation(summary = "update user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "this user is up-to-date"),
             @ApiResponse(responseCode = "404",description = "this user is not found")
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/update-password")
-    @Operation(description = "partial updating")
+    @Operation(summary = "partial updating")
     @ApiResponses(
             value={
                     @ApiResponse(responseCode = "200",description = "the password is up-to-date"),
@@ -93,7 +93,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "delete user")
+    @Operation(summary = "delete user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the deleting was successfully"),
             @ApiResponse(responseCode = "404",description = "the user is not found")

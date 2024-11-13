@@ -1,13 +1,18 @@
 package com.projet.foodGo.dto;
 
 
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.UUID;
 
 
-@Data
+@Getter
+@Setter
 public class AdminDto extends UserDto {
 
-    private String EntryKey;
+    private UUID EntryKey;
 
 
 }

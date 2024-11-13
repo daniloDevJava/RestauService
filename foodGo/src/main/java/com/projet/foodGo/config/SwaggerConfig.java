@@ -10,7 +10,7 @@ public class SwaggerConfig {
     @Bean
     public GroupedOpenApi publicApi() {
         return GroupedOpenApi.builder()
-                .group("public-api") // Nom du groupe
+                .group("api-dao-foodgo") // Nom du groupe
                 .packagesToScan("com.projet.foodGo.controller")
                 .build();
     }

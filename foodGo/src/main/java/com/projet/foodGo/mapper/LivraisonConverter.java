@@ -2,15 +2,13 @@ package com.projet.foodGo.mapper;
 
 import com.projet.foodGo.dto.LivraisonDto;
 import com.projet.foodGo.model.Livraison;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class LivraisonConverter {
     private final CommandeConverter commandeConverter;
-
-    public LivraisonConverter(CommandeConverter commandeConverter) {
-        this.commandeConverter = commandeConverter;
-    }
 
     public Livraison toEntity(LivraisonDto livraisonDto){
         if(livraisonDto==null)
@@ -20,7 +18,6 @@ public class LivraisonConverter {
         livraison.setTimeLivraison(livraisonDto.getTimeLivraison());
         livraison.setNumeroLivreur(livraisonDto.getNumeroLivreur());
         livraison.setEtatLivraison(livraisonDto.getEtatLivraison());
-        livraison.setCommande(commandeConverter.toEntity(livraisonDto.getCommandeDto()));
         return livraison;
     }
 
@@ -29,10 +26,11 @@ public class LivraisonConverter {
             return null;
         LivraisonDto livraisonDto=new LivraisonDto();
         livraisonDto.setId(livraison.getId());
+        livraisonDto.setEtatLivraison(livraison.getEtatLivraison());
+        livraisonDto.setCommandeId(livraison.getCommande().getId());
         livraisonDto.setNumeroLivreur(livraison.getNumeroLivreur());
         livraisonDto.setTimeLivraison(livraison.getTimeLivraison());
         livraisonDto.setFraisLivraison(livraison.getFraisLivraison());
-        livraisonDto.setCommandeDto(commandeConverter.toDto(livraison.getCommande()));
         return livraisonDto;
     }
 }

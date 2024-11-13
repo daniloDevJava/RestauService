@@ -1,0 +1,21 @@
+[
+  {
+    "id": "3c8695f2-8886-436a-a9e4-d9a362772bcc",
+    "prixTotal": 9000,
+    "withLivraison": true,
+    "idPrestataire": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+    "idUser": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+    "productQuantite": {
+      "45d0bd30-4637-4733-900a-3eda197fb44a": 9
+    },
+    "etat": "EN_COURS",
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    }
+  }
+]

@@ -14,4 +14,5 @@ public interface ImagesRepository extends JpaRepository<Images,Long> {
     Optional<Images> findByIdAndDeleteAtIsNull(Long id);
     List<Images> findByDeleteAtIsNull();
     List<Images> findByProduitAndDeleteAtIsNull(Produits produits);
+    Optional<Images> findByNomAndDeleteAtIsNull(String nom);
 }

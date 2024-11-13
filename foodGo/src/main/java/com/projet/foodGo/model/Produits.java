@@ -30,6 +30,7 @@ public class Produits {
     @ManyToOne
     @JoinColumn(name = "prestataire_id",nullable = false,updatable = false)
     private Prestataire prestataire;
+    @Column(nullable = false)
     private TypeProduct typeProduct;
 
     @CreationTimestamp
@@ -39,4 +40,7 @@ public class Produits {
     @UpdateTimestamp
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
+
+
+
 }

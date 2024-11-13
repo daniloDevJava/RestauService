@@ -18,10 +18,11 @@ import java.util.UUID;
 @RequestMapping("/prestataires")
 @AllArgsConstructor
 public class PrestataireController {
+
     private final PrestataireService prestataireService;
 
     @PostMapping("/add")
-    @Operation(description = "create prestataire")
+    @Operation(summary = "create prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "you have create new prestataire"),
             @ApiResponse(responseCode = "400", description = "A field(s) is missing")
@@ -33,7 +34,7 @@ public class PrestataireController {
     }
 
     @GetMapping("/{id}")
-    @Operation(description = "get an prestataire")
+    @Operation(summary = "get an prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "the found prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exists")
@@ -47,7 +48,7 @@ public class PrestataireController {
     }
 
     @GetMapping("/all")
-    @Operation(description = "get all prestataires")
+    @Operation(summary = "get all prestataires")
     @ApiResponse(responseCode = "200")
     public ResponseEntity<List<PrestataireDto>> getPrestataires() {
         return new ResponseEntity<>(prestataireService.getPrestataires(), HttpStatus.OK);
@@ -68,7 +69,7 @@ public class PrestataireController {
     }
 
     @PutMapping("/{id}")
-    @Operation(description = "update prestataire")
+    @Operation(summary = "update prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "full updating of prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
@@ -81,7 +82,7 @@ public class PrestataireController {
     }
 
     @PutMapping("/{id}/update-nom")
-    @Operation(description = "update prestataire")
+    @Operation(summary = "update prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " updating of the name's prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
@@ -107,7 +108,7 @@ public class PrestataireController {
     }
 
     @PutMapping("/{id}/update-position")
-    @Operation(description = "update position of prestaire")
+    @Operation(summary = "update position of prestaire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "updating of position of prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
@@ -120,7 +121,7 @@ public class PrestataireController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "delete prestataire")
+    @Operation(summary = "delete prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "deleting of position of prestataire is success"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")

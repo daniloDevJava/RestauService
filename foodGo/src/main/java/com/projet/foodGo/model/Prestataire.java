@@ -24,6 +24,8 @@ public class Prestataire extends Users {
     private Double noteMoyenne;
     @Column(nullable = false)
     private Point geography;
+    @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Note> notesList;
 
 
 }

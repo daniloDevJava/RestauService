@@ -1,5 +1,6 @@
 package com.projet.foodGo.repository;
 
+import com.projet.foodGo.model.Note;
 import com.projet.foodGo.model.Prestataire;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,4 +13,6 @@ public interface PrestataireRepository extends JpaRepository<Prestataire, UUID> 
     Optional<Prestataire> findByIdAndDeleteAtIsNull(UUID uuid);
     List<Prestataire> findByDeleteAtIsNull();
     Optional<Prestataire> findByNomAndDeleteAtIsNull(String nom);
+
+
 }

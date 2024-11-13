@@ -18,6 +18,7 @@ public class UserConverter {
         UserDto userDto=new UserDto();
         userDto.setId(user.getId());
         userDto.setNom(user.getNom());
+        userDto.setMotDePasse(String.valueOf(user.getMotDePasse().hashCode()));
         userDto.setAdresseMail(user.getAdresseMail());
         userDto.setCreateAt(user.getCreateAt());
         userDto.setUpdateAt(user.getUpdateAt());

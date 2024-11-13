@@ -24,7 +24,7 @@ public class Note {
     @JoinColumn(name = "user_id",nullable = false)
     private Users user;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "prestataire_id",nullable = false)
     private Prestataire prestataire;
 

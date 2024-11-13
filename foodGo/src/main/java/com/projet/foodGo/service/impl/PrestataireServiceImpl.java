@@ -22,6 +22,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Prestataire service.
+ */
 @Service
 @AllArgsConstructor
 public class PrestataireServiceImpl implements PrestataireService {
@@ -30,10 +33,6 @@ public class PrestataireServiceImpl implements PrestataireService {
     private final ProduitsRepository produitsRepository;
     private final ProduitsService produitsService;
 
-    /**
-     * @param prestataireDto 
-     * @return
-     */
     @Override
     public PrestataireDto createPrestataire(PrestataireDto prestataireDto) {
         prestataireDto.setNoteMoyenne(0.0);
@@ -42,9 +41,6 @@ public class PrestataireServiceImpl implements PrestataireService {
         return prestataireConverter.toDto(prestataireRepository.save(prestataire));
     }
 
-    /**
-     * @return 
-     */
     @Transactional(readOnly = true)
     @Override
     public List<PrestataireDto> getPrestataires() {
@@ -54,10 +50,6 @@ public class PrestataireServiceImpl implements PrestataireService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param id 
-     * @return
-     */
     @Transactional(readOnly = true)
     @Override
     public PrestataireDto getPrestataire(UUID id) {
@@ -70,10 +62,6 @@ public class PrestataireServiceImpl implements PrestataireService {
             return null;
     }
 
-    /**
-     * @param nom 
-     * @return
-     */
     @Transactional(readOnly = true)
     @Override
     public PrestataireDto getPrestataire(String nom) {
@@ -86,11 +74,6 @@ public class PrestataireServiceImpl implements PrestataireService {
             return null;
     }
 
-    /**
-     * @param id 
-     * @param prestataireDto
-     * @return
-     */
     //@Transactional(readOnly = true)
     @Override
     public PrestataireDto updatePrestataire(UUID id, PrestataireDto prestataireDto) {
@@ -118,12 +101,7 @@ public class PrestataireServiceImpl implements PrestataireService {
             return null;
     }
 
-    /**
-     * @param id 
-     * @param prestataireDto
-     * @return
-     */
-   // @Transactional(readOnly = true)
+    // @Transactional(readOnly = true)
     @Override
     public PrestataireDto updatePrestataireName(UUID id, PrestataireDto prestataireDto) {
         Optional<Prestataire> optionalPrestataire=prestataireRepository.findByIdAndDeleteAtIsNull(id);
@@ -136,11 +114,6 @@ public class PrestataireServiceImpl implements PrestataireService {
             return null;
     }
 
-    /**
-     * @param id 
-     * @param prestataireDto
-     * @return
-     */
     //@Transactional(readOnly = true)
     @Override
     public PrestataireDto updatePrestataireMail(UUID id, PrestataireDto prestataireDto) {
@@ -154,11 +127,6 @@ public class PrestataireServiceImpl implements PrestataireService {
             return null;
     }
 
-    /**
-     * @param id 
-     * @param prestataireDto
-     * @return
-     */
     //@Transactional(readOnly = true)
     @Override
     public PrestataireDto updatePrestataireCoordonnees(UUID id, PrestataireDto prestataireDto) {
@@ -174,10 +142,6 @@ public class PrestataireServiceImpl implements PrestataireService {
     }
 
 
-    /**
-     * @param id 
-     * @return
-     */
     @Override
     public boolean deletePrestataire(UUID id) {
         Optional<Prestataire> optionalPrestataire=prestataireRepository.findByIdAndDeleteAtIsNull(id);

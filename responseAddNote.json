@@ -1,0 +1,26 @@
+{
+  "id": "c3d46947-c934-419d-b54b-6bc23655a8be",
+  "avis": "ras",
+  "note": 3,
+  "userDto": {
+    "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+    "nom": "Karatsuba",
+    "motDePasse": null,
+    "adresseMail": "karatsuba@gmail.com",
+    "createAt": "2024-11-10T16:11:52.162006",
+    "updateAt": "2024-11-10T16:11:52.162079"
+  },
+  "prestataireDto": {
+    "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+    "nom": "Archimede",
+    "motDePasse": "2086960025",
+    "adresseMail": "archimede@gmail.com",
+    "createAt": "2024-11-10T16:13:45.615149",
+    "updateAt": "2024-11-10T17:34:31.410568",
+    "listProduits": [],
+    "noteMoyenne": 4.153846263885498,
+    "natureCompte": "VIP",
+    "longitude": 0.00001,
+    "latitude": 0.0001
+  }
+}

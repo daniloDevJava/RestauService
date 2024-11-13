@@ -14,24 +14,21 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * The type Client service.
+ */
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
     private final ClientConverter clientConverter;
     private final ClientRepository clientRepository;
-    /**
-     * @param clientDto 
-     * @return the client
-     */
+
     @Override
     public ClientDto createClient(ClientDto clientDto) {
         Client client= clientRepository.save(clientConverter.toEntity(clientDto));
         return clientConverter.toDto(client);
     }
 
-    /**
-     * @return the client
-     */
     @Override
     public List<ClientDto> getClients() {
         List<Client> listClient=clientRepository.findByDeleteAtIsNull();
@@ -40,10 +37,6 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * @param id of client
-     * @return the found client
-     */
     @Override
     public ClientDto getClient(UUID id) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(id);
@@ -55,10 +48,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param nom et prenom
-     * @return the found client
-     */
     @Override
     public ClientDto getClient(String nom) {
         Optional<Client> optionalClient=clientRepository.findByNomPrenom(nom);
@@ -70,11 +59,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param clientDto
-     * @param client_id
-     * @return
-     */
     @Override
     public ClientDto updateClient(ClientDto clientDto, UUID client_id) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
@@ -92,11 +76,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param client_id 
-     * @param clientDto
-     * @return
-     */
     @Override
     public ClientDto updateAdresseMail(UUID client_id, ClientDto clientDto) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
@@ -109,11 +88,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param client_id 
-     * @param clientDto
-     * @return
-     */
     @Override
     public ClientDto updateAdresse(UUID client_id, ClientDto clientDto) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
@@ -126,11 +100,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param client_id of client
-     * @param clientDto object
-     * @return new cliendto
-     */
     @Override
     public ClientDto updateDateOfBirth(UUID client_id, ClientDto clientDto) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(client_id);
@@ -143,10 +112,6 @@ public class ClientServiceImpl implements ClientService {
             return null;
     }
 
-    /**
-     * @param id of client
-     * @return
-     */
     @Override
     public boolean deleteClient(UUID id) {
         Optional<Client> optionalClient=clientRepository.findByIdAndDeleteAtIsNull(id);

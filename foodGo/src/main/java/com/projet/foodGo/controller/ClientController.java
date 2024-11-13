@@ -21,7 +21,7 @@ public class ClientController {
     private final ClientService clientService;
 
     @PostMapping("/add")
-    @Operation(description = "add an client")
+    @Operation(summary = "add an client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "new client now"),
             @ApiResponse(responseCode = "400",description = "a field of client is missing")
@@ -31,13 +31,13 @@ public class ClientController {
     }
 
     @GetMapping("/all")
-    @Operation(description = "get all clients")
+    @Operation(summary = "get all clients")
     @ApiResponse(responseCode = "200",description = "the all list of clients")
     public ResponseEntity<List<ClientDto>> getClients(){
         return new ResponseEntity<>(clientService.getClients(),HttpStatus.OK);
     }
     @GetMapping("/{client_id}")
-    @Operation(description = "get an client by id")
+    @Operation(summary = "get an client by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -51,7 +51,7 @@ public class ClientController {
     }
 
     @GetMapping("/{nom}/getByName")
-    @Operation(description = "get client")
+    @Operation(summary = "get client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -65,7 +65,7 @@ public class ClientController {
     }
 
     @PutMapping("/{client_id}")
-    @Operation(description = "full updating Client")
+    @Operation(summary = "full updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -79,7 +79,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}/update-addr")
-    @Operation(description = "partial updating Client")
+    @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -92,7 +92,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}/update-mail")
-    @Operation(description = "partial updating Client")
+    @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -105,7 +105,7 @@ public class ClientController {
     }
 
     @PutMapping("/{id}/update-dateOfBirth")
-    @Operation(description = "partial updating Client")
+    @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
@@ -118,7 +118,7 @@ public class ClientController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(description = "delete client")
+    @Operation(summary = "delete client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the deleting was successfully"),
             @ApiResponse(responseCode = "404",description = "the client is not found")

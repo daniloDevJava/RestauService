@@ -32,4 +32,6 @@ public class Images {
     public void makeName(){
         this.nom="IMG"+ 0 +id;
     }
+
+
 }
