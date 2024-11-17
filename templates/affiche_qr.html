@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+    <title>Find QR Codes</title>
+</head>
+<body>
+    <h1>Enter Client ID to View Orders</h1>
+    <form method="post" action="{{ url_for('show') }}">
+        <label for="clientid">Client ID:</label>
+        <input type="text" id="clientid" name="clientid" required>
+        <button type="submit">Show QR Codes</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner QR Code</title>
+    <!-- Utilisation de la version UMD -->
+    <script src="https://unpkg.com/qr-scanner/qr-scanner.umd.min.js"></script>
+    <script>
+        // Chemin vers le fichier qr-scanner-worker.min.js
+        // QrScanner.WORKER_PATH = 'path/to/qr-scanner-worker.min.js';
+        QrScanner.WORKER_PATH = '/static/JS/qr-scanner-worker.min.js';
+    </script>
+</head>
+<body>
+    <h1>Scanner un QR Code</h1>
+    <video id="video" autoplay></video>
+    <div id="result"></div>
+
+    <script>
+        const videoElement = document.getElementById('video');
+        const resultElement = document.getElementById('result');
+
+        // Initialiser le scanner QR avec l'option `returnDetailedScanResult`
+        const qrScanner = new QrScanner(videoElement, result => {
+            resultElement.innerText = `QR Code détecté: ${result.data || result}`;
+            
+            // Envoi du QR code au serveur Flask pour vérification
+            fetch('/scan_qr', {
+                method: 'POST',
+                body: JSON.stringify({ qr_code: result.data || result }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    resultElement.innerText = `Erreur: ${data.error}`;
+                } else {
+                    resultElement.innerText = `Commande trouvée: ${JSON.stringify(data.order)}`;
+                }
+            })
+            .catch(error => console.error('Erreur:', error));
+        }, { returnDetailedScanResult: true });
+
+        // Démarrer le scanner
+        qrScanner.start()
+            .catch(err => console.error(`Erreur lors du démarrage : ${err}`));
+    </script>
+</body>
+</html>

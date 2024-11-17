@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head>
+    <title>QR Code</title>
+</head>
+<body>
+    {% for order in orders %}
+        <h1>QR Code for Order {{ order.id }}</h1>
+        <p>Amount: {{ order.amount }}</p>
+        <!-- Voila comment on affiche le code qr -->
+        <img src="data:image/png;base64,{{ order.qr_code }}" alt="QR Code">
+    {% endfor %}
+</body>
+</html>
