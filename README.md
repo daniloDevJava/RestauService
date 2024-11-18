@@ -2,7 +2,7 @@
 
 ## BUT
 
-Facilité la visibilité des prestataire et offrir un service agreable au desireux voulant s'offir un bon repas.
+Faciliter la visibilité des prestataire et offrir un service agréable au desireux voulant s'offir un bon repas.
 
 ## LANGUAGES UTILISER
 
@@ -30,4 +30,4 @@ Facilité la visibilité des prestataire et offrir un service agreable au desire
 
 ## Principe de l'application
 
-Un **Prestataire**(Vendeur,revendeur,Particulier) offre un produit, il s'enregistre dans l'application comme restaurateur/prestataire et publi le produit qu'il désire commercialiser, les **clients** quand a eux, peuvent se connecter et recherche un produit de leurs choix, le systeme leurs enverras alors la liste des restaurants proches d'eux offrant ce produit.
+Un **Prestataire**(Vendeur,revendeur,Particulier) offre un produit, il s'enregistre dans l'application comme restaurateur/prestataire et publie le produit qu'il désire commercialiser;les **clients** quand à eux, peuvent se connecter et rechercher un produit de leurs choix, le système leur enverra alors la liste des restaurants proches d'eux offrant ce produit et recommandés;les **admins** vont inspecter les activités d'un prestataire de restauration et restreindre son compte si nécéssaire et pourra aussi le noter 
