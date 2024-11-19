@@ -253,6 +253,20 @@ def verification():
             "message":"Mauvaise methode de request"
         })
 
+'''
+    Definir notre application comme client eureka
+'''
+
+# from eureka import Eureka
+#
+# eureka_client = Eureka(
+#     app_name='ServiceResto-flask-app',
+#     eureka_server='http://localhost:8761/eureka',
+#     instance_port=5000,
+#     instance_ip='127.0.0.1'
+# )
+# eureka_client.start()
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True,port=5000)
+    app.run(host='0.0.0.0',debug=True,port=8761)
