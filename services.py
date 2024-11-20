@@ -135,7 +135,6 @@ def get_location_info():
     except Exception as e:
         return jsonify({"message": "Erreur inattendue", "error": str(e)}), 500
 
-
 from uuid import UUID
 
 # Route pour la creation d'un code qr
@@ -148,16 +147,16 @@ def create_order():
         - montant de la commande
     '''
     try :
-        clientID = request.json['clientID']
-        prestataireID = request.json['prestataireID']
+        clientId = request.json['clientId']
+        prestataireId = request.json['prestataireId']
         amount = request.json['amount']
 
-        if not clientID or not prestataireID:
+        if not clientId or not prestataireId:
             return jsonify({"error":"donnees erronees"}),400
 
         try:
-            UUID(clientID)  # Vérifie que clientID est un UUID valide
-            UUID(prestataireID)  # Vérifie que prestataireID est un UUID valide
+            UUID(clientId)  # Vérifie que clientId est un UUID valide
+            UUID(prestataireId)  # Vérifie que prestataireId est un UUID valide
         except ValueError:
             return jsonify({"error": "Les IDs doivent être des UUID valides."}), 400
 
@@ -165,7 +164,7 @@ def create_order():
         # Obtenir la date et l'heure actuelles
         current_datetime = datetime.now()
 
-        qr_data = f"Client: {clientID}, Prestataire:{prestataireID}, Amount: {amount}, date:{current_datetime}"
+        qr_data = f"Client: {clientId}, Prestataire:{prestataireId}, Amount: {amount}, date:{current_datetime}"
         
         # Génération du QR code
         qr = qrcode.make(qr_data)
@@ -176,8 +175,8 @@ def create_order():
 
         # Enregistrer dans la base de données
         cursor.execute(
-            "INSERT INTO orders (clientID, prestataireID, amount, qr_code) VALUES (%s, %s, %s, %s)",
-            (clientID, prestataireID, amount, qr_b64)
+            "INSERT INTO orders (clientId, prestataireId, amount, qr_code) VALUES (%s, %s, %s, %s)",
+            (clientId, prestataireId, amount, qr_b64)
         )
         conn.commit()
         # On renvois le code qr genere sous forme json
@@ -197,8 +196,8 @@ def create_order():
 @app.route('/show_qr', methods=['POST'])
 def show_qr():
     try:
-        user_id = request.json['clientID']
-        cursor.execute("SELECT qr_code FROM orders WHERE clientID = %s and etat = 'en cours'", (user_id,))
+        user_id = request.json['clientId']
+        cursor.execute("SELECT qr_code FROM orders WHERE clientId = %s and etat = 'en cours'", (user_id,))
         qr_codes = cursor.fetchall()
         return jsonify({
             "qr_codes":qr_codes
@@ -213,38 +212,12 @@ def show_qr():
 @app.route('/show', methods=['GET', 'POST'])
 def show():
     if request.method == 'POST':
-        user_id = request.form['clientid']
-        cursor.execute("SELECT * FROM orders WHERE clientid = %s", (user_id,))
+        user_id = request.form['clientId']
+        cursor.execute("SELECT * FROM orders WHERE clientId = %s", (user_id,))
         orders = cursor.fetchall()
         return render_template('show_qr.html', orders=orders)
     return render_template('affiche_qr.html')
 
-
-'''
-    Verification d'un code qr
-'''
-
-# @app.route('/scan_qr', methods=['POST', 'GET'])
-# def scan_qr():
-#     # Si la méthode est POST, traiter la donnée du QR code
-#     if request.method == 'POST':
-#         try:
-#             # Essayer de récupérer les données envoyées en JSON
-#             data = request.get_json()
-#             qr_code = data.get('qr_code')
-
-#             if qr_code:
-#                 # Si un QR code est trouvé, on le renvoie dans la réponse JSON
-#                 return jsonify({"qr_code": qr_code}), 200
-#             else:
-#                 # Si aucun QR code n'est détecté, renvoyer une erreur
-#                 return jsonify({"qr_code": None, "message": "Aucun QR code détecté."}), 404
-#         except Exception as e:
-#             # En cas d'erreur interne, renvoyer un message d'erreur avec le code 500
-#             return jsonify({"error": str(e)}), 500
-#     else:
-#         # Si la méthode est GET, afficher une page HTML pour vérifier le QR code
-#         return render_template('verifier_qr.html')
 
 # Veification de code qr
 
@@ -261,7 +234,7 @@ def verification():
         prestataireId = data.get('prestataireId')
 
         try:
-            UUID(prestataireId)  # Vérifie que prestataireID est un UUID valide
+            UUID(prestataireId)  # Vérifie que prestataireId est un UUID valide
         except ValueError:
             return jsonify({"error": "L'ID doit etre un UUID valide."}), 400
 
@@ -269,14 +242,24 @@ def verification():
             cursor.execute("SELECT * FROM orders WHERE qr_code = %s and etat = 'en cours'", (qr_code,)) # on recupere le code associer au qr
             orders = cursor.fetchone()
             if orders:
-                if orders['prestataireid'] == prestataireId: # On verifie si le prestataire est le bon
+                if orders['prestataireId'] == prestataireId: # On verifie si le prestataire est le bon
                     cursor.execute("UPDATE orders SET etat = 'validé' WHERE id = %s", (orders['id'],))
                     conn.commit()
+
+                    # J'envois l'argent dans le compte du prestataire
+
+                    SpringURL = "http://37.60.244.227/updateCount"
+                    spring_response = requests.post(SpringURL, json={
+                                                            "IdPrestataire": prestataireId,
+                                                            "montant": orders['amount']
+                                                        }
+                                                    )
                     return jsonify(
                         {
                             "message": "Commande valide avec succès",
-                            "prestataireId":prestataireId,
-                            "amount":orders['amount']
+                            "result":spring_response,
+                            # "prestataireId":prestataireId,
+                            # "amount":orders['amount']
                         }
                     ), 200
                 else:
@@ -301,19 +284,6 @@ def verification():
 '''
     Definir notre application comme client eureka
 '''
-
-
-
-# from eureka import Eureka
-#
-# eureka_client = Eureka(
-#     app_name='ServiceResto-flask-app',
-#     eureka_server='http://localhost:8761/eureka',
-#     instance_port=5000,
-#     instance_ip='127.0.0.1'
-# )
-# eureka_client.start()
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True,port=8761)
