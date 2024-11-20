@@ -9,6 +9,8 @@ from datetime import datetime
 
 app = Flask(__name__)
 
+app_name = 'ServiceResto/1.0'
+
 # Fonction pour calculer la distance entre deux points géographiques
 '''
     Elle prend en parametre les longitudes et latitudes des personnes
@@ -64,7 +66,7 @@ def quartier_coordonnees():
         
         # Faire la requête à l'API Nominatim avec un en-tête User-Agent
         headers = {
-            'User-Agent': 'ServiceResto/1.0'  # Nom et version de l'application
+            'User-Agent': app_name  # Nom et version de l'application
         }
         
         response = requests.get(url, params=params, headers=headers)
@@ -90,6 +92,49 @@ def quartier_coordonnees():
 
 conn = psycopg2.connect("dbname=prosper user=prosper password=prosper host=localhost")
 cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+'''
+    Fonction qui pour les coordonnees geographique d'un point ressort le nom du quatier
+'''
+@app.route('/get_location', methods=['POST'])
+def get_location_info():
+    if request.method != 'POST':
+        return jsonify({"message": "Mauvaise méthode utilisée"}), 400
+
+    data = request.get_json()
+    lat = data.get('lat')
+    lon = data.get('lon')
+
+    if lat is None or lon is None:
+        return jsonify({"message": "Latitude et longitude sont obligatoires"}), 400
+
+    try:
+        lat = float(lat)
+        lon = float(lon)
+    except ValueError:
+        return jsonify({"message": "Latitude et longitude doivent être des nombres"}), 400
+
+    url = "https://nominatim.openstreetmap.org/reverse"
+    params = {'lat': lat, 'lon': lon, 'format': 'json'}
+    headers = {"User-Agent": app_name}
+
+    try:
+        response = requests.get(url, params=params, headers=headers, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+
+        ville = data.get('address', {}).get('city')
+        quartier = (data.get('address', {}).get('neighbourhood') or
+            data.get('address', {}).get('suburb') or
+            data.get('address', {}).get('village') or
+            data.get('address', {}).get('hamlet'))
+
+        return jsonify({"ville": ville, "quartier": quartier}), 200
+    except requests.RequestException as e:
+        return jsonify({"message": "Erreur lors de la communication avec l'API", "error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"message": "Erreur inattendue", "error": str(e)}), 500
+
 
 from uuid import UUID
 
@@ -179,27 +224,27 @@ def show():
     Verification d'un code qr
 '''
 
-@app.route('/scan_qr', methods=['POST', 'GET'])
-def scan_qr():
-    # Si la méthode est POST, traiter la donnée du QR code
-    if request.method == 'POST':
-        try:
-            # Essayer de récupérer les données envoyées en JSON
-            data = request.get_json()
-            qr_code = data.get('qr_code')
+# @app.route('/scan_qr', methods=['POST', 'GET'])
+# def scan_qr():
+#     # Si la méthode est POST, traiter la donnée du QR code
+#     if request.method == 'POST':
+#         try:
+#             # Essayer de récupérer les données envoyées en JSON
+#             data = request.get_json()
+#             qr_code = data.get('qr_code')
 
-            if qr_code:
-                # Si un QR code est trouvé, on le renvoie dans la réponse JSON
-                return jsonify({"qr_code": qr_code}), 200
-            else:
-                # Si aucun QR code n'est détecté, renvoyer une erreur
-                return jsonify({"qr_code": None, "message": "Aucun QR code détecté."}), 404
-        except Exception as e:
-            # En cas d'erreur interne, renvoyer un message d'erreur avec le code 500
-            return jsonify({"error": str(e)}), 500
-    else:
-        # Si la méthode est GET, afficher une page HTML pour vérifier le QR code
-        return render_template('verifier_qr.html')
+#             if qr_code:
+#                 # Si un QR code est trouvé, on le renvoie dans la réponse JSON
+#                 return jsonify({"qr_code": qr_code}), 200
+#             else:
+#                 # Si aucun QR code n'est détecté, renvoyer une erreur
+#                 return jsonify({"qr_code": None, "message": "Aucun QR code détecté."}), 404
+#         except Exception as e:
+#             # En cas d'erreur interne, renvoyer un message d'erreur avec le code 500
+#             return jsonify({"error": str(e)}), 500
+#     else:
+#         # Si la méthode est GET, afficher une page HTML pour vérifier le QR code
+#         return render_template('verifier_qr.html')
 
 # Veification de code qr
 
@@ -256,6 +301,8 @@ def verification():
 '''
     Definir notre application comme client eureka
 '''
+
+
 
 # from eureka import Eureka
 #
