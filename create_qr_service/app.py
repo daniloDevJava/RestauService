@@ -7,6 +7,8 @@ import qrcode
 from eureka_config import *
 from py_eureka_client.eureka_client import EurekaClient
 
+from settings import *
+
 app_qr_creation = Flask(__name__)
 
 

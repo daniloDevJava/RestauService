@@ -3,7 +3,7 @@ from py_eureka_client.eureka_client import EurekaClient
 import math
 from eureka_config import *
 
-from ..settings import EUREKA_SERVER
+from settings import *
 
 app_distance = Flask(__name__)
 

@@ -3,6 +3,8 @@ import requests
 from eureka_config import *
 from py_eureka_client.eureka_client import EurekaClient
 
+from settings import *
+
 app_qr_show = Flask(__name__)
 
 client = EurekaClient(

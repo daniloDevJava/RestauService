@@ -4,6 +4,8 @@ from uuid import UUID
 from eureka_config import *
 from py_eureka_client.eureka_client import EurekaClient
 
+from settings import *
+
 app_qr_verification = Flask(__name__)
 
 client = EurekaClient(

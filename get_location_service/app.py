@@ -3,6 +3,8 @@ import requests
 from py_eureka_client.eureka_client import EurekaClient
 from eureka_config import *
 
+from settings import *
+
 app_location = Flask(__name__)
 
 client = EurekaClient(
