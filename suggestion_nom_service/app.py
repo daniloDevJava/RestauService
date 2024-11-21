@@ -21,23 +21,25 @@ def suggestionNom():
             "noms": None
         })
     # Ajoutez le caractère générique pour la recherche
-    cursor.execute("SELECT nom FROM nourritures WHERE nom LIKE %s", (f'{nom}%',))
+    cursor.execute("SELECT distinct nom FROM nourritures WHERE nom LIKE %s", (f'{nom}%',))
     orders = cursor.fetchall()
 
     # Transformez les résultats en une liste de noms
-    noms = [order[0] for order in orders]
+    noms = [order['nom'] for order in orders]
 
     if noms:
         return jsonify({"noms": noms})
     else:
-        # Insertion du nom s'il n'existe pas
-        try:
-            cursor.execute("INSERT INTO nourritures(nom) VALUES (%s)", (nom,))
-            conn.commit()
-        except Exception as e:
-            return jsonify({"error": str(e)}), 500
-        
-        return jsonify({"noms": None})
+        if len(nom) > 6:
+            # Insertion du nom s'il n'existe pas
+            try:
+                cursor.execute("INSERT INTO nourritures(nom) VALUES (%s)", (nom,))
+                conn.commit()
+                return jsonify({"noms": None})
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
+        else:
+            return jsonify({"noms": None})
 
 if __name__ == "__main__":
     # Enregistrer le service auprès d'Eureka
