@@ -30,7 +30,7 @@ def suggestionNom():
     if noms:
         return jsonify({"noms": noms})
     else:
-        if len(nom) > 6:
+        if len(nom) > 5:
             # Insertion du nom s'il n'existe pas
             try:
                 cursor.execute("INSERT INTO nourritures(nom) VALUES (%s)", (nom,))
