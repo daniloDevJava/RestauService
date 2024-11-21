@@ -1,5 +1,3 @@
-import psycopg2
-from psycopg2.extras import RealDictCursor
 
 # Configuration du client Eureka
 

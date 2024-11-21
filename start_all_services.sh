@@ -7,6 +7,7 @@ services=(
     "create_qr_service"
     "show_qr_service"
     "verification_qr_service"
+    "suggestion_nom_service"
 )
 
 for service in "${services[@]}"; do
