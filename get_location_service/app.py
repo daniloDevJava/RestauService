@@ -56,12 +56,18 @@ def get_location_info():
     except Exception as e:
         return jsonify({"message": "Erreur inattendue", "error": str(e)}), 500
 
+import asyncio
+
+async def start_eureka_client():
+    await client.start()
+
 if __name__ == "__main__":
     # Enregistrer le service auprès d'Eureka
-    client.start()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_eureka_client())
 
     try:
-        app_location.run(host="0.0.0.0", port=EUREKA_PORT,debug=True)
+        app_location.run(host="0.0.0.0", port=EUREKA_PORT, debug=True)
     finally:
         # Désenregistrer le service lors de l'arrêt de l'application
-        client.stop()
+        loop.run_until_complete(client.stop())

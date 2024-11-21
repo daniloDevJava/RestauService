@@ -60,12 +60,18 @@ def quartier_coordonnees():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
 
+import asyncio
+
+async def start_eureka_client():
+    await client.start()
+
 if __name__ == "__main__":
     # Enregistrer le service auprès d'Eureka
-    client.start()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_eureka_client())
 
     try:
-        app_coordonnees.run(host="0.0.0.0", port=EUREKA_PORT,debug=True)
+        app_coordonnees.run(host="0.0.0.0", port=EUREKA_PORT, debug=True)
     finally:
         # Désenregistrer le service lors de l'arrêt de l'application
-        client.stop()
+        loop.run_until_complete(client.stop())

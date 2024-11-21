@@ -46,12 +46,18 @@ def calculate_distance_endpoint():
     except KeyError:
         return jsonify({'error': 'Invalid input. Make sure lat1, lon1, lat2, and lon2 are provided.'}), 400
 
+import asyncio
+
+async def start_eureka_client():
+    await client.start()
+
 if __name__ == "__main__":
     # Enregistrer le service auprès d'Eureka
-    client.start()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(start_eureka_client())
 
     try:
-        app_distance.run(host="0.0.0.0", port=EUREKA_PORT,debug=True)
+        app_distance.run(host="0.0.0.0", port=EUREKA_PORT, debug=True)
     finally:
         # Désenregistrer le service lors de l'arrêt de l'application
-        client.stop()
+        loop.run_until_complete(client.stop())
