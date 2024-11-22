@@ -1,0 +1,807 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+[2024-11-22 18:44:15]-[MainThread]-[eureka_client:713] WARNING: Register error! Will try in next heartbeat. 
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 710, in register
+    await self.__connect_to_eureka_server(do_register)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 709, in do_register
+    await _register(url, self.__instance)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 304, in _register
+    await http_client.http_client.urlopen(req, json.dumps({"instance": instance_dic}).encode(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1352, in do_open
+    r = h.getresponse()
+        ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/http/client.py", line 1395, in getresponse
+    response.begin()
+  File "/usr/lib/python3.11/http/client.py", line 325, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/http/client.py", line 286, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 718, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+TimeoutError: timed out
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5002
+ * Running on http://192.168.117.91:5002
+Press CTRL+C to quit
+ * Restarting with watchdog (inotify)
+ * Debugger is active!
+ * Debugger PIN: 144-361-649
+[2024-11-22 18:44:47]-[HeartbeatThread]-[eureka_client:571] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 569, in __try_eureka_server_in_cache
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 709, in do_register
+    await _register(url, self.__instance)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 304, in _register
+    await http_client.http_client.urlopen(req, json.dumps({"instance": instance_dic}).encode(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:47]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 709, in do_register
+    await _register(url, self.__instance)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 304, in _register
+    await http_client.http_client.urlopen(req, json.dumps({"instance": instance_dic}).encode(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:47]-[HeartbeatThread]-[eureka_client:713] WARNING: Register error! Will try in next heartbeat. 
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 710, in register
+    await self.__connect_to_eureka_server(do_register)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 651, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:44:47]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 811, in do_fetch
+    delta = await get_delta(url, self.__remote_regions)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 511, in get_delta
+    res = await _get_applications_(f"{_format_url(eureka_server)}apps/delta", regions)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 370, in _get_applications_
+    res = await http_client.http_client.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:47]-[HeartbeatThread]-[eureka_client:825] WARNING: fetch delta from eureka server error!
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 823, in __fetch_delta
+    await self.__connect_to_eureka_server(do_fetch)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:44:57]-[HeartbeatThread]-[eureka_client:571] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 569, in __try_eureka_server_in_cache
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 740, in do_send_heartbeat
+    await send_heartbeat(url, self.__instance["app"],
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 325, in send_heartbeat
+    await http_client.http_client.urlopen(req, timeout=_DEFAULT_TIME_OUT)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:57]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 740, in do_send_heartbeat
+    await send_heartbeat(url, self.__instance["app"],
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 325, in send_heartbeat
+    await http_client.http_client.urlopen(req, timeout=_DEFAULT_TIME_OUT)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:57]-[HeartbeatThread]-[eureka_client:745] WARNING: Cannot send heartbeat to server, try to register. 
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 743, in send_heartbeat
+    await self.__connect_to_eureka_server(do_send_heartbeat)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 651, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:44:58]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 743, in send_heartbeat
+    await self.__connect_to_eureka_server(do_send_heartbeat)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 651, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 709, in do_register
+    await _register(url, self.__instance)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 304, in _register
+    await http_client.http_client.urlopen(req, json.dumps({"instance": instance_dic}).encode(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:58]-[HeartbeatThread]-[eureka_client:713] WARNING: Register error! Will try in next heartbeat. 
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 649, in __connect_to_eureka_server
+    await self.__try_eureka_server_in_cache(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 582, in __try_eureka_server_in_cache
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in cache are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 743, in send_heartbeat
+    await self.__connect_to_eureka_server(do_send_heartbeat)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 651, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 710, in register
+    await self.__connect_to_eureka_server(do_register)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:44:58]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 811, in do_fetch
+    delta = await get_delta(url, self.__remote_regions)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 511, in get_delta
+    res = await _get_applications_(f"{_format_url(eureka_server)}apps/delta", regions)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 370, in _get_applications_
+    res = await http_client.http_client.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:44:58]-[HeartbeatThread]-[eureka_client:825] WARNING: fetch delta from eureka server error!
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 823, in __fetch_delta
+    await self.__connect_to_eureka_server(do_fetch)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:45:17]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 709, in do_register
+    await _register(url, self.__instance)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 304, in _register
+    await http_client.http_client.urlopen(req, json.dumps({"instance": instance_dic}).encode(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:45:17]-[HeartbeatThread]-[eureka_client:713] WARNING: Register error! Will try in next heartbeat. 
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 710, in register
+    await self.__connect_to_eureka_server(do_register)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>
+[2024-11-22 18:45:17]-[HeartbeatThread]-[eureka_client:633] WARNING: Eureka server [http://37.60.244.227:8761/eureka] is down, use next url to try.
+Traceback (most recent call last):
+  File "/usr/lib/python3.11/urllib/request.py", line 1348, in do_open
+    h.request(req.get_method(), req.selector, req.data, headers,
+  File "/usr/lib/python3.11/http/client.py", line 1303, in request
+    self._send_request(method, url, body, headers, encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1349, in _send_request
+    self.endheaders(body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1298, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/usr/lib/python3.11/http/client.py", line 1058, in _send_output
+    self.send(msg)
+  File "/usr/lib/python3.11/http/client.py", line 996, in send
+    self.connect()
+  File "/usr/lib/python3.11/http/client.py", line 962, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/socket.py", line 863, in create_connection
+    raise exceptions[0]
+  File "/usr/lib/python3.11/socket.py", line 848, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 631, in __try_eureka_servers_in_list
+    await fun(url)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 811, in do_fetch
+    delta = await get_delta(url, self.__remote_regions)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 511, in get_delta
+    res = await _get_applications_(f"{_format_url(eureka_server)}apps/delta", regions)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_basic.py", line 370, in _get_applications_
+    res = await http_client.http_client.urlopen(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/http_client.py", line 144, in urlopen
+    res = urllib.request.urlopen(req, data=data, timeout=timeout)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 216, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 519, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 536, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 496, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1377, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/urllib/request.py", line 1351, in do_open
+    raise URLError(err)
+urllib.error.URLError: <urlopen error [Errno 111] Connection refused>
+[2024-11-22 18:45:17]-[HeartbeatThread]-[eureka_client:825] WARNING: fetch delta from eureka server error!
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 616, in __try_all_eureka_servers
+    await self.__try_eureka_server_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 586, in __try_eureka_server_in_zone
+    await self.__try_eureka_servers_in_list(
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 643, in __try_eureka_servers_in_list
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in zone[default] are down!>
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 823, in __fetch_delta
+    await self.__connect_to_eureka_server(do_fetch)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 653, in __connect_to_eureka_server
+    await self.__try_all_eureka_servers(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 618, in __try_all_eureka_servers
+    await self.__try_eureka_server_not_in_zone(fun)
+  File "/home/bober/.local/lib/python3.11/site-packages/py_eureka_client/eureka_client.py", line 598, in __try_eureka_server_not_in_zone
+    raise EurekaServerConnectionException(
+py_eureka_client.eureka_client.EurekaServerConnectionException: <urlopen error All eureka servers in all zone are down!>

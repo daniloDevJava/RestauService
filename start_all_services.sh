@@ -3,13 +3,8 @@
 export PYTHONPATH=/home/Appli_FoodGo/RestauService:$PYTHONPATH
 
 services=(
-    "calcul_distance_service"
-    "quartier_coordonnees_service"
-    "get_location_service"
-    "create_qr_service"
-    "show_qr_service"
-    "verification_qr_service"
-    "suggestion_nom_service"
+    "service_geolocalisation"
+    "service_payment"
 )
 
 for service in "${services[@]}"; do
