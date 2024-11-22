@@ -12,16 +12,17 @@ public class UserConverter {
          user.setNom(userDto.getNom());
          user.setAdresseMail(userDto.getAdresseMail());
          user.setMotDePasse(userDto.getMotDePasse());
+         user.setMontantCompte(userDto.getMontantCompte());
          return user;
     }
     public UserDto toDto(Users user){
         UserDto userDto=new UserDto();
         userDto.setId(user.getId());
         userDto.setNom(user.getNom());
-        userDto.setMotDePasse(String.valueOf(user.getMotDePasse().hashCode()));
         userDto.setAdresseMail(user.getAdresseMail());
         userDto.setCreateAt(user.getCreateAt());
         userDto.setUpdateAt(user.getUpdateAt());
+        userDto.setMontantCompte(user.getMontantCompte());
         return userDto;
     }
 }

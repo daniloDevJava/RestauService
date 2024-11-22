@@ -1,7 +1,6 @@
 package com.projet.foodGo.controller;
 
 import com.projet.foodGo.dto.CommandeDto;
-import com.projet.foodGo.exeptions.QuantitiesOutOfBoundExceptions;
 import com.projet.foodGo.service.CommandeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/commandes")
+@RequestMapping("/dao/commandes")
 @RequiredArgsConstructor
 public class CommandeControllers {
     private final CommandeService  commandeService;
@@ -32,7 +31,7 @@ public class CommandeControllers {
             CommandeDto commande=commandeService.createCommande(commandeDto,userId,prestataireId);
             return new ResponseEntity<>(commande,HttpStatus.CREATED);
         }
-        catch (IllegalArgumentException | QuantitiesOutOfBoundExceptions e){
+        catch (IllegalArgumentException e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -97,7 +96,7 @@ public class CommandeControllers {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/panier-change")
+    @PatchMapping("/{id}/panier-change")
     @Operation(summary = "Update state of commande ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "state of this commande is up-to-date"),

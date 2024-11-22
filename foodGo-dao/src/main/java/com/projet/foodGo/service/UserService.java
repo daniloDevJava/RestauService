@@ -60,4 +60,6 @@ public interface UserService {
      * @return the boolean
      */
     boolean deleteUser(UUID id);
+
+    UserDto updateMontantompte(UUID id, UserDto userDto);
 }

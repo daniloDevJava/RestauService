@@ -1,4 +1,4 @@
-package com.projet.foodGo.dto;
+package com.projet.foodGo.external;
 
 
 import lombok.Getter;
@@ -18,6 +18,5 @@ public class ClientDto extends UserDto {
     private String adresse;
     private double montantCompte;
     private String numeroCNI;
-
 
 }

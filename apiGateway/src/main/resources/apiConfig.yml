@@ -13,11 +13,11 @@ spring:
             - Path=/**
 
   server:
-    port: 8088
+    port: 8060
     eureka:
       client:
         service-url:
-          defaultZone: http://localhost:8761/eureka/
+          defaultZone: http://37.60.244.227:8761/eureka/
         register-with-eureka: true
         instance:
           prefer-ip-address: true

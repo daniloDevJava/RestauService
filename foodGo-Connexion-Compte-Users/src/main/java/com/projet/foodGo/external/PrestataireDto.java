@@ -1,9 +1,10 @@
-package com.projet.foodGo.dto;
+package com.projet.foodGo.external;
 
 
 import com.projet.foodGo.model.enumType.NatureCompte;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.util.List;
 import java.util.UUID;
 

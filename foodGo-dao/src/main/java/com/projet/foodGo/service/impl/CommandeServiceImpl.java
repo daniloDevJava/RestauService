@@ -1,7 +1,8 @@
 package com.projet.foodGo.service.impl;
 
 import com.projet.foodGo.dto.CommandeDto;
-import com.projet.foodGo.exeptions.QuantitiesOutOfBoundExceptions;
+import com.projet.foodGo.exeptions.BusinessException;
+import com.projet.foodGo.exeptions.ErrorModel;
 import com.projet.foodGo.mapper.CommandeConverter;
 import com.projet.foodGo.model.Commande;
 import com.projet.foodGo.model.Prestataire;
@@ -58,7 +59,14 @@ public class CommandeServiceImpl implements CommandeService {
                         produitsRepository.save(produits);
                     }
                     else
-                        throw new QuantitiesOutOfBoundExceptions("Quantité en stock pour un produit spécifié dans la commande non suffisante");
+                    {
+                        List<ErrorModel> errorModels=new ArrayList<>();
+                        ErrorModel errorModel=new ErrorModel();
+                        errorModel.setCode("INVALID_ENTRY");
+                        errorModel.setMessage("La quantité demandée est insuffisante pour aumoins un produit");
+                        errorModels.add(errorModel);
+                        throw new BusinessException(errorModels);
+                    }
                 }
                 else
                     throw new IllegalArgumentException("Un Produit n'a pas été trouvé");
@@ -73,8 +81,12 @@ public class CommandeServiceImpl implements CommandeService {
             throw new EntityNotFoundException("Restaurant ou client non trouvé");
         }
         catch (IndexOutOfBoundsException e){
-            System.err.println(e.getMessage());
-            throw new QuantitiesOutOfBoundExceptions("Le nombre de produits doit etre egal au nombre de qunatités demandées");
+            List<ErrorModel> errorModels=new ArrayList<>();
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("INVALID_ENTRY");
+            errorModel.setMessage("La quantité demandée est insuffisante pour aumoins un produit");
+            errorModels.add(errorModel);
+            throw new BusinessException(errorModels);
 
         }
 
@@ -146,8 +158,14 @@ public class CommandeServiceImpl implements CommandeService {
                         produits.setQuantiteStock(resteEnStock);
                         produitsRepository.save(produits);
                     }
-                    else
-                        throw new QuantitiesOutOfBoundExceptions("Quantité en stock pour un produit spécifié dans la commande non suffisante");
+                    else {
+                        List<ErrorModel> errorModels = new ArrayList<>();
+                        ErrorModel errorModel = new ErrorModel();
+                        errorModel.setCode("INVALID_ENTRY");
+                        errorModel.setMessage("La quantité demandée est insuffisante pour aumoins un produit");
+                        errorModels.add(errorModel);
+                        throw new BusinessException(errorModels);
+                    }
                 }
                 else
                     throw new IllegalArgumentException("Un Produit n'a pas été trouvé");

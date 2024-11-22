@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/notes")
+@RequestMapping("/dao/notes")
 @AllArgsConstructor
 public class NoteController {
     private final NoteService noteService;
@@ -87,7 +87,7 @@ public class NoteController {
 
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(summary = "changer l'avis d'une note")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the avis is up to date"),

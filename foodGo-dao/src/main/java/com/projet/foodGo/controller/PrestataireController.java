@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/prestataires")
+@RequestMapping("/dao/prestataires")
 @AllArgsConstructor
 public class PrestataireController {
 
@@ -81,7 +81,7 @@ public class PrestataireController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-nom")
+    @PatchMapping("/{id}/update-nom")
     @Operation(summary = "update prestataire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " updating of the name's prestataire"),
@@ -94,7 +94,7 @@ public class PrestataireController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-mail")
+    @PatchMapping("/{id}/update-mail")
     @Operation(description = "update Adresse mail")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = " updating of the mail's prestataire"),
@@ -107,7 +107,7 @@ public class PrestataireController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-position")
+    @PatchMapping("/{id}/update-position")
     @Operation(summary = "update position of prestaire")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "updating of position of prestataire"),
@@ -119,6 +119,8 @@ public class PrestataireController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+
 
     @DeleteMapping("/{id}")
     @Operation(summary = "delete prestataire")

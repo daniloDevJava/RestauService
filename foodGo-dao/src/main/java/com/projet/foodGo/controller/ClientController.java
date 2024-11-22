@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/clients")
+@RequestMapping("/dao/clients")
 @AllArgsConstructor
 public class ClientController {
     private final ClientService clientService;
@@ -78,7 +78,7 @@ public class ClientController {
 
     }
 
-    @PutMapping("/{id}/update-addr")
+    @PatchMapping("/{id}/update-addr")
     @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found new client"),
@@ -91,7 +91,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-mail")
+    @PatchMapping("/{id}/update-mail")
     @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found new client"),
@@ -104,7 +104,7 @@ public class ClientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-dateOfBirth")
+    @PatchMapping("/{id}/update-dateOfBirth")
     @Operation(summary = "partial updating Client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the found client"),

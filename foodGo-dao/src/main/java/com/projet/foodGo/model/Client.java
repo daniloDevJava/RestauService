@@ -17,8 +17,9 @@ public class Client extends Users {
     private String adresse;
     @Column(unique = true)
     private String nomPrenom;
-    @Column(name = "CNI")
+    @Column(name = "CNI",unique = true)
     private String numeroCNI;
+    private double montantCompte;
 
 
 }

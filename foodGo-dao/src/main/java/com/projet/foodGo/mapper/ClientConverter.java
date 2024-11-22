@@ -14,7 +14,7 @@ public class ClientConverter {
         client.setDateOfBirth(clientDto.getDateOfBirth());
         client.setNomPrenom(clientDto.getNom()+" "+clientDto.getPrenom());
         client.setNom(clientDto.getNom());
-        client.setMotDePasse(clientDto.getMotDePasse());
+        client.setMontantCompte(clientDto.getMontantCompte());
         return client;
     }
 
@@ -28,6 +28,7 @@ public class ClientConverter {
         clientDto.setNumeroCNI(client.getNumeroCNI());
         clientDto.setCreateAt(client.getCreateAt());
         clientDto.setUpdateAt(client.getUpdateAt());
+        clientDto.setMontantCompte(client.getMontantCompte());
         return clientDto;
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/admins")
+@RequestMapping("/dao/admins")
 @AllArgsConstructor
 public class AdminController {
     private final AdminService adminService;
@@ -84,7 +84,7 @@ public class AdminController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-entryKey")
+    @PatchMapping("/{id}/update-entryKey")
     @Operation(summary = "partial updating of an admim")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the updating of entryKey is okay"),

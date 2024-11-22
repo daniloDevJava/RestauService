@@ -3,7 +3,6 @@ package com.projet.foodGo.service.impl;
 
 import com.projet.foodGo.dto.PrestataireDto;
 import com.projet.foodGo.mapper.PrestataireConverter;
-import com.projet.foodGo.mapper.ProduitsConverter;
 import com.projet.foodGo.model.Prestataire;
 import com.projet.foodGo.model.Produits;
 import com.projet.foodGo.repository.PrestataireRepository;

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/livraisons")
+@RequestMapping("/dao/livraisons")
 @RequiredArgsConstructor
 public class LivraisonController {
     private final LivraisonService livraisonService;

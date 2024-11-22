@@ -21,7 +21,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 
 @RestController
-@RequestMapping("/images")
+@RequestMapping("/dao/images")
 @RequiredArgsConstructor
 public class ImagesController {
     private final ImageService imageService;

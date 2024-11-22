@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/produits")
+@RequestMapping("/dao/produits")
 @AllArgsConstructor
 public class ProduitsController {
     private final ProduitsService produitsService;
@@ -122,7 +122,7 @@ public class ProduitsController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-quantity")
+    @PatchMapping("/{id}/update-quantity")
     @Operation(summary = "full update of product")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "everything is up-to-ddate"),

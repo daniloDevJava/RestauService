@@ -36,6 +36,7 @@ public class PrestataireConverter {
         prestataire.setListProduits(listProduits);
         prestataire.setNoteMoyenne(prestataireDto.getNoteMoyenne());
         prestataire.setMotDePasse(prestataireDto.getMotDePasse());
+        prestataire.setMontantCompte(prestataireDto.getNoteMoyenne());
         return prestataire;
     }
 
@@ -50,7 +51,7 @@ public class PrestataireConverter {
         prestataireDto.setNoteMoyenne(prestataire.getNoteMoyenne());
         prestataireDto.setCreateAt(prestataire.getCreateAt());
         prestataireDto.setUpdateAt(prestataire.getUpdateAt());
-        prestataireDto.setNatureCompte(prestataire.getNatureCompte());
+        prestataireDto.setMontantCompte(prestataire.getMontantCompte());
         prestataireDto.setLongitude(prestataire.getGeography().getX());
         prestataireDto.setLatitude(prestataire.getGeography().getY());
         prestataireDto.setMotDePasse(String.valueOf(prestataire.getMotDePasse().hashCode()));
@@ -58,6 +59,7 @@ public class PrestataireConverter {
             if(produits.getDeleteAt()!=null)
                 listProduits.add(produits.getId());
         }
+        prestataireDto.setMontantCompte(prestataire.getMontantCompte());
         prestataireDto.setListProduits(listProduits);
         return prestataireDto;
     }

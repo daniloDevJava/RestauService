@@ -1,5 +1,6 @@
 package com.projet.foodGo.model;
 
+import com.projet.foodGo.model.enumType.RoleUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,9 +26,11 @@ public class Users {
     protected String nom;
     @Column(nullable = false)
     protected String motDePasse;
+    @Enumerated(EnumType.STRING)
+    private RoleUser role;
     @Column(nullable = false,unique = true)
     protected String adresseMail;
-
+    private double montantCompte;
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     protected LocalDateTime createAt;

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/dao/users")
 @AllArgsConstructor
 public class UserController {
 
@@ -30,6 +30,20 @@ public class UserController {
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
         UserDto user=userService.createUser(userDto);
         return new ResponseEntity<>(user,HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}/update-montant")
+    @Operation(summary="Update Montant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "the updating is ok"),
+            @ApiResponse(responseCode = "400",description = "pas de montant négatif")
+    })
+    public ResponseEntity<UserDto> updateMontantCompte(@Parameter(description = "Id of user") @PathVariable UUID id,@RequestBody UserDto userDto){
+        UserDto user=userService.updateMontantompte(id,userDto);
+        if(user!=null)
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all")
@@ -67,7 +81,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}/update-password")
+    @PatchMapping("/{id}/update-password")
     @Operation(summary = "partial updating")
     @ApiResponses(
             value={
