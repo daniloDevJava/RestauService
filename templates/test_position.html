@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Géolocalisation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #latitude, #longitude {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>TEST DE GÉOLOCALISATION</header>
+    <main>
+        <p id="latitude">Latitude: </p>
+        <p id="longitude">Longitude: </p>
+    </main>
+    <footer></footer>
+
+    <script type="module">
+        import { getLocation } from './function.js';
+
+        // Définir la fonction ici pour qu'elle soit accessible
+        async function maFonction() {
+            try {
+                const { latitude, longitude } = await getLocation();
+                document.getElementById('latitude').textContent = 'Latitude: ' + latitude;
+                document.getElementById('longitude').textContent = 'Longitude: ' + longitude;
+            } catch (error) {
+                console.error("Erreur lors de l'obtention de la position :", error);
+            }
+        }
+
+        window.onload = maFonction
+    </script>
+</body>
+</html>
