@@ -6,16 +6,16 @@ import p3_img from "./whatsapp.png";
 let all_product = [
     {
         id: 1,
-        name: "Restaurant Francais",
+        name: "",
         image: p1_img,
-        new_price: 500.0,
-        old_price: 700.0,
+        price: 500.0,
+        location: 'Yaounde',
+        prestname: "",
     },
     {
-        id: 1,
-        name: "Restaurant senegalais",
+        id: 2,
+        name: "",
         image: p2_img,
-        new_price: 500.0,
-        old_price: 700.0,
+        price: 500.0,
     },
 ];

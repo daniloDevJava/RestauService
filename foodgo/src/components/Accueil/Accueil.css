@@ -85,7 +85,7 @@
     width: 100%;
 }
 .home-imgHover{
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 30px;
     width: 500px;
