@@ -21,6 +21,7 @@
     z-index: 100;
     text-decoration: none;
 }
+/*
 .city-all{
     padding-bottom: 11px; 
     padding-left: 28px; 
@@ -41,7 +42,7 @@
     font-family: Montserrat; 
     font-weight: 700; 
     word-wrap: break-word;
-}
+}*/
 .city-names{
     display: flex;
     align-items: center;
@@ -163,13 +164,23 @@
     box-shadow: 0px 0px 10px rgba(255, 111, 0, 0.25); 
     border-radius: 9999px
 }
-.btn-plus{
-    width: 24.89px; 
+.add-btn{
+    background-color: #D30D00;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10%;
+    cursor: pointer;
+    font-size: 1.2rem;
     height: 25.22px; 
     left: 8px; 
-    top: 6.96px; 
+    top: 3.96px;
     position: absolute; 
-    background: #EDEFF2;
+   
+}
+.btn-plus{
+    justify-content: center;  
+    
 }
 .image img{
     width: 404px; 
@@ -225,3 +236,54 @@
     font-weight: 700; 
     word-wrap: break-word;
 }
+/* Style par défaut pour les villes */
+.filter {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 20px;
+    background: transparent;
+    color: #333;
+    font-size: 20px;
+    font-family: Montserrat;
+    font-weight: 500;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  /* Style spécifique à la classe city-all (style par défaut pour "All") */
+  .city-all {
+    padding-bottom: 11px;
+    padding-left: 28px;
+    padding-right: 28px;
+    position: absolute;
+    background: #d30d00;
+    box-shadow: 0px 4px 25px #d30d00;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+  }
+  
+  .city-all p {
+    color: white;
+    font-size: 23px;
+    font-family: Montserrat;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /* Classe active pour les villes sélectionnées */
+  .filter.active {
+    background: #d30d00; /* Même couleur que "All" */
+    color: white;
+    box-shadow: 0px 4px 25px #d30d00;
+    font-weight: 700;
+  }
+  
+  .filter.active p {
+    color: white;
+  }
+  

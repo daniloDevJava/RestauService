@@ -18,4 +18,14 @@ let all_product = [
         image: p2_img,
         price: 500.0,
     },
+    {
+        id: 2,
+        name: "Restaurant Bon Délice",
+        description: "Experience our exquisite taste.",
+        prestataire: "Jean Pierre",
+        role: "Prestataire",
+        price: "7.00",
+        city: "douala",
+        image: "image2.jpg", 
+    },
 ];

@@ -7,6 +7,12 @@ import viande from '../Assets/viande.png'
 const Accueil = () => {
 
     const [menu, setMenu] = useState("home");
+    const [activeCity, setActiveCity] = useState("all"); // "all" pour afficher tout par défaut
+
+    // Fonction pour mettre à jour la ville active
+    const handleFilterClick = (city) => {
+        setActiveCity(city);
+    };
 
     return (
         <>
@@ -27,21 +33,29 @@ const Accueil = () => {
 
             <section className="main">
                 <div className="city-container">
-                    <div className="city-all">
+                    <div
+                        className={`filter ${activeCity === "all" ? "city-all active" : ""}`}
+                        onClick={() => handleFilterClick("all")}
+                        >
                         <p>All</p>
                     </div>
                     <ul className="city-names">
-                        <li>Yaounde</li>
-                        <li>Douala</li>
-                        <li>Baffoussam</li>
-                        <li>Buea</li>
-                        <li>Ngaoundere</li>
-                        <li>Bertoua</li>
-                        <li>Adamaoua</li>
-                    </ul>
+                        {["yaounde", "douala", "baffoussam", "buea", "ngaoundere", "bertoua", "adamaoua"].map(
+                            (city) => (
+                            <li
+                                key={city}
+                                className={`filter ${activeCity === city ? "active" : ""}`}
+                                onClick={() => handleFilterClick(city)}
+                                data-filter={city}
+                            >
+                                {city.charAt(0).toUpperCase() + city.slice(1)}
+                            </li>
+                            )
+                        )}
+                        </ul>
                 </div>
                 <div className="prestataire-container">
-                    <div className="food-container">
+                    <div className="food-container" data-city="yaounde">
                         <div className="style">
                             <div className="resto-name1">Restaurant Akua</div>
                             <div className="resto-description">This is one of our best dishes, you
@@ -50,7 +64,7 @@ const Accueil = () => {
                             <div className="prest-name">Halim Maïmouna</div>
                             <div className="prest-role">Prestataire</div>
                             <div className="plus">
-                                <div className="btn-plus"></div>
+                                <div className="btn-plus"><button class="add-btn">+</button></div>
                             </div>
                         </div>
                         <div className="image">
