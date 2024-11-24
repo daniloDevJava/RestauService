@@ -1,8 +1,10 @@
 import React,{useState} from "react";
 import './Accueil.css';
 import './Main.css';
-import elle from '../Assets/elle.jpeg';
-import viande from '../Assets/viande.png'
+import PrestatairesList from "../Prestataire/PrestataireList";
+//import elle from '../Assets/elle.jpeg';
+//import viande from '../Assets/viande.png'
+
 
 const Accueil = () => {
 
@@ -54,28 +56,8 @@ const Accueil = () => {
                         )}
                         </ul>
                 </div>
-                <div className="prestataire-container">
-                    <div className="food-container" data-city="yaounde">
-                        <div className="style">
-                            <div className="resto-name1">Restaurant Akua</div>
-                            <div className="resto-description">This is one of our best dishes, you
-                            can<br/> taste many delicacies.</div>
-                            <img src={elle} alt="" />
-                            <div className="prest-name">Halim Maïmouna</div>
-                            <div className="prest-role">Prestataire</div>
-                            <div className="plus">
-                                <div className="btn-plus"><button class="add-btn">+</button></div>
-                            </div>
-                        </div>
-                        <div className="image">
-                            <img src={viande} alt="" />
-                        </div>
-                        <div className="price"><p>5.00</p></div>
-                        <div className="localisation">
-                            <div className="local-name">Yaoundé</div>
-                        </div>
-                    </div>
-                </div>
+                
+                <PrestatairesList activeCity={activeCity}/>
             </section>
         </>
     )
