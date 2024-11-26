@@ -46,8 +46,9 @@
                 .then(response => response.json())
                 .then(data => {
                     console.log('Succès:', data);
-                    console.log('VILLE:',data['ville'])
-                    console.log('QUARTIER',data['quartier'])
+                    alert('VILLE: ' + data["ville"]);
+                    alert('QUARTIER: ' + data["quartier"]);
+
                 })
                 .catch((error) => {
                     console.error('Erreur:', error);
