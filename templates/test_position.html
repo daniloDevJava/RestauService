@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Géolocalisation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #latitude, #longitude {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>TEST DE GÉOLOCALISATION</header>
+    <main>
+        <p id="latitude">Latitude: </p>
+        <p id="longitude">Longitude: </p>
+    </main>
+    <footer></footer>
+
+    <script>
+        // import { getLocation } from './function.js';
+
+        // Définir la fonction ici pour qu'elle soit accessible
+        async function maFonction() {
+            try {
+                const { latitude, longitude } = await getLocation();
+                document.getElementById('latitude').textContent = 'Latitude: ' + latitude;
+                document.getElementById('longitude').textContent = 'Longitude: ' + longitude;
+                fetch('http://37.60.244.227:5001/get_location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        latitude: latitude,
+                        longitude: longitude
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Succès:', data);
+                    console.log('VILLE:',data['ville'])
+                    console.log('QUARTIER',data['quartier'])
+                })
+                .catch((error) => {
+                    console.error('Erreur:', error);
+                });
+
+            } catch (error) {
+                console.error("Erreur lors de l'obtention de la position :", error);
+            }
+        }
+        function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const latitude = position.coords.latitude;
+                            const longitude = position.coords.longitude;
+                            resolve({ latitude, longitude }); // Résoudre la promesse avec les coordonnées
+                        },
+                        (error) => {
+                            showError(error);
+                            reject(error); // Rejeter la promesse en cas d'erreur
+                        }
+                    );
+                } else {
+                    alert("La géolocalisation n'est pas supportée par ce navigateur.");
+                    reject(new Error("Géolocalisation non supportée"));
+                }
+            });
+        }
+
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("L'utilisateur a refusé la demande de géolocalisation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Les informations de localisation ne sont pas disponibles.");
+            break;
+        case error.TIMEOUT:
+            alert("La demande de localisation a expiré.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("Une erreur inconnue s'est produite.");
+            break;
+    }
+}
+        window.onload = maFonction
+    </script>
+</body>
+</html>

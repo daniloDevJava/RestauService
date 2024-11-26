@@ -9,7 +9,9 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-CORS(app)
+from flask_cors import CORS
+
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 client = EurekaClient(
     eureka_server=EUREKA_SERVER,
@@ -71,8 +73,8 @@ def quartier_coordonnees():
 def get_location_info():
 
     data = request.get_json()
-    lat = data.get('lat')
-    lon = data.get('lon')
+    lat = data.get('latitude')
+    lon = data.get('longitude')
 
     if lat is None or lon is None:
         return jsonify({"message": "Latitude et longitude sont obligatoires"}), 400
