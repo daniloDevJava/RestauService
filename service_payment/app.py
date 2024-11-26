@@ -8,8 +8,10 @@ from eureka_config import *
 from py_eureka_client.eureka_client import EurekaClient
 
 from settings import *
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 client = EurekaClient(
     eureka_server=EUREKA_SERVER,
