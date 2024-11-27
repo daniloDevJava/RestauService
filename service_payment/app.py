@@ -162,7 +162,7 @@ def suggestionNom():
     if not isinstance(nom, str) or not nom.strip():
         return jsonify({"noms": None}), 400  # Bad Request
 
-    SpringURL = "http://37.60.244.227:8001/produits/all"
+    SpringURL = "http://37.60.244.227:8001/dao/produits/all"
 
     try:
         # Requête vers le service Spring
