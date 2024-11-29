@@ -1,16 +1,6 @@
 /* Prestataire Container */
 .prestataire-container {
-  display: grid; /* Active Flexbox */
-  grid-template-columns: repeat(auto-fit, minmax(404px, 1fr)); /* Ajuste automatiquement */
-  flex-wrap: wrap; /* Permet de revenir à la ligne si l'espace est insuffisant */
-  justify-content: space-between; /* Espacement entre les éléments */
-  gap: 20px; /* Espacement entre les cartes */
-  width: 100%; /* S'adapte à la largeur disponible */
-  margin: 0 auto; /* Centrage horizontal avec marge verticale */
-  padding: 10px; /* Ajoute de l'espace interne au conteneur */
-  box-sizing: border-box; /* Assure que padding et bordures sont inclus dans la largeur */
-  position: relative; /* Mieux que "absolute" pour éviter des problèmes de positionnement global */
-  margin: 20px auto; /* Ajoute un espace entre les prestataires */
+  margin: 70px;
 }
 
 /* Food Container */

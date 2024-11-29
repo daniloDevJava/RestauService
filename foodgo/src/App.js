@@ -6,10 +6,11 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import LoginSignup from './pages/LoginSignup';
 import Contact from './pages/Contact';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
-    <div >
+    <div className='main-content'>
       <BrowserRouter>
         <Navbar/>
         <Routes>
@@ -19,6 +20,7 @@ function App() {
           <Route path='/cart' element={<Cart/>}/>
           <Route path='/login' element={<LoginSignup/>}/>
         </Routes>
+        <Footer />
       </BrowserRouter>
     </div>
   );
