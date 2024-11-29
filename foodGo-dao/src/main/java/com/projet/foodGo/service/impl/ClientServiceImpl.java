@@ -3,6 +3,7 @@ package com.projet.foodGo.service.impl;
 import com.projet.foodGo.dto.ClientDto;
 import com.projet.foodGo.mapper.ClientConverter;
 import com.projet.foodGo.model.Client;
+import com.projet.foodGo.model.enumType.RoleUser;
 import com.projet.foodGo.repository.ClientRepository;
 import com.projet.foodGo.service.ClientService;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public ClientDto createClient(ClientDto clientDto) {
+        clientDto.setRole(RoleUser.CLIENT);
         Client client= clientRepository.save(clientConverter.toEntity(clientDto));
         return clientConverter.toDto(client);
     }

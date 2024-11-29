@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,15 +25,11 @@ public class AdminController {
     @Operation(summary = "add a admin")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",description = "success"),
-            @ApiResponse(responseCode = "400",description = "A field is missing"),
-            @ApiResponse(responseCode = "500",description = "admin unauthorized")
+            @ApiResponse(responseCode = "400",description = "A field is missing or authentification failed"),
     })
-    public ResponseEntity<AdminDto> createAdmin(@RequestBody AdminDto adminDto){
+    public ResponseEntity<AdminDto> createAdmin(@Valid @RequestBody AdminDto adminDto){
         AdminDto admin=adminService.createAdmin(adminDto);
-        if(admin!=null)
-            return new ResponseEntity<>(admin, HttpStatus.CREATED);
-        else
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(admin, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -76,7 +73,7 @@ public class AdminController {
             @ApiResponse(responseCode = "200",description = "the updating is okay"),
             @ApiResponse(responseCode = "404",description = "admin doesn't exist")
     })
-    public ResponseEntity<AdminDto> updateAdmin(@Parameter(description = "Id of Admin") @PathVariable UUID id, AdminDto adminDto){
+    public ResponseEntity<AdminDto> updateAdmin(@Parameter(description = "Id of Admin") @PathVariable UUID id,@Valid @RequestBody AdminDto adminDto){
         AdminDto admin= adminService.getAdmin(id);
         if(admin!=null)
             return new ResponseEntity<>(adminService.updateAdmin(id,adminDto),HttpStatus.OK);
@@ -89,15 +86,12 @@ public class AdminController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the updating of entryKey is okay"),
             @ApiResponse(responseCode = "404",description = "admin doesn't exist"),
-            @ApiResponse(responseCode ="401",description = "Cet admin n'a pas le droit de changer la clé d'entrée C'est le premier dans la liste des admins qui en a le droit veuillez consulter celle-ci et le contacter(L'admin)")
+            @ApiResponse(responseCode ="400",description = "operation refusée droits insuffisqnts")
     })
-    public ResponseEntity<AdminDto> updateEntryKey(@Parameter(description = "Id Of Admin") @PathVariable UUID id,@RequestBody AdminDto adminDto){
-        //AdminDto adminDto1=adminService.getAdmin(id);
+    public ResponseEntity<AdminDto> updateEntryKey(@Parameter(description = "Id Of Admin") @PathVariable UUID id,@Valid @RequestBody AdminDto adminDto){
         AdminDto admin=adminService.updateEntryKey(id,adminDto);
-        if(admin!=null && admin.getEntryKey().equals(adminDto.getEntryKey()))
+        if(admin!=null)
             return new ResponseEntity<>(admin,HttpStatus.OK);
-        else if (admin != null)
-            return new ResponseEntity<>(admin,HttpStatus.UNAUTHORIZED);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

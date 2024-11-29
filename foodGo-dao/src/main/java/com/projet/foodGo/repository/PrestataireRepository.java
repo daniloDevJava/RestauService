@@ -14,5 +14,6 @@ public interface PrestataireRepository extends JpaRepository<Prestataire, UUID> 
     List<Prestataire> findByDeleteAtIsNull();
     Optional<Prestataire> findByNomAndDeleteAtIsNull(String nom);
 
+    Optional<Prestataire> findByNomNotNull();
 
 }

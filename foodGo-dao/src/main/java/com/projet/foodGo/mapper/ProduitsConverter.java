@@ -24,9 +24,7 @@ public class ProduitsConverter {
         List<Images> imagesList=new ArrayList<>();
         produits.setLibelle(produitsDto.getLibelle());
         produits.setPrixUnitaire(produitsDto.getPrixUnitaire());
-        produits.setTypeProduct(produitsDto.getTypeProduct());
         produits.setQuantiteStock(produitsDto.getQuantiteStock());
-        //produits.setQuantiteVenduLocal(produitsDto.getQuantiteVenduLocal());
         if(produitsDto.getImagesList()!=null) {
             for (Long id : produitsDto.getImagesList()) {
                 Optional<Images> optionalImages = imagesRepository.findByIdAndDeleteAtIsNull(id);
@@ -44,10 +42,8 @@ public class ProduitsConverter {
         produitsDto.setId(produits.getId());
         produitsDto.setQuantiteStock(produits.getQuantiteStock());
         produitsDto.setPrixUnitaire(produits.getPrixUnitaire());
-        produitsDto.setTypeProduct(produits.getTypeProduct());
         produitsDto.setCreateAt(produits.getCreateAt());
         produitsDto.setUpdateAt(produits.getUpdateAt());
-        //produitsDto.setQuantiteVenduLocal(produits.getQuantiteVenduLocal());
         for(Images images: produits.getImagesList()){
             imagesList.add(images.getId());
         }

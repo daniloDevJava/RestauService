@@ -26,21 +26,15 @@ public class Produits {
     private List<Images> imagesList=new ArrayList<>();
     private int quantiteStock;
     private int prixUnitaire;
-
     @ManyToOne
     @JoinColumn(name = "prestataire_id",nullable = false,updatable = false)
     private Prestataire prestataire;
-    @Column(nullable = false)
-    private TypeProduct typeProduct;
-
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     private LocalDateTime createAt;
-    private String cheminVersImages;
     @UpdateTimestamp
     private LocalDateTime updateAt;
     private LocalDateTime deleteAt;
-
 
 
 }

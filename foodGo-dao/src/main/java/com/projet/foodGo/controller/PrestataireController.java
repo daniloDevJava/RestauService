@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class PrestataireController {
             @ApiResponse(responseCode = "400", description = "A field(s) is missing")
     }
     )
-    public ResponseEntity<PrestataireDto> createPrestataire(@RequestBody PrestataireDto prestataireDto) {
+    public ResponseEntity<PrestataireDto> createPrestataire(@Valid @RequestBody PrestataireDto prestataireDto) {
         PrestataireDto prestataire = prestataireService.createPrestataire(prestataireDto);
         return new ResponseEntity<>(prestataire, HttpStatus.CREATED);
     }
@@ -74,7 +75,7 @@ public class PrestataireController {
             @ApiResponse(responseCode = "200", description = "full updating of prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
     })
-    public ResponseEntity<PrestataireDto> updatePrestataire(@Parameter(description = "id of prestTaire") @PathVariable UUID id, @RequestBody PrestataireDto prestataireDto) {
+    public ResponseEntity<PrestataireDto> updatePrestataire(@Parameter(description = "id of prestTaire") @PathVariable UUID id,@Valid @RequestBody PrestataireDto prestataireDto) {
         if (prestataireService.getPrestataire(id) != null)
             return new ResponseEntity<>(prestataireService.updatePrestataire(id, prestataireDto), HttpStatus.OK);
         else
@@ -87,7 +88,7 @@ public class PrestataireController {
             @ApiResponse(responseCode = "200", description = " updating of the name's prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
     })
-     public ResponseEntity<PrestataireDto> updatePrestataireName(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@RequestBody PrestataireDto prestataireDto) {
+     public ResponseEntity<PrestataireDto> updatePrestataireName(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@Valid @RequestBody PrestataireDto prestataireDto) {
         if (prestataireService.getPrestataire(id) != null)
             return new ResponseEntity<>(prestataireService.updatePrestataireName(id, prestataireDto), HttpStatus.OK);
         else
@@ -100,7 +101,7 @@ public class PrestataireController {
             @ApiResponse(responseCode = "200", description = " updating of the mail's prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
     })
-    public ResponseEntity<PrestataireDto> updatePrestataireAdrresse(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@RequestBody PrestataireDto prestataireDto) {
+    public ResponseEntity<PrestataireDto> updatePrestataireAdrresse(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@Valid @RequestBody PrestataireDto prestataireDto) {
         if (prestataireService.getPrestataire(id) != null)
             return new ResponseEntity<>(prestataireService.updatePrestataireMail(id, prestataireDto), HttpStatus.OK);
         else
@@ -113,13 +114,24 @@ public class PrestataireController {
             @ApiResponse(responseCode = "200",description = "updating of position of prestataire"),
             @ApiResponse(responseCode = "404", description = "the prestataire doesn't exisits")
     })
-    public ResponseEntity<PrestataireDto> updatePrestatairePosition(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@RequestBody PrestataireDto prestataireDto) {
+    public ResponseEntity<PrestataireDto> updatePrestatairePosition(@Parameter(description = "id of prestTaire") @PathVariable UUID id ,@Valid @RequestBody PrestataireDto prestataireDto) {
         if (prestataireService.getPrestataire(id) != null)
             return new ResponseEntity<>(prestataireService.updatePrestataireCoordonnees(id, prestataireDto), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    @PatchMapping("/{id}/update-addresse")
+    @Operation(summary = "change adresse of restaurant")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "The updating is okay"),
+            @ApiResponse(responseCode = "400",description = "Bad entry is json")
+    })
+    public ResponseEntity<PrestataireDto> updateAdress(@Parameter(description = "Id Of Prestataire")@PathVariable UUID id,@Valid @RequestBody PrestataireDto prestataireDto){
+        if (prestataireService.getPrestataire(id) != null)
+            return new ResponseEntity<>(prestataireService.updateAdresse(id, prestataireDto), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
     @DeleteMapping("/{id}")

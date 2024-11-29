@@ -85,4 +85,6 @@ public interface PrestataireService {
      * @return the boolean
      */
     boolean deletePrestataire(UUID id);
+
+    PrestataireDto updateAdresse(UUID prestataireId,PrestataireDto prestataireDto);
 }

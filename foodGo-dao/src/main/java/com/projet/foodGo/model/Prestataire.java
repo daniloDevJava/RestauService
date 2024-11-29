@@ -19,6 +19,7 @@ public class Prestataire extends Users {
 
     private NatureCompte natureCompte;
     private double montantCompte;
+    private String adresse;
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Produits> listProduits= new ArrayList<>();
     private Double noteMoyenne;
@@ -26,6 +27,5 @@ public class Prestataire extends Users {
     private Point geography;
     @OneToMany(mappedBy = "prestataire", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Note> notesList;
-
 
 }

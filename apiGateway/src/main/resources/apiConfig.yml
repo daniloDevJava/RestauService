@@ -7,13 +7,17 @@ spring:
         locator:
           enabled: true
       route:
-        - id: my_route
+        - id: route_dao
           uri: lb://foodGo-dao
+          predicates:
+            - Path=/**
+        - id: route_userAccount
+          uri: lb://foodGo-ConnexionEtComptes
           predicates:
             - Path=/**
 
   server:
-    port: 8060
+    port: 6000
     eureka:
       client:
         service-url:

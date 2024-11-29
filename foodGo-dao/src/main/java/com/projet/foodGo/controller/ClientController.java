@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class ClientController {
             @ApiResponse(responseCode = "201",description = "new client now"),
             @ApiResponse(responseCode = "400",description = "a field of client is missing")
     })
-    public ResponseEntity<ClientDto> createClient(@RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> createClient(@Valid @RequestBody ClientDto clientDto){
         return new ResponseEntity<>(clientService.createClient(clientDto), HttpStatus.CREATED);
     }
 
@@ -70,7 +71,7 @@ public class ClientController {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
     })
-    public ResponseEntity<ClientDto> updateClient(@Parameter(description = "id of client") @PathVariable UUID client_id,@RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> updateClient(@Parameter(description = "id of client") @PathVariable UUID client_id,@Valid @RequestBody ClientDto clientDto){
         if(clientService.getClient(client_id)!=null)
             return new ResponseEntity<>(clientService.updateClient(clientDto,client_id),HttpStatus.OK);
         else
@@ -84,7 +85,7 @@ public class ClientController {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
     })
-    public ResponseEntity<ClientDto> updateClientAddr(@Parameter(description = "id of client") @PathVariable UUID id,@RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> updateClientAddr(@Parameter(description = "id of client") @PathVariable UUID id,@Valid @RequestBody ClientDto clientDto){
         if(clientService.getClient(id)!=null)
             return new ResponseEntity<>(clientService.updateAdresse(id,clientDto),HttpStatus.OK);
         else
@@ -97,7 +98,7 @@ public class ClientController {
             @ApiResponse(responseCode = "200",description = "the found new client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
     })
-    public ResponseEntity<ClientDto> updateClientMail(@Parameter(description = "id of client") @PathVariable UUID id,@RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> updateClientMail(@Parameter(description = "id of client") @PathVariable UUID id,@Valid @RequestBody ClientDto clientDto){
         if(clientService.getClient(id)!=null)
             return new ResponseEntity<>(clientService.updateAdresseMail(id,clientDto),HttpStatus.OK);
         else
@@ -110,7 +111,7 @@ public class ClientController {
             @ApiResponse(responseCode = "200",description = "the found client"),
             @ApiResponse(responseCode = "404",description = "client doen't exists")
     })
-    public ResponseEntity<ClientDto> updateClientDateOfBirth(@Parameter(description = "id of client") @PathVariable UUID id,@RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> updateClientDateOfBirth(@Parameter(description = "id of client") @PathVariable UUID id,@Valid @RequestBody ClientDto clientDto){
         if(clientService.getClient(id)!=null)
             return new ResponseEntity<>(clientService.updateDateOfBirth(id,clientDto),HttpStatus.OK);
         else

@@ -2,9 +2,12 @@ package com.projet.foodGo.service.impl;
 
 
 import com.projet.foodGo.dto.PrestataireDto;
+import com.projet.foodGo.exeptions.BusinessException;
+import com.projet.foodGo.exeptions.ErrorModel;
 import com.projet.foodGo.mapper.PrestataireConverter;
 import com.projet.foodGo.model.Prestataire;
 import com.projet.foodGo.model.Produits;
+import com.projet.foodGo.model.enumType.RoleUser;
 import com.projet.foodGo.repository.PrestataireRepository;
 import com.projet.foodGo.repository.ProduitsRepository;
 import com.projet.foodGo.service.PrestataireService;
@@ -36,8 +39,22 @@ public class PrestataireServiceImpl implements PrestataireService {
     public PrestataireDto createPrestataire(PrestataireDto prestataireDto) {
         prestataireDto.setNoteMoyenne(0.0);
         prestataireDto.setListProduits(new ArrayList<>());
-        Prestataire prestataire=prestataireConverter.toEntity(prestataireDto);
-        return prestataireConverter.toDto(prestataireRepository.save(prestataire));
+        prestataireDto.setRole(RoleUser.VENDEUR);
+        prestataireDto.setMontantCompte(0.0);
+        Optional<Prestataire> optionalPrestataire= prestataireRepository.findByNomAndDeleteAtIsNull(prestataireDto.getNom());
+        if(optionalPrestataire.isEmpty()) {
+            Prestataire prestataire = prestataireConverter.toEntity(prestataireDto);
+            return prestataireConverter.toDto(prestataireRepository.save(prestataire));
+        }
+        else
+        {
+            List<ErrorModel> errorModelList=new ArrayList<>();
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("OPERATION_DENIED");
+            errorModel.setMessage("Ce nom est réservé");
+            errorModelList.add(errorModel);
+            throw new BusinessException(errorModelList);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -83,6 +100,7 @@ public class PrestataireServiceImpl implements PrestataireService {
             Prestataire prestataire = optionalPrestataire.get();
             prestataire.setNom(prestataireDto.getNom());
             prestataire.setAdresseMail(prestataireDto.getAdresseMail());
+            prestataire.setAdresse(prestataireDto.getAddress());
             prestataire.setNatureCompte(prestataireDto.getNatureCompte());
             prestataire.setMotDePasse(prestataireDto.getMotDePasse());
             if(prestataireDto.getListProduits()!=null) {
@@ -153,5 +171,18 @@ public class PrestataireServiceImpl implements PrestataireService {
         }
         else 
             return false;
+    }
+
+
+    @Override
+    public PrestataireDto updateAdresse(UUID prestataireId, PrestataireDto prestataireDto) {
+        Optional<Prestataire> optionalPrestataire=prestataireRepository.findByIdAndDeleteAtIsNull(prestataireId);
+        if(optionalPrestataire.isPresent()) {
+            Prestataire prestataire= optionalPrestataire.get();
+            prestataire.setAdresse(prestataireDto.getAddress());
+            return prestataireConverter.toDto(prestataireRepository.save(prestataire));
+        }
+        else
+            return null;
     }
 }

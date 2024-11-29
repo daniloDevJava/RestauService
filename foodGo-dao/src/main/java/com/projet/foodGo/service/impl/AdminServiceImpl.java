@@ -1,18 +1,18 @@
 package com.projet.foodGo.service.impl;
 
 import com.projet.foodGo.dto.AdminDto;
+import com.projet.foodGo.exeptions.BusinessException;
+import com.projet.foodGo.exeptions.ErrorModel;
 import com.projet.foodGo.mapper.AdminConverter;
 import com.projet.foodGo.model.Admin;
+import com.projet.foodGo.model.enumType.RoleUser;
 import com.projet.foodGo.repository.AdminRepository;
 import com.projet.foodGo.service.AdminService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +29,7 @@ public class AdminServiceImpl implements AdminService {
         List<Admin> adminList=adminRepository.findByDeleteAtIsNull();
         if(adminList.isEmpty()) {
             adminDto.setEntryKey(UUID.randomUUID());
+            adminDto.setRole(RoleUser.ADMIN);
             Admin admin=adminRepository.save(adminConverter.toEntity(adminDto));
             return adminConverter.toDto(admin);
         }
@@ -37,7 +38,12 @@ public class AdminServiceImpl implements AdminService {
             return adminConverter.toDto(admin);
         }
         else {
-            throw new IllegalArgumentException("Vous n'etes pas reconnu comme un admin");
+            List<ErrorModel> errorModelList=new ArrayList<>();
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("AUTHENTIFICATION_FAILED");
+            errorModel.setMessage("Vous n'etes pas reconnu comme un admin");
+            errorModelList.add(errorModel);
+            throw new BusinessException(errorModelList);
         }
     }
 
@@ -100,8 +106,14 @@ public class AdminServiceImpl implements AdminService {
                 }
                 return adminConverter.toDto(admin);
             }
-            else
-                return adminConverter.toDto(optionalAdmin.get());
+            else{
+                List<ErrorModel> errorModelList=new ArrayList<>();
+                ErrorModel errorModel=new ErrorModel();
+                errorModel.setCode("AUTHENTIFICATION_FAILED");
+                errorModel.setMessage("Cet admin n'a pas le droit de changer la clé d'entrée C'est le premier dans la liste des admins qui en a le droit veuillez consulter celle-ci et/ou le contacter(L'admin)");
+                errorModelList.add(errorModel);
+                throw new BusinessException(errorModelList);
+            }
         }
         else
             return null;

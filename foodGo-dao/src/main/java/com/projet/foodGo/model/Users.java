@@ -22,7 +22,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(unique = true,nullable = false)
+    @Column(nullable = false)
     protected String nom;
     @Column(nullable = false)
     protected String motDePasse;

@@ -39,7 +39,6 @@ public class ProduitsServiceImpl implements ProduitsService {
                 Produits produits = produitsConverter.toEntity(produitDto);
                 produits.setPrestataire(prestataire);
                 produits=produitsRepository.save(produits);
-                System.err.println(produits.getId());
                 return produitsConverter.toDto(produits);
             }
             else 
@@ -130,7 +129,6 @@ public class ProduitsServiceImpl implements ProduitsService {
             }
             produits.setImagesList(imagesList);
             produits.setPrixUnitaire(produitAlimentaireDto.getPrixUnitaire());
-            produits.setTypeProduct(produitAlimentaireDto.getTypeProduct());
             return produitsConverter.toDto(produitsRepository.save(produits));
         }
         else 

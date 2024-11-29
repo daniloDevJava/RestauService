@@ -29,6 +29,8 @@ public class PrestataireConverter {
         prestataire.setNom(prestataireDto.getNom());
         prestataire.setNatureCompte(prestataireDto.getNatureCompte());
         prestataire.setGeography(geography);
+        prestataire.setAdresse(prestataireDto.getAddress());
+        prestataire.setRole(prestataireDto.getRole());
         for(UUID id: prestataireDto.getListProduits()){
             Optional<Produits> optionalProduits=produitsRepository.findByIdAndDeleteAtIsNull(id);
             optionalProduits.ifPresent(listProduits::add);
@@ -47,9 +49,11 @@ public class PrestataireConverter {
         PrestataireDto prestataireDto=new PrestataireDto();
         prestataireDto.setId(prestataire.getId());
         prestataireDto.setNom(prestataire.getNom());
+        prestataireDto.setAddress(prestataire.getAdresse());
         prestataireDto.setAdresseMail(prestataire.getAdresseMail());
         prestataireDto.setNoteMoyenne(prestataire.getNoteMoyenne());
         prestataireDto.setCreateAt(prestataire.getCreateAt());
+        prestataireDto.setRole(prestataire.getRole());
         prestataireDto.setUpdateAt(prestataire.getUpdateAt());
         prestataireDto.setMontantCompte(prestataire.getMontantCompte());
         prestataireDto.setLongitude(prestataire.getGeography().getX());
