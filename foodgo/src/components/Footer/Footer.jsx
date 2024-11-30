@@ -1,10 +1,10 @@
 import React from 'react'
 import './Footer.css'
-/*import facebookIcon from '../Assets/facebook.jpeg'
+import facebookIcon from '../Assets/facebook.jpeg'
 import instagramIcon from '../Assets/instagram.jpeg'
 import twitterIcon from '../Assets/twitter.png'
 import youtubeIcon from '../Assets/youtube.png'
-*/
+
 
 const Footer = () => {
   return (
@@ -50,7 +50,7 @@ const Footer = () => {
             <p>Terms of Services</p>
             <p>Privacy Policy</p>
             <div className="social-icons">
-                {/*<a href="https://facebook.com">
+                <a href="https://facebook.com">
                     <img src={facebookIcon} alt="Facebook" />
                 </a>
                 <a href="https://instagram.com">
@@ -61,7 +61,7 @@ const Footer = () => {
                 </a>
                 <a href="https://youtube.com">
                     <img src={youtubeIcon} alt="YouTube" />
-                </a>*/}
+                </a>
             </div>
         </div>
     </div>
