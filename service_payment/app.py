@@ -226,7 +226,6 @@ def suggestionNom():
 
     return jsonify({"noms": noms})
 
-
 import asyncio
 
 async def start_eureka_client():
@@ -242,3 +241,4 @@ if __name__ == "__main__":
     finally:
         # Désenregistrer le service lors de l'arrêt de l'application
         loop.run_until_complete(client.stop())
+
