@@ -26,54 +26,91 @@ from uuid import UUID
 # Route pour la creation d'un code qr
 @app.route('/create_order', methods=['POST'])
 def create_order():
-    '''
-        La fonction recupere les donnees necessaire pour la creation du code qr
-        - id du prestataire
-        - id de la commande
-        - montant de la commande
-    '''
-    try :
-        prestataireId = request.json['prestataireId']
-        amount = int(request.json['amount'])
-        commandeId = request.json['commandeId']
+    """
+    La fonction crée une commande, génère un QR code, et met à jour le solde du client.
+    """
+    try:
+        # Récupération des données de la requête
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Aucune donnée reçue."}), 400
 
-        if not prestataireId or not commandeId:
-            return jsonify({"error":"donnees erronees"}),400
+        amount = data.get('amount')
+        commandeId = data.get('commandeId')
+
+        # Validation des données
+        if not commandeId or not isinstance(amount, int) or amount <= 0:
+            return jsonify({"error": "Données erronées. Vérifiez les IDs et le montant."}), 400
 
         try:
-            UUID(prestataireId)  # Vérifie que prestataireId est un UUID valide
             UUID(commandeId)
         except ValueError:
             return jsonify({"error": "Les IDs doivent être des UUID valides."}), 400
 
+        # Récupérer la commande associée
+        SpringUrlGet = f"http://37.60.244.227:8001/dao/commandes/{commandeId}"
+        commande = requests.get(SpringUrlGet, timeout=5)
+        commande.raise_for_status()
+        commande_data = commande.json()
+        userId = commande_data['idUser']
+        prestataireId = commande_data['idPrestataire']
 
-        # Obtenir la date et l'heure actuelles
+        # Vérifier le solde du client
+        SpringUrlGet = f"http://37.60.244.227:8001/dao/users/{userId}"
+        client = requests.get(SpringUrlGet, timeout=5)
+        client.raise_for_status()
+        client_data = client.json()
+        montant = client_data.get('montantCompte')
+
+        if montant is None:
+            return jsonify({"error": "Le compte utilisateur n'a pas de montant défini."}), 400
+        if montant < amount:
+            return jsonify({"message": "Montant insuffisant."}), 400
+
+        # Mettre à jour le solde du client
+        montant -= amount
+        SpringURL = f"http://37.60.244.227:8001/dao/users/{userId}/update-montant"
+        response = requests.patch(SpringURL, json={"montant": montant}, timeout=5)
+        response.raise_for_status()
+
+        app.logger.info(f"Montant mis à jour pour l'utilisateur {userId}. Nouveau solde : {montant}")
+
+        # Générer le QR code
         current_datetime = datetime.now()
-
-        qr_data = f"Prestataire:{prestataireId}, Amount: {amount}, date:{current_datetime}, commande:{commandeId}"
-        
-        # Génération du QR code
+        qr_data = f"Prestataire:{prestataireId}, Amount: {amount}, Date:{current_datetime}, Commande:{commandeId}"
         qr = qrcode.make(qr_data)
         img_io = BytesIO()
         qr.save(img_io, 'PNG')
         img_io.seek(0)
         qr_b64 = base64.b64encode(img_io.getvalue()).decode('utf-8')
 
-        # Enregistrer dans la base de données
-        cursor.execute(
-            "INSERT INTO orders (prestataireid, amount, qr_code, commandeid) VALUES (%s, %s, %s,%s)",
-            (prestataireId, amount, qr_b64,commandeId)
-        )
-        conn.commit()
-        # On renvois le code qr genere sous forme json
-        '''
-            Le code qr generer est sous forme de text
-        '''
+        # Enregistrer la commande dans la base de données
+        try:
+            with conn.cursor() as cursor:
+                cursor.execute(
+                    "INSERT INTO orders (prestataireid, amount, qr_code, commandeid) VALUES (%s, %s, %s, %s)",
+                    (prestataireId, amount, qr_b64, commandeId)
+                )
+                conn.commit()
+                app.logger.info(f"Commande insérée pour le prestataire {prestataireId}")
+        except psycopg2.Error as e:
+            app.logger.error(f"Erreur SQL : {str(e)}")
+            return jsonify({"error": "Erreur lors de l'enregistrement de la commande."}), 500
+
+        # Retourner le QR code au client
         return jsonify({
-            "code":qr_b64
-            }),200
+            "message": "Commande payée avec succès.",
+            "clientId": userId,
+            "amount": amount,
+            "code": qr_b64
+        }), 200
+
     except requests.exceptions.RequestException as e:
-        return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
+        app.logger.error(f"Erreur externe : {str(e)}")
+        return jsonify({"error": f"Erreur lors de la communication avec le service externe : {str(e)}"}), 502
+    except Exception as e:
+        app.logger.error(f"Erreur inattendue : {str(e)}")
+        return jsonify({"error": "Erreur interne du serveur."}), 500
 
 # Route pour afficher les qr des commandes d'un client
 '''
@@ -122,7 +159,7 @@ def verification():
                             cursor.execute("UPDATE orders SET etat = 'validé' WHERE id = %s", (orders['id'],))
                             conn.commit()
 
-                            # Appeler le service externe pour récupérer le montant actuel
+                            # Appeler le service externe pour récupérer le montant actuel du prestataire
                             SpringUrlGet = f"http://37.60.244.227:8001/dao/users/{prestataireId}"
                             try:
                                 Prestataire = requests.get(SpringUrlGet)
