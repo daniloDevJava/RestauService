@@ -35,7 +35,7 @@ def create_order():
         if not data:
             return jsonify({"error": "Aucune donnée reçue."}), 400
 
-        amount = data.get('amount')
+        amount =int(data.get('amount'))
         commandeId = data.get('commandeId')
 
         # Validation des données
