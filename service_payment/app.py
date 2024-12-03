@@ -98,60 +98,64 @@ def show_qr():
     - le code_qr(qr_code): qui est le text associer au code_qr scanner
     - l'id du prestataire qui scanne le code(prestataireId)
 '''
-@app.route('/verification_qr',methods=['POST'])
+@app.route('/verification_qr', methods=['POST'])
 def verification():
     if request.method == 'POST':
         data = request.get_json()
         qr_code = data.get('qr_code')
         prestataireId = data.get('prestataireId')
 
+        # Vérification UUID
         try:
             UUID(prestataireId)  # Vérifie que prestataireId est un UUID valide
         except ValueError:
-            return jsonify({"error": "L'ID doit etre un UUID valide."}), 400
+            return jsonify({"error": "L'ID doit être un UUID valide."}), 400
 
         if prestataireId:
-            cursor.execute("SELECT * FROM orders WHERE qr_code = %s and etat = 'en cours'", (qr_code,)) # on recupere le code associer au qr
-            orders = cursor.fetchone()
-            if orders:
-                if orders['prestataireid'] == prestataireId: # On verifie si le prestataire est le bon
-                    cursor.execute("UPDATE orders SET etat = 'validé' WHERE id = %s", (orders['id'],))
-                    conn.commit()
+            try:
+                with conn.cursor() as cursor:
+                    cursor.execute("SELECT * FROM orders WHERE qr_code = %s AND etat = 'en cours'", (qr_code,))
+                    orders = cursor.fetchone()
 
-                    # J'envois l'argent dans le compte du prestataire
+                    if orders:
+                        if orders['prestataireid'] == prestataireId:
+                            cursor.execute("UPDATE orders SET etat = 'validé' WHERE id = %s", (orders['id'],))
+                            conn.commit()
 
-                    # SpringURL = "http://37.60.244.227/updateCount"
-                    # spring_response = requests.post(SpringURL, json={
-                    #                                         "IdPrestataire": prestataireId,
-                    #                                         "montant": orders['amount']
-                    #                                     }
-                    #                                 )
-                    return jsonify(
-                        {
-                            "message": "Commande valide avec succès",
-                            # "result":spring_response,
-                            "prestataireId":prestataireId,
-                            "amount":orders['amount']
-                        }
-                    ), 200
-                else:
-                    return jsonify({"message": "Le prestataire n'est pas le bon"}), 403
-            else:
-                return jsonify(
-                    {
-                        "message":"Code qr inconnu ou commande deja valider"
-                    }
-                )
+                            # Appeler le service externe pour récupérer le montant actuel
+                            SpringUrlGet = f"http://37.60.244.227:8001/dao/users/{prestataireId}"
+                            try:
+                                Prestataire = requests.get(SpringUrlGet)
+                                Prestataire.raise_for_status()
+                                data = Prestataire.json()
+                                montant = data.get('montantCompte')
+                                montant += orders['amount']
+
+                                # Envoyer le montant mis à jour
+                                SpringURL = f"http://37.60.244.227:8001/dao/users/{prestataireId}/update-montant"
+                                response = requests.patch(SpringURL, json={"montant": montant})
+
+                                if response.status_code == 200:
+                                    return jsonify({
+                                        "message": "Commande validée avec succès",
+                                        "prestataireId": prestataireId,
+                                        "amount": orders['amount']
+                                    }), 200
+                                else:
+                                    app.logger.error(f"Erreur lors de la mise à jour du montant : {response.text}")
+                                    return jsonify({"error": "Erreur lors de la mise à jour du montant."}), 502
+                            except requests.RequestException as e:
+                                app.logger.error(f"Erreur externe : {str(e)}")
+                                return jsonify({"error": "Erreur lors de la communication avec le service externe."}), 502
+                        else:
+                            return jsonify({"message": "Le prestataire n'est pas le bon"}), 403
+                    else:
+                        return jsonify({"message": "Code QR inconnu ou commande déjà validée"}), 404
+            except Exception as e:
+                app.logger.error(f"Erreur SQL : {str(e)}")
+                return jsonify({"error": "Erreur lors de la vérification dans la base de données."}), 500
         else:
-            return jsonify(
-                {
-                    "message":"Le prestataire ne peut pas etre vide"
-                }
-            )
-    else:
-        return jsonify({
-            "message":"Mauvaise methode de request"
-        })
+            return jsonify({"message": "Le prestataire ne peut pas être vide"}), 400
 
 @app.route('/suggestion', methods=['POST'])
 def suggestionNom():
