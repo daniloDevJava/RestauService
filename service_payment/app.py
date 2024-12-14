@@ -70,7 +70,7 @@ def create_order():
         # Mettre à jour le solde du client
         montant -= amount
         SpringURL = f"http://37.60.244.227/dao/users/{userId}/update-montant"
-        response = requests.patch(SpringURL, json={"montant": montant}, timeout=5)
+        response = requests.patch(SpringURL, json={"montantCompte": montant}, timeout=5)
         response.raise_for_status()
 
         app.logger.info(f"Montant mis à jour pour l'utilisateur {userId}. Nouveau solde : {montant}")
@@ -170,9 +170,12 @@ def verification():
 
                                 # Envoyer le montant mis à jour
                                 SpringURL = f"http://37.60.244.227/dao/users/{prestataireId}/update-montant"
-                                response = requests.patch(SpringURL, json={"montant": montant})
+                                response = requests.patch(SpringURL, json={"montantCompte": montant})
 
                                 if response.status_code == 200:
+                                    commandeId = orders['commandeId']
+                                    Spring = f"http://37.60.244.227/dao/commandes/{commandeId}/state-change"
+                                    resp = requests.patch(Spring,json={"etat":"FINALISE"})
                                     return jsonify({
                                         "message": "Commande validée avec succès",
                                         "prestataireId": prestataireId,
