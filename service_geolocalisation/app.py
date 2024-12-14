@@ -21,7 +21,7 @@ client = EurekaClient(
 )
 
 # Route pour afficher les coordonnes geographique d'un quartier par son nom en utilisant l'api Nominatim
-@app.route('/quartier-coordonnees', methods=['POST'])
+@app.route('/geolocalisation/quartier-coordonnees', methods=['POST'])
 def quartier_coordonnees():
     data = request.json
     nom_quartier = data.get('nom')
@@ -69,7 +69,7 @@ def quartier_coordonnees():
 '''
     Fonction qui pour les coordonnees geographique d'un point ressort le nom du quatier
 '''
-@app.route('/get_location', methods=['POST'])
+@app.route('/geolocalisation/get-location', methods=['POST'])
 def get_location_info():
 
     data = request.get_json()
@@ -123,7 +123,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     return R * c  # Retourne la distance en kilomètres
 
 # Route POST pour calculer la distance
-@app.route('/calcul-distance', methods=['POST'])
+@app.route('/geolocalisation/calcul-distance', methods=['POST'])
 def calculate_distance_endpoint():
     try:
         # Récupère les données envoyées sous forme de JSON

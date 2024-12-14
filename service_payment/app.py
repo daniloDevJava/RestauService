@@ -24,7 +24,7 @@ client = EurekaClient(
 from uuid import UUID
 
 # Route pour la creation d'un code qr
-@app.route('/create_order', methods=['POST'])
+@app.route('/payment/create_order', methods=['POST'])
 def create_order():
     """
     La fonction crée une commande, génère un QR code, et met à jour le solde du client.
@@ -116,7 +116,7 @@ def create_order():
 '''
     Elle recupere l'id de la commande et affiche le code qr associer en cours 
 '''
-@app.route('/show_qr', methods=['POST'])
+@app.route('/payment/show_qr', methods=['POST'])
 def show_qr():
     try:
         commande_id = request.json['commandeId']
@@ -135,7 +135,7 @@ def show_qr():
     - le code_qr(qr_code): qui est le text associer au code_qr scanner
     - l'id du prestataire qui scanne le code(prestataireId)
 '''
-@app.route('/verification_qr', methods=['POST'])
+@app.route('/payment/verification_qr', methods=['POST'])
 def verification():
     if request.method == 'POST':
         data = request.get_json()
@@ -194,7 +194,7 @@ def verification():
         else:
             return jsonify({"message": "Le prestataire ne peut pas être vide"}), 400
 
-@app.route('/suggestion', methods=['POST'])
+@app.route('/payment/suggestion', methods=['POST'])
 def suggestionNom():
     data = request.get_json()
     nom = data.get('nom')
