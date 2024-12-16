@@ -3,6 +3,13 @@
   margin: 70px;
 }
 
+.prestataires-list {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
 /* Food Container */
 .food-container {
   width: 404px;
@@ -13,6 +20,10 @@
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ajoute un léger effet d'ombre */
   transition: transform 0.3s ease-in-out;
+}
+
+.food-container:hover {
+  transform: translateY(-5px); /* Légère animation au survol */
 }
 
 /* Titre du restaurant */
@@ -50,6 +61,25 @@
   border-radius: 50%; /* Ajuste pour un cercle parfait */
   object-fit: cover;
   background-size: cover;
+}
+
+/* Image du produit */
+.image img {
+  width: 100%; /* S'adapte à la largeur du conteneur */
+  height: 230px;
+  top: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: cover; /* Assure une bonne adaptation de l'image */
+}
+
+/* Conteneur des détails */
+.style {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
 }
 
 /* Nom du prestataire */
@@ -105,26 +135,19 @@
   background-color: #B00C00;
 }
 
-/* Image du produit */
-.image img {
-  width: 100%; /* S'adapte à la largeur du conteneur */
-  height: 230px;
-  position: absolute;
-  top: 0;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  object-fit: cover; /* Assure une bonne adaptation de l'image */
-}
+
 
 /* Prix */
 .price {
   position: absolute;
-  left: 326px;
+  left: 310px;
   top: 180px;
+  right: 10px;
   background: white;
   border-radius: 5px;
   padding: 5px 10px;
   display: flex;
+  font-size: 14px;
   align-items: center;
   justify-content: center;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import Prestataire from "./Prestataire";
 import prestataires from "../Assets/all_product"; // Exemple des données centralisées
+import "./Prestataire.css";
 
 function PrestatairesList({activeCity}) {
 
@@ -31,7 +32,7 @@ function PrestatairesList({activeCity}) {
         />
       ))
     ) : (
-      <p>Aucun prestataire trouvé pour cette ville.</p>
+      <p >Aucun prestataire trouvé pour cette ville.</p>
     )}
     </div>
   );

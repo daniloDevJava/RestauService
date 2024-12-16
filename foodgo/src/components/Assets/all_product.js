@@ -86,6 +86,17 @@ let all_product = [
         productImage: p7_img,
         image: p1a,
     },
+    {
+        id: 8,
+        restoName: "Restaurant Le Bon Gout",
+        description: "Experience our exquisite taste.",
+        prestataireName: "Jean Pierre",
+        prestataireRole: "Prestataire",
+        price: "500 FCFA",
+        city: 'yaounde',
+        productImage: p1_img,
+        image: p1a,
+    }
 ];
   
 export default all_product;
