@@ -17,7 +17,7 @@ import java.time.Instant;
 public class Validation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private Instant creation;
     private Instant expiration;
     private Instant activation;

@@ -104,7 +104,9 @@ public class UserServiceImpl implements UserService {
             Users users=optionalUsers.get();
             if(userDto.getMontantCompte()>=0) {
                 users.setMontantCompte(userDto.getMontantCompte());
-                return userConverter.toDto(userRepository.save(users));
+                users=userRepository.save(users);
+                System.out.println(users.getMontantCompte());
+                return userConverter.toDto(users);
             }
             else{
                 List<ErrorModel> errorModelList=new ArrayList<>();

@@ -18,5 +18,6 @@ public class PrestataireDto extends UserDto {
     private Double longitude;
     private Double latitude;
     private double montantCompte;
+    private String address;
 
 }

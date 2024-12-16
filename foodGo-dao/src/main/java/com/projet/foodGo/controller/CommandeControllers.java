@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class CommandeControllers {
             @ApiResponse(responseCode = "201",description = "THe processus of commande has begin"),
             @ApiResponse(responseCode = "500",description = "The commande doesn't respects the parameters")
     })
-    public ResponseEntity<CommandeDto> createCommande(@RequestBody CommandeDto commandeDto, @Parameter(description = "Id of user") @RequestParam("userId")UUID userId,@Parameter(description = "Id of Prestataire") @RequestParam("prestataireId") UUID prestataireId){
+    public ResponseEntity<CommandeDto> createCommande(@Valid @RequestBody CommandeDto commandeDto, @Parameter(description = "Id of user") @RequestParam("userId")UUID userId,@Parameter(description = "Id of Prestataire") @RequestParam("prestataireId") UUID prestataireId){
         try {
             CommandeDto commande=commandeService.createCommande(commandeDto,userId,prestataireId);
             return new ResponseEntity<>(commande,HttpStatus.CREATED);
@@ -88,8 +89,8 @@ public class CommandeControllers {
             @ApiResponse(responseCode = "200",description = "state of this commande is up-to-date"),
             @ApiResponse(responseCode = "404",description = "The commande is not found")
     })
-    public ResponseEntity<CommandeDto> updateCommande(@Parameter(description = "Id Of Commande") @PathVariable UUID commandeId,@RequestBody CommandeDto commandeDto){
-        CommandeDto commande= commandeService.updateEtatCommande(commandeId,commandeDto);
+    public ResponseEntity<CommandeDto> updateCommande(@Parameter(description = "Id Of Commande") @PathVariable UUID id,@Valid @RequestBody CommandeDto commandeDto){
+        CommandeDto commande= commandeService.updateEtatCommande(id,commandeDto);
         if(commande!=null)
             return new ResponseEntity<>(commande,HttpStatus.OK);
         else
@@ -102,7 +103,7 @@ public class CommandeControllers {
             @ApiResponse(responseCode = "200",description = "state of this commande is up-to-date"),
             @ApiResponse(responseCode = "404",description = "The commande is not found")
     })
-    public ResponseEntity<CommandeDto> updatePanier(@Parameter(description = "Id Of Commande") @PathVariable UUID commandeId,@RequestBody CommandeDto commandeDto){
+    public ResponseEntity<CommandeDto> updatePanier(@Parameter(description = "Id Of Commande") @PathVariable UUID commandeId,@Valid @RequestBody CommandeDto commandeDto){
         CommandeDto commande= commandeService.updatePanier(commandeId,commandeDto);
         if(commande!=null)
             return new ResponseEntity<>(commande,HttpStatus.OK);

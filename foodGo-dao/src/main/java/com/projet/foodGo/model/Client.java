@@ -19,7 +19,6 @@ public class Client extends Users {
     private String nomPrenom;
     @Column(name = "CNI",unique = true)
     private String numeroCNI;
-    private double montantCompte;
 
 
 }

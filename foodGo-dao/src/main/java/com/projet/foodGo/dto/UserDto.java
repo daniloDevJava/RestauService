@@ -21,7 +21,6 @@ public class UserDto {
 
     protected UUID id;
     @NotNull(message = "The name is mandatory")
-    @NotEmpty(message = "The name of user is not empty")
     protected String nom;
     @NotNull(message = "The password must be specified")
     @Size(min=8,message = "The password has 8 characters minimum")

@@ -21,7 +21,6 @@ public class CommandeDto {
     private UUID id;
     private Double prixTotal;
     @NotNull(message = "you should to tell if the command is with livraison")
-    @NotEmpty(message = "TRUE_OR_FALSE")
     private boolean withLivraison;
     private UUID idPrestataire;
     private UUID idUser;

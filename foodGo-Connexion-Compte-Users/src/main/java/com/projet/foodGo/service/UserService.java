@@ -5,13 +5,18 @@ import com.projet.foodGo.exceptions.ErrorModel;
 import com.projet.foodGo.external.AdminDto;
 import com.projet.foodGo.external.ClientDto;
 import com.projet.foodGo.external.PrestataireDto;
-import com.projet.foodGo.external.RegisterRequest;
+import com.projet.foodGo.dto.RegisterRequest;
 import com.projet.foodGo.model.Utilisateur;
+import com.projet.foodGo.model.enumType.RoleUser;
 import com.projet.foodGo.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import java.util.Optional;
+
+import reactor.core.publisher.Mono; // Pour Mono
+
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,8 +28,8 @@ import java.util.Objects;
 public class UserService {
     private final UtilisateurRepository utilisateurRepository;
     private final ValidationService validationService;
-    private final EmailService emailService;
     private final WebClient.Builder webClientBuilder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     /**
      * Enregistre un utilisateur en fonction de son rôle.
@@ -34,31 +39,35 @@ public class UserService {
     public RegisterRequest registerUser(RegisterRequest request) throws BusinessException {
         List<ErrorModel> errorModelList=new ArrayList<>();
         // Étape 1 : Créer un utilisateur inactif localement
-        if(LocalDate.now().getYear()-request.getDateOfBirth().getYear()<15){
-            ErrorModel errorModel=new ErrorModel();
-            errorModel.setCode("NOT_AUTHORIZED");
-            errorModel.setMessage("vous n'avez pas l'age minimale pour creer un compte");
-            errorModelList.add(errorModel);
-            throw new BusinessException(errorModelList);
-        } else if (Objects.equals(request.getPassword(), "")) {
-            ErrorModel errorModel=new ErrorModel();
-            errorModel.setCode("INVALID_FORMAT");
-            errorModel.setMessage("Le mot de pass ne peut etre vide");
-            errorModelList.add(errorModel);
-            throw new BusinessException(errorModelList);
-
-        } else if (!request.getEmail().contains("@")) {
-            ErrorModel errorModel=new ErrorModel();
-            errorModel.setCode("INVALID_FORMAT");
-            errorModel.setMessage("Le mot de pass ne peut etre vide");
-            errorModelList.add(errorModel);
-            throw new BusinessException(errorModelList);
-
+        Optional<Utilisateur> optionalUser=utilisateurRepository.findByEmailAndDeleteAtIsNull(request.getEmail());
+        if(request.getRole().equals(RoleUser.CLIENT)) {
+            if(LocalDate.now().getYear()-request.getDateOfBirth().getYear()<15){
+                ErrorModel errorModel=new ErrorModel();
+                errorModel.setCode("NOT_AUTHORIZED");
+                errorModel.setMessage("vous n'avez pas l'age minimale pour creer un compte");
+                errorModelList.add(errorModel);
+                throw new BusinessException(errorModelList);
+            }
+		}
+        else if(optionalUser.isPresent()){
+	    ErrorModel errorModel=new ErrorModel();
+	    errorModel.setCode("NOT_ALLOWED");
+	    errorModel.setMessage("vous essayez d'enregistrer un utilisateur ayant dejà un compte");
+	    errorModelList.add(errorModel);
+	    throw new BusinessException(errorModelList);
+		    
         }
-        else if (!request.getEmail().contains(".")) {
-            ErrorModel errorModel=new ErrorModel();
+         else if (Objects.equals(request.getPassword(), "")) {
+            ErrorModel errorModel = new ErrorModel();
             errorModel.setCode("INVALID_FORMAT");
             errorModel.setMessage("Le mot de pass ne peut etre vide");
+            errorModelList.add(errorModel);
+            throw new BusinessException(errorModelList);
+        }
+        else if (!request.getEmail().contains(".") || !request.getEmail().contains("@")) {
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("INVALID_FORMAT");
+            errorModel.setMessage("L'adresse mail a un format non valide");
             errorModelList.add(errorModel);
             throw new BusinessException(errorModelList);
 
@@ -67,7 +76,7 @@ public class UserService {
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setUsername(request.getUsername());
         utilisateur.setEmail(request.getEmail());
-        utilisateur.setMdp(request.getPassword()); // Assurez-vous de hacher le mot de passe avant enregistrement
+        utilisateur.setMdp(bCryptPasswordEncoder.encode(request.getPassword())); // Assurez-vous de hacher le mot de passe avant enregistrement
         utilisateur.setRole(request.getRole());
         utilisateur.setActif(false);
 
@@ -78,19 +87,20 @@ public class UserService {
 
         // Étape 3 : Appeler le DAO en fonction du rôle
         switch (request.getRole()) {
-            case ADMIN -> registerAdmin(utilisateur,request);
+            case ADMIN -> registerAdmin(request);
             case CLIENT -> registerClient(utilisateur, request);
-            case PRESTATAIRE -> registerPrestataire(utilisateur, request);
+            case VENDEUR -> registerPrestataire(utilisateur, request);
             default -> throw new IllegalArgumentException("Rôle inconnu : " + request.getRole());
         }
         return request;
     }
 
-    private void registerAdmin(Utilisateur utilisateur, RegisterRequest request) {
-        // Construire l'AdminDto sans EntryKey
+    private void registerAdmin(RegisterRequest request) {
+
         AdminDto adminDto = new AdminDto();
         adminDto.setAdresseMail(request.getEmail());
         adminDto.setNom(request.getUsername());
+        adminDto.setMotDePasse(request.getPassword());
         adminDto.setEntryKey(request.getEntryKey());
        
 
@@ -104,6 +114,7 @@ public class UserService {
         clientDto.setNom(utilisateur.getUsername());
         clientDto.setMotDePasse(request.getPassword());
         clientDto.setPrenom(request.getPrenom());
+        System.out.println(request.getDateOfBirth());
         clientDto.setDateOfBirth(request.getDateOfBirth());
         clientDto.setAdresse(request.getAdresse());
         clientDto.setNumeroCNI(request.getNumeroCNI());
@@ -114,7 +125,9 @@ public class UserService {
     private void registerPrestataire(Utilisateur utilisateur, RegisterRequest request) {
         PrestataireDto prestataireDto = new PrestataireDto();
         prestataireDto.setAdresseMail(utilisateur.getEmail());
+        prestataireDto.setMotDePasse(utilisateur.getMdp());
         prestataireDto.setNom(utilisateur.getUsername());
+        prestataireDto.setAddress(request.getAdresse());
         prestataireDto.setNatureCompte(request.getNatureCompte());
         prestataireDto.setLatitude(request.getLatitude());
         prestataireDto.setLongitude(request.getLongitude());
@@ -123,17 +136,60 @@ public class UserService {
     }
 
     private <T> void sendToDao(String uri, T dto) {
-        ResponseEntity<Void> response = webClientBuilder.build()
-                .post()
-                .uri(uri)
-                .bodyValue(dto)
-                .retrieve()
-                .toBodilessEntity()
-                .block();
+	    webClientBuilder.build()
+		    .post()
+		    .uri(uri)
+		    .bodyValue(dto)
+		    .retrieve()
+		    .onStatus(
+		        status -> status.value() >= 400 && status.value() < 500, // Vérifie les erreurs 4xx
+		        clientResponse -> clientResponse.bodyToMono(String.class)
+		            .flatMap(errorBody -> {
+		                ErrorModel errorModel = new ErrorModel();
+		                errorModel.setCode("CLIENT_ERROR");
+		                errorModel.setMessage("Erreur lors de l'appel au service DAO : " + errorBody);
+		                return Mono.error(new BusinessException(List.of(errorModel)));
+		            })
+		    )
+		    .onStatus(
+		        status -> status.value() >= 500, // Vérifie les erreurs 5xx
+		        clientResponse -> clientResponse.bodyToMono(String.class)
+		            .flatMap(errorBody -> {
+		                ErrorModel errorModel = new ErrorModel();
+		                errorModel.setCode("SERVER_ERROR");
+		                errorModel.setMessage("Erreur interne dans le service DAO : " + errorBody);
+		                return Mono.error(new BusinessException(List.of(errorModel)));
+		            })
+		    )
+		    .toBodilessEntity()
+		    .block();
+}
 
-        if (response == null || !response.getStatusCode().is2xxSuccessful()) {
-            throw new IllegalStateException("Échec de l'enregistrement dans le service DAO.");
+
+    public RegisterRequest validate(String mail, String code) throws BusinessException {
+        Optional<Utilisateur> optionalUtilisateur=utilisateurRepository.findByEmailAndDeleteAtIsNull(mail);
+        if(optionalUtilisateur.isPresent()) {
+            Utilisateur utilisateur= optionalUtilisateur.get();
+            RegisterRequest request = new RegisterRequest();
+            request.setUsername(utilisateur.getUsername());
+            request.setRole(utilisateur.getRole());
+            request.setEmail(utilisateur.getEmail());
+            if(validationService.validateCode(mail,code))
+                return request;
+            else
+                return null;
+
         }
-    }
+        else
+        {
+            List<ErrorModel> errorModels=new ArrayList<>();
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("INVALID_PARAMETERS");
+            errorModel.setMessage("adresse mail incorrecte");
+            errorModels.add(errorModel);
+            throw new BusinessException(errorModels);
+        }
 
+
+    }
 }

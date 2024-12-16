@@ -16,6 +16,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Autoriser les endpoints spécifiques
                         .requestMatchers("/user-management/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
                         // Tous les autres endpoints nécessitent une authentification
                         .anyRequest().authenticated()
                 );

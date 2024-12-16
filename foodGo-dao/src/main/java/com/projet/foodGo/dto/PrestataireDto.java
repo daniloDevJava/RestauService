@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.projet.foodGo.model.enumType.NatureCompte;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
@@ -24,7 +25,6 @@ public class PrestataireDto extends UserDto {
     private Double longitude;
     private Double latitude;
     @NotNull(message = "the address is mandatory")
-    @NotEmpty(message = "the adress ")
     private String address;
     private double montantCompte;
 

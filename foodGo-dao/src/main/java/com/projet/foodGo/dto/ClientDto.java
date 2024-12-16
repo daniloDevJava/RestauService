@@ -22,7 +22,6 @@ public class ClientDto extends UserDto {
     private UUID id;
     private String Prenom;
     @NotNull(message = "The date of birth is mandatory")
-    @NotEmpty(message = "The date of birth is not empty")
     private LocalDate dateOfBirth;
     private String adresse;
     private double montantCompte;

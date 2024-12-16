@@ -6,6 +6,9 @@ import lombok.Setter;
 
 
 import jakarta.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -39,9 +43,15 @@ public class Utilisateur implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_" + role));
     }
-
-
-
+    
+    @CreationTimestamp
+    @Column(nullable = false,updatable = false)
+    private LocalDateTime createAt;
+    @UpdateTimestamp
+    private LocalDateTime updateAt;
+    private LocalDateTime deleteAt;
+    
+	
     @Override
     public boolean isAccountNonExpired() {
         return actif;

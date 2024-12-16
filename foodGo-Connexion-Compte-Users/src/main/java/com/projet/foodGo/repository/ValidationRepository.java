@@ -12,5 +12,5 @@ public interface ValidationRepository extends JpaRepository<Validation, Integer>
     void deleteAllByExpirationBefore(Instant now);
 
 
-    Optional<Validation> findByUtilisateur_EmailAndCode(String email, String code);
+    Optional<Validation> findByUtilisateur_Email_AndCode(String email, String code);
 }

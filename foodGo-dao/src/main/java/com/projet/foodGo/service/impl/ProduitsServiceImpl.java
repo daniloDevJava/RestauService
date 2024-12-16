@@ -1,6 +1,8 @@
 package com.projet.foodGo.service.impl;
 
 import com.projet.foodGo.dto.ProduitsDto;
+import com.projet.foodGo.exeptions.BusinessException;
+import com.projet.foodGo.exeptions.ErrorModel;
 import com.projet.foodGo.mapper.ProduitsConverter;
 import com.projet.foodGo.model.Images;
 import com.projet.foodGo.model.Prestataire;
@@ -41,8 +43,14 @@ public class ProduitsServiceImpl implements ProduitsService {
                 produits=produitsRepository.save(produits);
                 return produitsConverter.toDto(produits);
             }
-            else 
-                throw new IllegalArgumentException("Impossible d'entrer un meme libelle pour deux produits veuillez modifier la quantite en stocke et/ou d'autres caracteristiques du produit");
+            else {
+            	List<ErrorModel> errorModels=new ArrayList<>();
+            	ErrorModel errorModel=new ErrorModel();
+            	errorModel.setCode("INVALID_ENTRY");
+            	errorModel.setMessage("Impossible d'entrer un meme libelle pour deux produits veuillez modifier la quantite en stocke et/ou d'autres caracteristiques du produit");
+            	errorModels.add(errorModel); 
+                throw new BusinessException(errorModels);
+                }
         }
         else
             return null;

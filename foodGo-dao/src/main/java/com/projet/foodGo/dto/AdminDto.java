@@ -1,7 +1,5 @@
 package com.projet.foodGo.dto;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
