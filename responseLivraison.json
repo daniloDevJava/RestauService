@@ -1,0 +1,8 @@
+{
+  "id": "a5c503e4-92cd-4511-9e5e-be6695b0cda9",
+  "timeLivraison": 100,
+  "etatLivraison": "PROPOSEE",
+  "fraisLivraison": 1500,
+  "numeroLivreur": "string",
+  "commandeId": "3c8695f2-8886-436a-a9e4-d9a362772bcc"
+}

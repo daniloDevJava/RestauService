@@ -1,0 +1,288 @@
+.main{
+    width: 1350px; 
+    height: 4776px; 
+    position: absolute; 
+    background: #F7F7F7;
+    display: flex;
+    background-position: center;    
+}
+.city-container{
+    height: 50px; 
+    left: 73px; 
+    top: 25px; 
+    top: 10;
+    left: 0;
+    width:50%;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    text-decoration: none;
+}
+/*
+.city-all{
+    padding-bottom: 11px; 
+    padding-left: 28px; 
+    padding-right: 28px; 
+    left: 110px; 
+    top: 0px; 
+    position: absolute; 
+    background: #D30D00; 
+    box-shadow: 0px 4px 25px #D30D00; 
+    border-radius: 20px; 
+    justify-content: center; 
+    align-items: center; 
+    display: inline-flex;
+}
+.city-all p{
+    color: white; 
+    font-size: 23px; 
+    font-family: Montserrat; 
+    font-weight: 700; 
+    word-wrap: break-word;
+}*/
+.city-names{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 30px;
+    color: #626262;
+    font-weight: 500;
+    left: 120px;
+    justify-content: space-between;
+    height: 50px;
+}
+.city-names li{
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 70%;
+    left: 90px;
+    border: 1px solid #C84032;
+    border-radius: 20px;
+    font-size: 18px;
+    color: #C84032;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    z-index: 1;
+    overflow: hidden;
+    transition: .5s;
+    
+}
+.city-names li:hover,
+.city-names li:active{
+    color: #DC0900;
+}
+.prestataire-container{
+    width: 404px; 
+    height: 400px; 
+    left: 50px; 
+    top: 150px; 
+    position: absolute;
+}
+.food-container{
+    width: 404px; 
+    height: 400px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    background: white; 
+    border-radius: 10px; 
+    overflow: hidden
+}
+/*.style{
+    width: 303.50px; 
+    height: 0px; 
+    left: 0.50px; 
+    top: 232.50px; 
+    border: 1px white solid;
+}*/
+.resto-name1{
+    left: 18px; 
+    top: 248px; 
+    position: absolute; 
+    color: black; 
+    font-size: 20px; 
+    font-family: Montserrat; 
+    font-weight: 700; 
+    word-wrap: break-word;
+}
+.resto-description{
+    left: 23px; 
+    top: 281px; 
+    position: absolute; 
+    color: black; 
+    font-size: 15px; 
+    font-family: Montserrat; 
+    font-weight: 400; 
+    word-wrap: break-word;
+}
+.style img{
+    width: 40px; 
+    height: 40px;
+    left: 43px; 
+    top: 335px; 
+    position: absolute; 
+    border-radius: 100px;
+    background-size: cover;
+}
+/*.ras{
+    width: 48px; height: 14px; left: 341px; top: 370px; position: absolute;
+}*/
+.prest-name{
+    left: 89px; 
+    top: 334px; 
+    position: absolute; 
+    color: #DB877F; 
+    font-size: 16px; 
+    font-family: Montserrat; 
+    font-weight: 500; 
+    word-wrap: break-word;
+}
+.prest-role{
+    left: 89px; 
+    top: 356px; 
+    position: absolute; 
+    color: black; 
+    font-size: 13px; 
+    font-family: Montserrat; 
+    font-weight: 400; 
+    word-wrap: break-word;
+}
+.plus{
+    width: 40px; 
+    height: 40px; 
+    left: 350px; 
+    top: 350px; 
+    position: absolute; 
+    background: #D30D00; 
+    box-shadow: 0px 0px 10px rgba(255, 111, 0, 0.25); 
+    border-radius: 9999px
+}
+.add-btn{
+    background-color: #D30D00;
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 10%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    height: 25.22px; 
+    left: 8px; 
+    top: 3.96px;
+    position: absolute; 
+   
+}
+.btn-plus{
+    justify-content: center;  
+    
+}
+.image img{
+    width: 404px; 
+    height: 230px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px;
+}
+.price{
+    padding-top: 2px; 
+    padding-bottom: 3px; 
+    padding-left: 3px; 
+    padding-right: 2px; 
+    left: 326px; 
+    top: 180px; 
+    position: absolute; 
+    background: white; 
+    border-radius: 5px; 
+    overflow: hidden; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 2px; 
+    display: inline-flex;
+}
+.price p{
+    color: red; 
+    font-size: 15px; 
+    font-family: Montserrat; 
+    font-weight: 700; 
+    word-wrap: break-word;
+}
+.localisation{
+    padding-top: 4px; 
+    padding-bottom: 4px; 
+    padding-left: 5px; 
+    padding-right: 2px; 
+    left: 0px; 
+    top: 0px; 
+    position: absolute; 
+    background: #EB5757; 
+    border-top-left-radius: 10px; 
+    overflow: hidden; 
+    justify-content: center; 
+    align-items: center; 
+    display: inline-flex;
+}
+.local-name{
+    color: white; 
+    font-size: 12px; 
+    font-family: Montserrat; 
+    font-weight: 700; 
+    word-wrap: break-word;
+}
+/* Style par défaut pour les villes */
+.filter {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 20px;
+    background: transparent;
+    color: #333;
+    font-size: 20px;
+    font-family: Montserrat;
+    font-weight: 500;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  /* Style spécifique à la classe city-all (style par défaut pour "All") */
+  .city-all {
+    padding-bottom: 11px;
+    padding-left: 28px;
+    padding-right: 28px;
+    position: absolute;
+    background: #d30d00;
+    box-shadow: 0px 4px 25px #d30d00;
+    border-radius: 20px;
+    justify-content: center;
+    align-items: center;
+    display: inline-flex;
+  }
+  
+  .city-all p {
+    color: white;
+    font-size: 23px;
+    font-family: Montserrat;
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  /* Classe active pour les villes sélectionnées */
+  .filter.active {
+    background: #d30d00; /* Même couleur que "All" */
+    color: white;
+    box-shadow: 0px 4px 25px #d30d00;
+    font-weight: 700;
+  }
+  
+  .filter.active p {
+    color: white;
+  }
+  

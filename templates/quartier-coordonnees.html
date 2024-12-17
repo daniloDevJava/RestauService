@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordonnées d'un Quartier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Obtenir les Coordonnées</h1>
+    <input type="text" id="quartier" placeholder="Nom du quartier" required>
+    <button onclick="getCoordinates()">Obtenir Coordonnées</button>
+    <div id="result"></div>
+
+    <script>
+        function getCoordinates() {
+            const quartier = document.getElementById('quartier').value;
+
+            fetch('/quartier-coordonnees', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ nom: quartier })
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                if (data.error) {
+                    resultDiv.innerHTML = "Erreur : " + data.error;
+                } else {
+                    resultDiv.innerHTML = "Latitude : " + data.latitude + ", Longitude : " + data.longitude;
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = "Une erreur est survenue : " + error;
+            });
+        }
+    </script>
+</body>
+</html>

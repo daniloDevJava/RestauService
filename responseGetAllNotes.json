@@ -1,0 +1,340 @@
+[
+  {
+    "id": "8c443191-1152-4a6b-82fb-2783b64c6992",
+    "avis": "moyen",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "3e9c0b89-5005-4869-bc03-6d3c04d4a64e",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "e88649e7-0988-4a07-89c1-b10e3f30da5a",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "6bed1aa0-6df8-4b89-8ecd-dd3ea6e9f446",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "0653be9d-cadb-48f9-9358-0b618cf94528",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "5c7b2301-f62c-47b9-8678-da56feb7ea72",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "f214251e-1340-4164-adc2-adb819ade65c",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "4282b0dc-901d-42ec-a61a-850941717227",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "868f417f-7e39-4238-b172-d9bba5a3368e",
+    "avis": "good",
+    "note": 5,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "c8171838-b66a-4b61-b169-95a4c227bb88",
+    "avis": "good",
+    "note": 2,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "91535501-19da-49e3-8e05-6aaa7cc00dd6",
+    "avis": "good",
+    "note": 2,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "9c2428c7-0db3-4c3e-b3c3-a7d3e1d54608",
+    "avis": "good",
+    "note": 2,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  },
+  {
+    "id": "c3d46947-c934-419d-b54b-6bc23655a8be",
+    "avis": "ras",
+    "note": 3,
+    "userDto": {
+      "id": "ab45d504-4812-4e34-abc1-dd4ee2371339",
+      "nom": "Karatsuba",
+      "motDePasse": null,
+      "adresseMail": "karatsuba@gmail.com",
+      "createAt": "2024-11-10T16:11:52.162006",
+      "updateAt": "2024-11-10T16:11:52.162079"
+    },
+    "prestataireDto": {
+      "id": "a487f228-7b74-4f8e-aa4a-0d3300d079f0",
+      "nom": "Archimede",
+      "motDePasse": "2086960025",
+      "adresseMail": "archimede@gmail.com",
+      "createAt": "2024-11-10T16:13:45.615149",
+      "updateAt": "2024-11-10T17:34:31.410568",
+      "listProduits": [],
+      "noteMoyenne": 4.153846263885498,
+      "natureCompte": "VIP",
+      "longitude": 0.00001,
+      "latitude": 0.0001
+    }
+  }
+]
