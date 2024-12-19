@@ -1,0 +1,192 @@
+
+.prestataire-container {
+  margin: 70px;
+  margin-left: 0px;
+  
+}
+a{
+  text-decoration: none;
+  color: white;
+}
+
+.prestataires-list {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+
+  padding: 20px;
+}
+
+.food-container {
+  width: 370px;
+  height: 400px;
+  position: relative;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  transition: transform 0.3s ease-in-out;
+}
+.food-container:hover {
+  transform: translateY(-5px);
+}
+
+
+.resto-name1 {
+  position: absolute;
+  left: 18px;
+  top: 248px;
+  color: black;
+  font-size: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  word-wrap: break-word;
+  margin-bottom: 8px;
+}
+
+/* Description du restaurant */
+.resto-description {
+  position: absolute;
+  top: 281px;
+  color: black;
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+  line-height: 1.5; /* Améliore la lisibilité */
+}
+
+/* Image du prestataire */
+.style img {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 43px;
+  top: 335px;
+  border-radius: 50%; /* Ajuste pour un cercle parfait */
+  object-fit: cover;
+  background-size: cover;
+  
+}
+
+/* Nom du prestataire */
+.prest-name {
+  position: absolute;
+  margin-top: 5px;
+  margin-left: 0;
+  left: 0;
+  top: 334px;
+  color: #DB877F;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  word-wrap: break-word;
+}
+
+/* Rôle du prestataire */
+.prest-role {
+  position: absolute;
+  left: 0;
+  top: 356px;
+  color: black;
+  font-size: 13px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Bouton + */
+.plus {
+  width: 45px;
+  height: 45px;
+  position: absolute;
+  left: 320px;
+  top: 330px;
+  background: #f12314;
+  box-shadow: 0px 0px 10px rgba(29, 13, 1, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-btn {
+  background-color: #D30D00;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.add-btn:hover {
+  background-color: #B00C00;
+}
+
+/* Image du produit */
+.image img {
+  width: 100%; /* S'adapte à la largeur du conteneur */
+  height: 230px;
+  top: 0;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  object-fit: cover; /* Assure une bonne adaptation de l'image */
+}
+
+/* Prix */
+.price {
+  position: absolute;
+  left: 326px;
+  top: 165px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price p {
+  color: rgb(15, 15, 15);
+  font-size: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+/* Localisation */
+.localisation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #EB5757;
+  border-top-left-radius: 10px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.local-name {
+  color: white;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+
+
+/* Badges de localisation */
+[data-city="yaounde"]::before {
+  content: "Yaoundé";
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #e30613;
+  color: #fff;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  text-transform: uppercase;
+}

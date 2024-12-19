@@ -1,0 +1,22 @@
+.Acceuil {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+
+  .middle {
+    position: relative;
+    top: 100vh; 
+    z-index: 2;
+    height: 100vh;
+  }
+
+  .Footer{
+    margin-top: 50vh ;
+  }
+ 

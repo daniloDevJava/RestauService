@@ -1,0 +1,146 @@
+.Sign{
+  width: 100%;
+  height: 200vh;
+  background-color: #f7f5f3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.conteneur {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: rgb(252, 234, 199);
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+  
+  .role-options {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+  }
+  
+  .role-card {
+    padding: 1.5rem;
+    border: 2px solid #f11d1d;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 200px;
+  }
+  
+  .role-card:hover {
+    border-color: #0a0a0a;
+    transform: translateY(-2px);
+  }
+  
+  .role-card.selected {
+    border-color: #ff4444;
+    background-color: #fff5f5;
+  }
+  
+  .role-card h3 {
+    margin: 0 0 0.5rem 0;
+    color: #f31e1e;
+  }
+  
+  .role-card p {
+    margin: 0;
+    color: #ff2d2d;
+    font-size: 0.9rem;
+  }
+  
+  .groupe {
+    margin-bottom: 1.5rem;
+  }
+  
+  .groupe label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .groupe input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 1rem;
+  }
+  
+  .groupe input:focus {
+    outline: none;
+    border-color: #ff4444;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  button {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    
+  }
+  
+  .back-button {
+    background: #f1f1f1;
+    color: #333;
+  }
+  
+  .back-button:hover {
+    background: #e1e1e1;
+  }
+  
+  .submit-button {
+    background: #ff4444;
+    color: white;
+  }
+  
+  .submit-button:hover {
+    background: #ff2222;
+  }
+  
+  .rouge {
+    color: #ff4444;
+    text-decoration: none;
+  }
+  
+  .rouge:hover {
+    text-decoration: underline;
+  }
+
+ 
+  .terms-checkbox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+  
+  .terms-checkbox input[type="checkbox"] {
+    width: auto;
+
+  }
+  
+  .terms-checkbox label {
+    font-size: 14px;
+    color: #666;
+  }

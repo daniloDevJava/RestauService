@@ -1,0 +1,169 @@
+/* Conteneur global */
+.Log {
+    width: 100%;
+    height: 100vh;
+    background-color: #f7f5f3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Navbar */
+.Navbar { 
+    width: 100%;
+    padding: 10px;
+    background-color: #F6BE8E;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Conteneur principal */
+.conteneur {
+    display: flex;
+    flex-direction: column;
+    margin: 50px auto;
+    width: 40%;
+    max-width: 600px;
+    padding: 30px;
+    gap: 20px;
+    background-color: #F6BE8E;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+}
+
+
+/* Champs input */
+input {
+    background-color: #FEFBFB;
+    border-radius: 10px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    font-size: 1em;
+    color: #333;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid #C84032;
+}
+
+/* Groupe de champs */
+.groupe {
+    margin-bottom: 1em;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Boutons */
+button {
+    height: 50px;
+    color: #FFFFFF;
+    font-weight: 700;
+    width: 100%;
+    background: #C84032;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Messages d'erreur */
+.error-message {
+    color: #D30D00;
+    font-size: 0.9em;
+    margin-top: 0.3em;
+}
+
+input.error {
+    border: 1px solid #D30D00;
+}
+
+/* Liens */
+.forgot-password a,
+.signup-link a {
+    text-decoration: none;
+    color: rgb(236, 48, 48);
+    font-weight: bold;
+}
+
+.submit-link{
+    text-decoration: none;
+    color: #ddd;
+}
+
+.signup-link {
+    text-align: center;
+    color: #333;
+}
+
+.rouge {
+    color: #C84032;
+}
+
+.forgot-password a:hover,
+.signup-link a:hover {
+    text-decoration: underline;
+}
+/* Conteneur du mot de passe avec l'icône de l'œil */
+.password-container {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    right: 10px;
+    width: 100px;
+    top: 50%;
+    transform: translateY(-51%);
+    background: none;
+    border: none;
+    font-size: 1.2em; /* Taille de l'icône */
+    cursor: pointer;
+    color: #aa2525; /* Couleur de l'icône */
+  }
+  
+  /* Optionnel : pour styliser les champs d'entrée en erreur */
+  input.error {
+    border-color: red;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
+  
+  /* Style du bouton quand il est focus */
+  .password-toggle:focus {
+    outline: none;
+  }
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .conteneur {
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    button, .choice-button {
+        font-size: 0.9em;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}
