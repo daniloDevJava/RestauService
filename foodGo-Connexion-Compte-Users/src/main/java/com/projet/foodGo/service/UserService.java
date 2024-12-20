@@ -34,7 +34,7 @@ public class UserService {
     /**
      * Enregistre un utilisateur en fonction de son rôle.
      *
-     *
+     * @return
      */
     public RegisterRequest registerUser(RegisterRequest request) throws BusinessException {
         List<ErrorModel> errorModelList=new ArrayList<>();
@@ -80,58 +80,44 @@ public class UserService {
         utilisateur.setRole(request.getRole());
         utilisateur.setActif(false);
 
+        utilisateur = utilisateurRepository.save(utilisateur);
 
         // Étape 2 : Générer et envoyer le code de validation
-        
+        String code = validationService.generateAndSendValidationCode(utilisateur);
 
         // Étape 3 : Appeler le DAO en fonction du rôle
         switch (request.getRole()) {
-            case ADMIN -> {
-                AdminDto admin=registerAdmin(utilisateur,request);
-                request.setEntryKey(admin.getEntryKey());
-                utilisateurRepository.save(utilisateur);
-                String code = validationService.generateAndSendValidationCode(utilisateur);
-
-            }
-            case CLIENT -> {
-                registerClient(utilisateur, request);
-                utilisateurRepository.save(utilisateur);
-                String code = validationService.generateAndSendValidationCode(utilisateur);
-            }
-            case VENDEUR -> {
-                registerPrestataire(utilisateur, request);
-                utilisateurRepository.save(utilisateur);
-                String code = validationService.generateAndSendValidationCode(utilisateur);
-            }
+            case ADMIN -> registerAdmin(request);
+            case CLIENT -> registerClient(utilisateur, request);
+            case VENDEUR -> registerPrestataire(utilisateur, request);
             default -> throw new IllegalArgumentException("Rôle inconnu : " + request.getRole());
         }
         return request;
     }
 
-    private AdminDto registerAdmin(Utilisateur utilisateur,RegisterRequest request) {
+    private void registerAdmin(RegisterRequest request) {
 
         AdminDto adminDto = new AdminDto();
         adminDto.setAdresseMail(request.getEmail());
         adminDto.setNom(request.getUsername());
-        adminDto.setMotDePasse(utilisateur.getMdp());
+        adminDto.setMotDePasse(request.getPassword());
         adminDto.setEntryKey(request.getEntryKey());
-        adminDto.setRole(request.getRole());
+       
 
         // Appeler le service DAO
-         return sendToDaoAdmin(adminDto);
+        sendToDao("/admins/add", adminDto);
     }
 
     private void registerClient(Utilisateur utilisateur, RegisterRequest request) {
         ClientDto clientDto = new ClientDto();
         clientDto.setAdresseMail(utilisateur.getEmail());
         clientDto.setNom(utilisateur.getUsername());
-        clientDto.setMotDePasse(utilisateur.getMdp());
+        clientDto.setMotDePasse(request.getPassword());
         clientDto.setPrenom(request.getPrenom());
         System.out.println(request.getDateOfBirth());
         clientDto.setDateOfBirth(request.getDateOfBirth());
         clientDto.setAdresse(request.getAdresse());
         clientDto.setNumeroCNI(request.getNumeroCNI());
-        clientDto.setRole(request.getRole());
 
         sendToDao("/clients/add", clientDto);
     }
@@ -145,12 +131,11 @@ public class UserService {
         prestataireDto.setNatureCompte(request.getNatureCompte());
         prestataireDto.setLatitude(request.getLatitude());
         prestataireDto.setLongitude(request.getLongitude());
-        prestataireDto.setRole(request.getRole());
 
         sendToDao("/prestataires/add", prestataireDto);
     }
 
-    private <T>  void sendToDao(String uri, T dto) {
+    private <T> void sendToDao(String uri, T dto) {
 	    webClientBuilder.build()
 		    .post()
 		    .uri(uri)
@@ -177,39 +162,6 @@ public class UserService {
 		            })
 		    )
 		    .toBodilessEntity()
-		    .block();
-                
-
-                ;
-}
-
-	private AdminDto sendToDaoAdmin(AdminDto dto) {
-	    return webClientBuilder.build()
-		    .post()
-		    .uri("/admins/add")
-		    .bodyValue(dto)
-		    .retrieve()
-		    .onStatus(
-		        status -> status.value() >= 400 && status.value() < 500, // Vérifie les erreurs 4xx
-		        clientResponse -> clientResponse.bodyToMono(String.class)
-		            .flatMap(errorBody -> {
-		                ErrorModel errorModel = new ErrorModel();
-		                errorModel.setCode("CLIENT_ERROR");
-		                errorModel.setMessage("Erreur lors de l'appel au service DAO : " + errorBody);
-		                return Mono.error(new BusinessException(List.of(errorModel)));
-		            })
-		    )
-		    .onStatus(
-		        status -> status.value() >= 500, // Vérifie les erreurs 5xx
-		        clientResponse -> clientResponse.bodyToMono(String.class)
-		            .flatMap(errorBody -> {
-		                ErrorModel errorModel = new ErrorModel();
-		                errorModel.setCode("SERVER_ERROR");
-		                errorModel.setMessage("Erreur interne dans le service DAO : " + errorBody);
-		                return Mono.error(new BusinessException(List.of(errorModel)));
-		            })
-		    )
-		    .bodyToMono(AdminDto.class)
 		    .block();
 }
 

@@ -27,7 +27,7 @@ public class ClientController {
             @ApiResponse(responseCode = "201",description = "new client now"),
             @ApiResponse(responseCode = "400",description = "a field of client is missing")
     })
-    public ResponseEntity<ClientDto> createClient( @RequestBody ClientDto clientDto){
+    public ResponseEntity<ClientDto> createClient(@Valid @RequestBody ClientDto clientDto){
         return new ResponseEntity<>(clientService.createClient(clientDto), HttpStatus.CREATED);
     }
 

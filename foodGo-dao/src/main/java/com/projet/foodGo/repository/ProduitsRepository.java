@@ -18,5 +18,7 @@ public interface ProduitsRepository extends JpaRepository<Produits, UUID> {
     @Query("SELECT p FROM produits p WHERE p.prestataire.id = :prestataire_id AND p.deleteAt IS NULL AND p.libelle = :libelle ")
     Optional<Produits> findByPrestataireOrderByLibelle(@Param("prestataire_id") UUID prestataire_id,@Param("libelle") String  libelle);
     List<Produits> findByPrestataireAndDeleteAtIsNotNull(Prestataire prestataire);
-
+    @Query("UPDATE  produits SET quantiteStock = :quantite WHERE id = :id")
+    void updateQuantiteStock(@Param("quantite") int quantite,@Param("id") UUID id);
+    List<Produits> findByLibelleAndDeleteAtIsNull(String libelle);
 }

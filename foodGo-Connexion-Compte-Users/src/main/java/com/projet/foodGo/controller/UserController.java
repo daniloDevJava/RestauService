@@ -1,7 +1,10 @@
 package com.projet.foodGo.controller;
 
-import com.projet.foodGo.dto.*;
+import com.projet.foodGo.dto.AuthentificationDto;
+import com.projet.foodGo.dto.LoginDto;
+import com.projet.foodGo.dto.ValidationDto;
 import com.projet.foodGo.exceptions.BusinessException;
+import com.projet.foodGo.dto.RegisterRequest;
 import com.projet.foodGo.service.JwtService;
 import com.projet.foodGo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,36 +62,15 @@ public class UserController {
 
 
     @PostMapping("/refresh")
-    @Operation(summary = "refresh refresh-token")
+    @Operation(summary = "refresh token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the token if refresh"),
             @ApiResponse(responseCode = "400",description = "Exception coté clien levée")
     })
     public ResponseEntity<AuthentificationDto> refreshToken(@RequestParam("refreshToken") String refreshToken) throws BusinessException {
-        AuthentificationDto tokens=jwtService.refreshTokens(refreshToken);
+        AuthentificationDto tokens=jwtService.refreshAccessToken(refreshToken);
         return new ResponseEntity<>(tokens,HttpStatus.OK);
     }
-
-    @PostMapping("/refreshAccessToken")
-    @Operation(summary = "refresh Access token")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "the new access token"),
-            @ApiResponse(responseCode = "400",description = "Exception coté client levée")
-    })
-    public ResponseEntity<AccessTokenDto> refreshAccessToken(@RequestParam("refreshToken") String refreshToken) throws BusinessException {
-        AccessTokenDto accestoken=jwtService.refreshAccessToken(refreshToken);
-        return new ResponseEntity<>(accestoken,HttpStatus.OK);
-    }
-
-    @PostMapping("/logout")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",description = "the new access token"),
-            @ApiResponse(responseCode = "400",description = "Exception coté client levée")
-    })
-    public ResponseEntity<String> deconnexion(@RequestParam("refreshToken") String refreshToken) throws BusinessException {
-        jwtService.invalidateRefreshToken(refreshToken);
-        return new ResponseEntity<>("{\"message\": \"déconnexion réussie\"}",HttpStatus.OK);
-    } 
 
 
 }
