@@ -87,4 +87,6 @@ public interface PrestataireService {
     boolean deletePrestataire(UUID id);
 
     PrestataireDto updateAdresse(UUID prestataireId,PrestataireDto prestataireDto);
+
+    List<PrestataireDto> getPrestatairesByFood(String libelle);
 }

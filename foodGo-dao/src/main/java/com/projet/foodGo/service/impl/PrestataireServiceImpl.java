@@ -185,4 +185,17 @@ public class PrestataireServiceImpl implements PrestataireService {
         else
             return null;
     }
+
+    /**
+     * @param libelle
+     * @return
+     */
+    @Override
+    public List<PrestataireDto> getPrestatairesByFood(String libelle) {
+        List<Prestataire> prestataires=prestataireRepository.findPrestatairesByProduitLibelle(libelle);
+
+        return prestataires.stream()
+                .map(prestataireConverter::toDto)
+                .collect(Collectors.toList());
+    }
 }
