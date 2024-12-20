@@ -1,5 +1,6 @@
 import React from 'react';
 import './Footer.css';
+import { Link } from 'react-router-dom';
 import facebookIcon from '../Assets/facebook.svg';
 import instagramIcon from '../Assets/instagram.svg';
 import twitterIcon from '../Assets/twitter-alt-circle.svg';
@@ -18,7 +19,7 @@ const Footer = () => {
           <ul>
             <li><a href="/information#about" style={{ textDecoration: 'none', color: '#000' }}>About us</a></li>
             <li><a href="/information#portfolio" style={{ textDecoration: 'none', color: '#000' }}>Portfolio</a></li>
-            <li><a href="/information#page" style={{ textDecoration: 'none', color: '#000' }}>Page</a></li>
+            <li> <Link to='/Dashboard' style={{textDecoration: 'none', color: 'black'}}>Page</Link></li>
             <li><a href="/information#faq" style={{ textDecoration: 'none', color: '#000' }}>FAQ</a></li>
             <li><a href="/information#reviews" style={{ textDecoration: 'none', color: '#000' }}>Reviews</a></li>
           </ul>

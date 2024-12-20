@@ -7,7 +7,7 @@ import profileImage from "../Assets/elle.jpeg"
 const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const isFoodPage = location.pathname === '/Food'|| location.pathname === '/cart'
+  const isFoodPage = location.pathname === '/Food'|| location.pathname === '/cart' || location.pathname === '/Offers'
    
 
   return (
