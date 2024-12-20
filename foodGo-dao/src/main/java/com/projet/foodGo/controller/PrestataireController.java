@@ -147,4 +147,15 @@ public class PrestataireController {
         else
             return new ResponseEntity<>("{\"message\" : \"prestataire doesn't exists\"}",HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/prestataires-find")
+    @Operation(summary = "rechercher les prestataires qui vendent un produit appelé ...")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "la liste trouvée"),
+            @ApiResponse(responseCode = "400",description = "aucune nourriture appelée ainsi trouvée")
+    })
+    public ResponseEntity<List<PrestataireDto>> getPrestatairesByFood(@RequestParam("libelle") String libelle){
+        List<PrestataireDto> prestataireDtoList=prestataireService.getPrestatairesByFood(libelle);
+        return new ResponseEntity<>(prestataireDtoList,HttpStatus.OK);
+    }
 }
