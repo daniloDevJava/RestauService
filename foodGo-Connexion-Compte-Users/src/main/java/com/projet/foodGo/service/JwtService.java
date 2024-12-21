@@ -12,6 +12,7 @@ import com.projet.foodGo.repository.JwtRepository;
 import com.projet.foodGo.repository.RefreshTokenRepository;
 import com.projet.foodGo.repository.UtilisateurRepository;
 import com.projet.foodGo.util.JwtUtil;
+import com.projet.foodGo.model.enumType.NatureCompte;
 import com.projet.foodGo.external.PrestataireDto;
 import com.projet.foodGo.external.UserDto;
 import lombok.AllArgsConstructor;
@@ -69,24 +70,41 @@ public class JwtService {
 
     public AuthentificationDto login(String email, String password) throws BusinessException {
 
-        Optional<Utilisateur> optionalUser = utilisateurRepository.findByEmailAndDeleteAtIsNull(email);
-        if (optionalUser.isPresent()) {
-            Utilisateur utilisateur = optionalUser.get();
-            if (!passwordEncoder.matches(password, utilisateur.getPassword())) {
-                ErrorModel errorModel = new ErrorModel();
-                errorModel.setCode("AUTHENTIFICATION FAILED");
-                errorModel.setMessage("Identifiants invalides");
-                throw new BusinessException(List.of(errorModel));
-            }
+	    Optional<Utilisateur> optionalUser = utilisateurRepository.findByEmailAndDeleteAtIsNull(email);
 
-            return generateTokens(utilisateur);
-        } else {
-            ErrorModel errorModel = new ErrorModel();
-            errorModel.setCode("AUTHENTIFICATION FAILED");
-            errorModel.setMessage("Utilisateur non trouvé");
-            throw new BusinessException(List.of(errorModel));
-        }
-    }
+	    if (optionalUser.isPresent()) {
+		Utilisateur utilisateur = optionalUser.get();
+
+		// Vérification du mot de passe
+		if (!passwordEncoder.matches(password, utilisateur.getPassword())) {
+		    ErrorModel errorModel = new ErrorModel();
+		    errorModel.setCode("AUTHENTIFICATION FAILED");
+		    errorModel.setMessage("Identifiants invalides");
+		    throw new BusinessException(List.of(errorModel));
+		}
+		
+		
+
+		// Vérification de la nature du compte pour les prestataires
+		if (utilisateur.getRole() == RoleUser.VENDEUR ) {
+		    PrestataireDto prestataire=getPrestataireByName(utilisateur.getUsername());
+		    if(prestataire.getNatureCompte()==NatureCompte.RESTREINT){
+			    ErrorModel errorModel = new ErrorModel();
+			    errorModel.setCode("ACCOUNT RESTRICTED");
+			    errorModel.setMessage("Votre compte est restreint, veuillez contacter l'administrateur.");
+			    throw new BusinessException(List.of(errorModel));
+		    }
+		}
+
+		// Générer les tokens si tout est valide
+		return generateTokens(utilisateur);
+	    } else {
+		ErrorModel errorModel = new ErrorModel();
+		errorModel.setCode("AUTHENTIFICATION FAILED");
+		errorModel.setMessage("Utilisateur non trouvé");
+		throw new BusinessException(List.of(errorModel));
+	    }
+}
 
     public AuthentificationDto refreshTokens(String refreshTokenValue) throws BusinessException {
 

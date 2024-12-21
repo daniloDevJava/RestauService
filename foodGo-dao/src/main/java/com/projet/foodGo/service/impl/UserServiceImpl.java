@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public UserDto updateMontantompte(UUID id, UserDto userDto) {
+    public UserDto updateMontantCompte(UUID id, UserDto userDto) {
         Optional<Users> optionalUsers=userRepository.findByIdAndDeleteAtIsNull(id);
         if(optionalUsers.isPresent())
         {

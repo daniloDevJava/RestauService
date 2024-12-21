@@ -2,6 +2,7 @@ package com.projet.foodGo.controller;
 
 import com.projet.foodGo.dto.*;
 import com.projet.foodGo.exceptions.BusinessException;
+import com.projet.foodGo.external.PrestataireDto;
 import com.projet.foodGo.service.JwtService;
 import com.projet.foodGo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -81,6 +82,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
+    @Operation(summary = "déconnexion d'un utilisateur")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",description = "the new access token"),
             @ApiResponse(responseCode = "400",description = "Exception coté client levée")
@@ -88,7 +90,54 @@ public class UserController {
     public ResponseEntity<String> deconnexion(@RequestParam("refreshToken") String refreshToken) throws BusinessException {
         jwtService.invalidateRefreshToken(refreshToken);
         return new ResponseEntity<>("{\"message\": \"déconnexion réussie\"}",HttpStatus.OK);
-    } 
+    }
 
+    @PatchMapping("/update-password")
+    @Operation(summary = "Mise à jour du mot de passe par email")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Mot de passe mis à jour avec succès."),
+                    @ApiResponse(responseCode = "404", description = "Utilisateur introuvable."),
+                    @ApiResponse(responseCode = "500", description = "Erreur lors de la mise à jour du mot de passe.")
+            }
+    )
+    public ResponseEntity<String> updatePassword(
+            @RequestParam String email,
+            @RequestParam String oldPassword,
+            @RequestParam String newPassword)throws BusinessException {
+        userService.updatePassword(email, newPassword, oldPassword);
+        return ResponseEntity.ok("{\"message\": \"Mot de passe mis à jour avec succès.\"}");
+    }
+    @PatchMapping("/restrict-prestataire")
+    @Operation(summary = "Restreindre un prestataire")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Le prestataire a été restreint avec succès."),
+            @ApiResponse(responseCode = "404", description = "Utilisateur ou prestataire introuvable."),
+            @ApiResponse(responseCode = "500", description = "Erreur lors de la restriction du prestataire.")
+    })
+    public ResponseEntity<String> restrictPrestataire(@RequestParam String emailPrestataire,@RequestParam String mailAdmin) {
+        try {
+            userService.restrictPrestataire(emailPrestataire,mailAdmin);
+            return ResponseEntity.ok("{\"message\": \"Prestataire restreint avec succès.\"}");
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/unrestricted-prestataire")
+    @Operation(summary = "lever la restriction sur un prestataire")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "La restriction du prestataire a été levée avec succès."),
+            @ApiResponse(responseCode = "404", description = "Utilisateur ou prestataire introuvable."),
+            @ApiResponse(responseCode = "500", description = "Erreur lors de la levée de la restriction du prestataire.")
+    })
+    public ResponseEntity<String> unrestrictedPrestataire(@RequestParam String emailPrestataire, @RequestParam String mailAdmin, @RequestBody PrestataireDto prestataireDto){
+        try{
+            userService.unrestrictedPrestataire(emailPrestataire,mailAdmin,prestataireDto);
+            return ResponseEntity.ok("{\"message\": \"la levée de restriction du Prestataire  est un succès.\"}");
+        } catch (BusinessException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 }

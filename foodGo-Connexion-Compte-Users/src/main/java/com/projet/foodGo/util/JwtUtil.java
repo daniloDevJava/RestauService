@@ -87,6 +87,7 @@ public class JwtUtil {
         return extractClaims(token).getSubject();
     }
 
+
     /**
      * Vérifie si un token a expiré.
      *

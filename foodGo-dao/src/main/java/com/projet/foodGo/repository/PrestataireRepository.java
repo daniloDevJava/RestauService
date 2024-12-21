@@ -17,5 +17,6 @@ public interface PrestataireRepository extends JpaRepository<Prestataire, UUID> 
     Optional<Prestataire> findByNomAndDeleteAtIsNull(String nom);
     @Query("SELECT p FROM Prestataire p JOIN p.listProduits pr WHERE pr.libelle = :libelle")
     List<Prestataire> findPrestatairesByProduitLibelle(@Param("libelle") String libelle);
+    Optional<Prestataire> findByAdresseMailAndDeleteAtIsNull(String AdresseMail);
 
 }

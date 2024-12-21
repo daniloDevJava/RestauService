@@ -2,26 +2,26 @@ package com.projet.foodGo.service;
 
 import com.projet.foodGo.exceptions.BusinessException;
 import com.projet.foodGo.exceptions.ErrorModel;
-import com.projet.foodGo.external.AdminDto;
-import com.projet.foodGo.external.ClientDto;
-import com.projet.foodGo.external.PrestataireDto;
+import com.projet.foodGo.external.*;
 import com.projet.foodGo.dto.RegisterRequest;
 import com.projet.foodGo.model.Utilisateur;
 import com.projet.foodGo.model.enumType.RoleUser;
+import com.projet.foodGo.model.enumType.NatureCompte;
+import com.projet.foodGo.repository.JwtRepository;
 import com.projet.foodGo.repository.UtilisateurRepository;
+import com.projet.foodGo.model.Jwt;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import java.util.Optional;
+
+import java.util.*;
 
 import reactor.core.publisher.Mono; // Pour Mono
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -30,6 +30,8 @@ public class UserService {
     private final ValidationService validationService;
     private final WebClient.Builder webClientBuilder;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final GeolocationService geolocationService;
+    private final JwtRepository jwtRepository;
 
     /**
      * Enregistre un utilisateur en fonction de son rôle.
@@ -142,9 +144,10 @@ public class UserService {
         prestataireDto.setMotDePasse(utilisateur.getMdp());
         prestataireDto.setNom(utilisateur.getUsername());
         prestataireDto.setAddress(request.getAdresse());
+        GeoCoordinates coordinates = geolocationService.getCoordinates(request.getAdresse());
         prestataireDto.setNatureCompte(request.getNatureCompte());
-        prestataireDto.setLatitude(request.getLatitude());
-        prestataireDto.setLongitude(request.getLongitude());
+        prestataireDto.setLatitude(Double.valueOf(coordinates.getLatitude()));
+        prestataireDto.setLongitude(Double.valueOf(coordinates.getLongitude()));
         prestataireDto.setRole(request.getRole());
 
         sendToDao("/prestataires/add", prestataireDto);
@@ -238,6 +241,253 @@ public class UserService {
             throw new BusinessException(errorModels);
         }
 
+
+    }
+    /**
+     * Met à jour le mot de passe d'un utilisateur.
+     *
+     * @param email L'email de l'utilisateur.
+     * @param newPassword Le nouveau mot de passe.
+     * @param oldPassword L'ancien mot de passe.
+     */
+    public void updatePassword(String email, String newPassword, String oldPassword) throws BusinessException{
+        Optional<Utilisateur> optionalUtilisateur=utilisateurRepository.findByEmailAndDeleteAtIsNull(email);
+        if(optionalUtilisateur.isPresent()) {
+                Utilisateur utilisateur= optionalUtilisateur.get();
+		// Étape 1 : Trouver l'utilisateur correspondant à l'email
+		UserDto userDto = getUserByEmail(email);
+		if(utilisateur.getEmail().equals(userDto.getMotDePasse()))
+			System.out.println("Ok");
+		// Étape 2 : Vérifier l'ancien mot de passe
+		if (!bCryptPasswordEncoder.matches(oldPassword, userDto.getMotDePasse())) {
+		    throw new IllegalArgumentException("L'ancien mot de passe est incorrect.");
+		}
+
+		// Étape 3 : Encoder le nouveau mot de passe
+		String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+
+		// Étape 4 : Mettre à jour le mot de passe dans le service DAO
+		updatePasswordInDao(userDto.getId(), encodedPassword,userDto.getMotDePasse());
+		utilisateur.setMdp(encodedPassword);
+		utilisateurRepository.save(utilisateur);
+	    }
+	     else
+		{
+		    List<ErrorModel> errorModels=new ArrayList<>();
+		    ErrorModel errorModel=new ErrorModel();
+		    errorModel.setCode("INVALID_PARAMETERS");
+		    errorModel.setMessage("adresse mail incorrecte");
+		    errorModels.add(errorModel);
+		    throw new BusinessException(errorModels);
+		}
+    }
+
+    /**
+     * Parcourt la liste des utilisateurs pour trouver celui correspondant à l'email.
+     *
+     * @param email L'email de l'utilisateur.
+     * @return Le DTO utilisateur contenant l'ID et le mot de passe.
+     */
+    private UserDto getUserByEmail(String email) {
+        String url = "/users/all";
+
+        List<UserDto> users = webClientBuilder.build()
+                .get()
+                .uri(url)
+                .retrieve()
+                .bodyToFlux(UserDto.class)
+                .collectList()
+                .block();
+
+        assert users != null;
+        return users.stream()
+                .filter(user -> user.getAdresseMail().equalsIgnoreCase(email))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Utilisateur introuvable avec l'email : " + email));
+    }
+
+    /**
+     * Met à jour le mot de passe d'un utilisateur dans le service DAO.
+     *
+     * @param id L'ID de l'utilisateur dans le service DAO.
+     * @param encodedPassword Le nouveau mot de passe encodé.
+     */
+    private void updatePasswordInDao(UUID id, String encodedPassword,String oldPassword) {
+        String url = String.format("/users/%s/update-password?oldPassWord=%s", id,oldPassword);
+        UserDto updatedUserDto = new UserDto();
+        updatedUserDto.setMotDePasse(encodedPassword);
+
+        webClientBuilder.build()
+                .patch()
+                .uri(url)
+                .bodyValue(updatedUserDto)
+                .retrieve()
+                .onStatus(
+                        HttpStatusCode::is4xxClientError,
+                        response -> response.createException()
+                                .map(ex -> new IllegalArgumentException("Erreur lors de la mise à jour du mot de passe."))
+                )
+                .toBodilessEntity()
+                .block();
+    }
+    /**
+     * Restreindre un prestataire.
+     *
+     * @param email L'email du prestataire à restreindre.
+     * @throws BusinessException Si le prestataire n'existe pas ou en cas d'erreur.
+     */
+
+    public void restrictPrestataire(String email, String mailAdmin) throws BusinessException {
+    
+        Optional<Utilisateur> optionalAdmin=utilisateurRepository.findByEmailAndDeleteAtIsNull(mailAdmin);
+        Optional<Utilisateur> optionalPrestataire=utilisateurRepository.findByEmailAndDeleteAtIsNull(email);
+
+        if(optionalPrestataire.isPresent() && optionalAdmin.isPresent()){
+            Utilisateur Admin=optionalAdmin.get();
+            Utilisateur prestataire= optionalPrestataire.get();
+            if(Admin.getRole() != RoleUser.ADMIN){
+                ErrorModel errorModel=new ErrorModel();
+                errorModel.setCode("AUTHORIZATION_FAILED");
+                errorModel.setMessage("seul un administrateur est capable d'effectuer cette operation");
+                throw new BusinessException(List.of(errorModel));
+            } else if (prestataire.getRole() == RoleUser.VENDEUR) {
+		// Étape 1 : Invalider tous les JWT et RefreshTokens associés
+		invalidateTokensForUser(email);
+
+		// Étape 2 : Changer la nature du compte dans le service DAO
+		updatePrestataireNatureInDao(email);
+
+            }
+
+        }
+    }
+    /**
+     * Invalider tous les JWT et RefreshTokens liés à un utilisateur.
+     *
+     * @param email L'email de l'utilisateur.
+     */
+    private void invalidateTokensForUser(String email) throws BusinessException{
+        List<Jwt> jwts = jwtRepository.findByUtilisateurEmail(email);
+
+        if (jwts.isEmpty()) {
+            ErrorModel errorModel=new ErrorModel();
+                errorModel.setCode("AUTHORIZATION_FAILED");
+                errorModel.setMessage("Aucun token actif pour cet utilisateur.");
+                throw new BusinessException(List.of(errorModel));
+         
+        }
+
+        jwts.forEach(jwt -> {
+            jwt.setExpire(true);
+            jwt.setDesactive(true);
+            jwt.getRefreshToken().setExpire(true);
+            jwtRepository.save(jwt);
+        });
+    }
+    private void validateTokensForUser(String email) throws BusinessException{
+        List<Jwt> jwts = jwtRepository.findByUtilisateurEmail(email);
+
+        if (jwts.isEmpty()) {
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("AUTHORIZATION_FAILED");
+            errorModel.setMessage("Aucun token actif pour cet utilisateur.");
+            throw new BusinessException(List.of(errorModel));
+
+        }
+
+        jwts.forEach(jwt -> {
+            jwt.setExpire(false);
+            jwt.setDesactive(false);
+            jwt.getRefreshToken().setExpire(false);
+            jwtRepository.save(jwt);
+        });
+    }
+    
+     /**
+      * Changer la nature du compte du prestataire dans le service DAO.
+      *
+      * @param email L'email du prestataire.
+      */
+    private void updatePrestataireNatureInDao(String email) {
+		String url = String.format("/prestataires/%s/changer-natureCompte", email);
+
+		PrestataireDto prestataireDto = new PrestataireDto();
+		prestataireDto.setNatureCompte(NatureCompte.RESTREINT);
+
+		webClientBuilder.build()
+		        .patch()
+		        .uri(url)
+		        .bodyValue(prestataireDto)
+		        .retrieve()
+		        .onStatus(
+		        status -> status.value() >= 400 && status.value() < 500, // Vérifie les erreurs 4xx
+		        clientResponse -> clientResponse.bodyToMono(String.class)
+		            .flatMap(errorBody -> {
+		                ErrorModel errorModel = new ErrorModel();
+		                errorModel.setCode("CLIENT_ERROR");
+		                errorModel.setMessage("Erreur lors de l'appel au service DAO : " + errorBody);
+		                return Mono.error(new BusinessException(List.of(errorModel)));
+		            })
+		    )
+		    .onStatus(
+		        status -> status.value() >= 500, // Vérifie les erreurs 5xx
+		        clientResponse -> clientResponse.bodyToMono(String.class)
+		            .flatMap(errorBody -> {
+		                ErrorModel errorModel = new ErrorModel();
+		                errorModel.setCode("SERVER_ERROR");
+		                errorModel.setMessage("Erreur interne dans le service DAO : " + errorBody);
+		                return Mono.error(new BusinessException(List.of(errorModel)));
+		            })
+		    )
+		        .toBodilessEntity()
+		        .block();
+    }
+
+    public void unrestrictedPrestataire(String emailPrestataire, String mailAdmin, PrestataireDto prestataireDto) throws BusinessException {
+        Optional<Utilisateur> optionalAdmin=utilisateurRepository.findByEmailAndDeleteAtIsNull(mailAdmin);
+        Optional<Utilisateur> optionalPrestataire=utilisateurRepository.findByEmailAndDeleteAtIsNull(emailPrestataire);
+
+        if(optionalPrestataire.isPresent() && optionalAdmin.isPresent()){
+            Utilisateur Admin=optionalAdmin.get();
+            Utilisateur prestataire= optionalPrestataire.get();
+            if(Admin.getRole() != RoleUser.ADMIN){
+                ErrorModel errorModel=new ErrorModel();
+                errorModel.setCode("AUTHORIZATION_FAILED");
+                errorModel.setMessage("seul un administrateur est capable d'effectuer cette operation");
+                throw new BusinessException(List.of(errorModel));
+            } else if (prestataire.getRole() == RoleUser.VENDEUR) {
+                validateTokensForUser(emailPrestataire);
+                String url = String.format("/prestataires/%s/changer-natureCompte", emailPrestataire);
+                webClientBuilder.build()
+                        .patch()
+                        .uri(url)
+                        .bodyValue(prestataireDto)
+                        .retrieve()
+                        .onStatus(
+                                status -> status.value() >= 400 && status.value() < 500, // Vérifie les erreurs 4xx
+                                clientResponse -> clientResponse.bodyToMono(String.class)
+                                        .flatMap(errorBody -> {
+                                            ErrorModel errorModel = new ErrorModel();
+                                            errorModel.setCode("CLIENT_ERROR");
+                                            errorModel.setMessage("Erreur lors de l'appel au service DAO : " + errorBody);
+                                            return Mono.error(new BusinessException(List.of(errorModel)));
+                                        })
+                        )
+                        .onStatus(
+                                status -> status.value() >= 500, // Vérifie les erreurs 5xx
+                                clientResponse -> clientResponse.bodyToMono(String.class)
+                                        .flatMap(errorBody -> {
+                                            ErrorModel errorModel = new ErrorModel();
+                                            errorModel.setCode("SERVER_ERROR");
+                                            errorModel.setMessage("Erreur interne dans le service DAO : " + errorBody);
+                                            return Mono.error(new BusinessException(List.of(errorModel)));
+                                        })
+                        )
+                        .toBodilessEntity()
+                        .block();
+            }
+
+            }
 
     }
 }

@@ -22,6 +22,7 @@ public class UserConverter {
         userDto.setAdresseMail(user.getAdresseMail());
         userDto.setCreateAt(user.getCreateAt());
         userDto.setUpdateAt(user.getUpdateAt());
+        userDto.setMotDePasse(user.getMotDePasse());
         userDto.setMontantCompte(user.getMontantCompte());
         return userDto;
     }

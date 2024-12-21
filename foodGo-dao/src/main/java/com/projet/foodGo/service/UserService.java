@@ -61,5 +61,12 @@ public interface UserService {
      */
     boolean deleteUser(UUID id);
 
-    UserDto updateMontantompte(UUID id, UserDto userDto);
+    /**
+     * Update montant compte user dto.
+     *
+     * @param id      the id
+     * @param userDto the user dto
+     * @return the user dto
+     */
+    UserDto updateMontantCompte(UUID id, UserDto userDto);
 }

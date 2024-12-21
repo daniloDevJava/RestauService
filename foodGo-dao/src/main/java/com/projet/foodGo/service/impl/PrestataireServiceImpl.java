@@ -198,4 +198,27 @@ public class PrestataireServiceImpl implements PrestataireService {
                 .map(prestataireConverter::toDto)
                 .collect(Collectors.toList());
     }
+
+    /**
+     * @param mail 
+     * @param prestataireDto
+     * @return
+     */
+    @Override
+    public PrestataireDto updatePrestataireNature(String mail, PrestataireDto prestataireDto) {
+        Optional<Prestataire> optionalPrestataire=prestataireRepository.findByAdresseMailAndDeleteAtIsNull(mail);
+        if(optionalPrestataire.isPresent()){
+            Prestataire prestataire= optionalPrestataire.get();
+            prestataire.setNatureCompte(prestataireDto.getNatureCompte());
+            return prestataireConverter.toDto(prestataireRepository.save(prestataire));
+        }
+        else{
+            List<ErrorModel> errorModelList=new ArrayList<>();
+            ErrorModel errorModel=new ErrorModel();
+            errorModel.setCode("NOT_FOUND");
+            errorModel.setMessage("l'adresse mail est incorrecte");
+            errorModelList.add(errorModel);
+            throw new BusinessException(errorModelList);
+        }
+    }
 }

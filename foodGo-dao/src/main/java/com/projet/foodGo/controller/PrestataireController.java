@@ -1,6 +1,7 @@
 package com.projet.foodGo.controller;
 
 import com.projet.foodGo.dto.PrestataireDto;
+import com.projet.foodGo.exeptions.BusinessException;
 import com.projet.foodGo.service.PrestataireService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -64,10 +65,7 @@ public class PrestataireController {
     public ResponseEntity<PrestataireDto> getPrestataire(@Parameter(description = "Nom du prestataire") @PathVariable String nom) {
         PrestataireDto prestataireDto = prestataireService.getPrestataire(nom);
         System.out.println(prestataireDto.getNatureCompte());
-        if (prestataireDto != null)
-            return new ResponseEntity<>(prestataireDto, HttpStatus.OK);
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(prestataireDto, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -147,7 +145,16 @@ public class PrestataireController {
         else
             return new ResponseEntity<>("{\"message\" : \"prestataire doesn't exists\"}",HttpStatus.NOT_FOUND);
     }
-
+    @PatchMapping("/{mail}/changer-natureCompte")
+    @Operation(summary = "changer la nature du compte d'un prestataire")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",description = "le prestataire a changé la nature de son compte"),
+            @ApiResponse(responseCode = "404",description = "il n'y a pas de prestataire reconnu")
+    })
+    public ResponseEntity<PrestataireDto> changeNaturePrestataire(@RequestBody PrestataireDto prestataireDto,@Parameter(description = "mail of prestataire")@PathVariable String mail) throws BusinessException {
+        PrestataireDto prestataire=prestataireService.updatePrestataireNature(mail,prestataireDto);
+        return new ResponseEntity<>(prestataire,HttpStatus.OK);
+    }
     @GetMapping("/prestataires-find")
     @Operation(summary = "rechercher les prestataires qui vendent un produit appelé ...")
     @ApiResponses(value = {

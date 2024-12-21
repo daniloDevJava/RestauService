@@ -89,4 +89,6 @@ public interface PrestataireService {
     PrestataireDto updateAdresse(UUID prestataireId,PrestataireDto prestataireDto);
 
     List<PrestataireDto> getPrestatairesByFood(String libelle);
+
+    PrestataireDto updatePrestataireNature(String mail, PrestataireDto prestataireDto);
 }

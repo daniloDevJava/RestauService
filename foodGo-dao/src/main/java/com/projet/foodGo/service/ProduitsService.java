@@ -71,7 +71,7 @@ public interface ProduitsService {
     List<ProduitsDto> getCorbeille(UUID prestataire_id);
 
     /**
-     * Update quantite stock produits dto.
+     * Update quantité stock d'un produit dto.
      *
      * @param produit_id  the produit id
      * @param produitsDto the produits dto

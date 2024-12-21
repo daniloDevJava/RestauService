@@ -39,7 +39,7 @@ public class UserController {
             @ApiResponse(responseCode = "400",description = "pas de montant négatif")
     })
     public ResponseEntity<UserDto> updateMontantCompte(@Parameter(description = "Id of user") @PathVariable UUID id,@RequestBody UserDto userDto){
-        UserDto user=userService.updateMontantompte(id,userDto);
+        UserDto user=userService.updateMontantCompte(id,userDto);
         if(user!=null)
             return new ResponseEntity<>(user,HttpStatus.OK);
         else
