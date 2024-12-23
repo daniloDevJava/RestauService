@@ -30,7 +30,7 @@ spring:
     web-application-type: reactive # Mode web réactif pour Spring Cloud Gateway
 
 server:
-  port: 6000 # Port sur lequel l'API Gateway est accessible
+  port: 6005 # Port sur lequel l'API Gateway est accessible
 
 logging:
   level:
@@ -46,16 +46,14 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
     register-with-eureka: true
     instance:
-      prefer-ip-address: true
+      prefer-ip-address: false
 
 routes:
   - id: dao
     uri: lb://FOODGO-DAO
     predicates:
-      - Path=/api/dao/**
-    filters:
-      - StripPrefix=1
-    order: -1
+      - Path=/dao/**
+    
 
   - id: user_account
     uri: lb://FOODGO-CONNEXIONETCOMPTES

@@ -12,7 +12,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         HttpSecurity httpSecurity = http
-                .csrf(AbstractHttpConfigurer::disable) // Désactiver CSRF pour les tests dans Swagger (attention en production)
+                .csrf(AbstractHttpConfigurer::disable) 
+                .cors() // Activer CORS
+        	.and()// Désactiver CSRF pour les tests dans Swagger (attention en production)
                 .authorizeHttpRequests(auth -> auth
                         // Autoriser les endpoints spécifiques
                         .requestMatchers("/user-management/**").permitAll()
