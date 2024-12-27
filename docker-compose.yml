@@ -1,0 +1,34 @@
+# Docker Compose file (docker-compose.yml)
+version: '3.3'
+
+services:
+  geolocalisation:
+    build:
+      context: ./service_geolocalisation
+    ports:
+      - "5001:5001"
+    networks:
+      - restau_network
+    volumes:
+      - ./service_geolocalisation/logs:/app/logs
+
+  payment:
+    build:
+      context: ./service_payment
+    ports:
+      - "5002:5002"
+    networks:
+      - restau_network
+    volumes:
+      - ./service_payment/log_service_payment.txt:/app/log_service_payment.txt
+
+  eurekaserver:
+    image: eurekaserver:latest
+    ports:
+      - "8761:8761"
+    networks:
+      - restau_network
+
+networks:
+  restau_network:
+    driver: bridge

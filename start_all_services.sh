@@ -1,19 +1,15 @@
 #!/bin/bash
 
+# Set PYTHONPATH (if required)
 export PYTHONPATH=/home/Appli_FoodGo/RestauService:$PYTHONPATH
 
-services=(
-    "service_geolocalisation"
-    "service_payment"
-)
+# Start services using Docker Compose
+if docker-compose up -d --build; then
+    echo "All services have been started successfully."
+else
+    echo "Failed to start services!"
+    exit 1
+fi
 
-for service in "${services[@]}"; do
-    if [ -d "$service" ]; then
-        (
-            cd "$service" || exit
-            python3 app.py > "log_${service}.txt" 2>&1 &
-        )
-    else
-        echo "Directory $service does not exist."
-    fi
-done
+# Check service status
+docker-compose ps
