@@ -1,5 +1,5 @@
 # Docker Compose file (docker-compose.yml)
-version: '3.3'
+# version: '3.3'
 
 services:
   geolocalisation:
@@ -22,12 +22,12 @@ services:
     volumes:
       - ./service_payment/log_service_payment.txt:/app/log_service_payment.txt
 
-  eurekaserver:
-    image: eurekaserver:latest
-    ports:
-      - "8761:8761"
-    networks:
-      - restau_network
+  # eurekaserver:
+  #   image: eurekaserver:latest
+  #   ports:
+  #     - "8761:8761"
+  #   networks:
+  #     - restau_network
 
 networks:
   restau_network:
