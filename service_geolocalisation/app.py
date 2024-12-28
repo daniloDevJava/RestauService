@@ -15,8 +15,9 @@ client = EurekaClient(
     eureka_server=EUREKA_SERVER,
     app_name=EUREKA_APP_NAME,
     instance_port=EUREKA_PORT,
-    instance_host="localhost",
+    instance_host="geolocalisation",  # Nom du service dans le docker-compose
 )
+
 
 # Route pour afficher les coordonnes geographique d'un quartier par son nom en utilisant l'api Nominatim
 @app.route('/geolocalisation/quartier-coordonnees', methods=['POST'])

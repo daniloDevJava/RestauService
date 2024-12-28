@@ -18,7 +18,7 @@ client = EurekaClient(
     eureka_server=EUREKA_SERVER,
     app_name=EUREKA_APP_NAME,
     instance_port=EUREKA_PORT,
-    instance_host="localhost",
+    instance_host="payment",  # Nom du service dans le docker-compose
 )
 
 from uuid import UUID

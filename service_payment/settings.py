@@ -1,10 +1,15 @@
+# Settings for payment
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-conn = psycopg2.connect("dbname=prosper user=prosper password=prosper host=postgres")
+conn = psycopg2.connect(
+    "dbname=prosper user=prosper password=prosper host=postgres"
+)
 
 cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-EUREKA_SERVER = "http://37.60.244.227:8761"
-
-app_name = 'ServiceResto/1.0'
+EUREKA_SERVER = os.getenv('EUREKA_SERVER', 'http://37.60.244.227:8761')
+EUREKA_APP_NAME = os.getenv('EUREKA_APP_NAME', 'ServicePayment')
+EUREKA_INSTANCE_HOST = os.getenv('EUREKA_INSTANCE_HOST', 'payment')
+EUREKA_PORT = int(os.getenv('EUREKA_PORT', 5002))

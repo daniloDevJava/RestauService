@@ -1,5 +1,3 @@
-version: '3.3'
-
 services:
   geolocalisation:
     build:
@@ -10,6 +8,13 @@ services:
       - foodgo
     volumes:
       - ./service_geolocalisation/logs:/app/logs
+    environment:
+      - EUREKA_SERVER=http://37.60.244.227:8761
+      - EUREKA_APP_NAME=ServiceGeolocalisation
+      - EUREKA_INSTANCE_HOST=geolocalisation
+      - EUREKA_PORT=5001
+    depends_on:
+      - postgres
 
   payment:
     build:
@@ -20,6 +25,13 @@ services:
       - foodgo
     volumes:
       - ./service_payment/logs:/app/logs
+    environment:
+      - EUREKA_SERVER=http://37.60.244.227:8761
+      - EUREKA_APP_NAME=ServicePayment
+      - EUREKA_INSTANCE_HOST=payment
+      - EUREKA_PORT=5002
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:14
