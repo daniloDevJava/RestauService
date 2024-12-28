@@ -1,5 +1,4 @@
-# Docker Compose file (docker-compose.yml)
-# version: '3.3'
+version: '3.3'
 
 services:
   geolocalisation:
@@ -8,7 +7,7 @@ services:
     ports:
       - "5001:5001"
     networks:
-      - restau_network
+      - foodgo
     volumes:
       - ./service_geolocalisation/logs:/app/logs
 
@@ -18,17 +17,27 @@ services:
     ports:
       - "5002:5002"
     networks:
-      - restau_network
+      - foodgo
     volumes:
-      - ./service_payment/log_service_payment.txt:/app/log_service_payment.txt
+      - ./service_payment/logs:/app/logs
 
-  # eurekaserver:
-  #   image: eurekaserver:latest
-  #   ports:
-  #     - "8761:8761"
-  #   networks:
-  #     - restau_network
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    environment:
+      POSTGRES_USER: prosper
+      POSTGRES_PASSWORD: prosper
+      POSTGRES_DB: prosper
+    ports:
+      - "5432:5432"
+    networks:
+      - foodgo
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 networks:
-  restau_network:
+  foodgo:
     driver: bridge
+
+volumes:
+  postgres_data:
