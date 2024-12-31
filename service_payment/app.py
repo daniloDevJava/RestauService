@@ -48,7 +48,7 @@ def create_order():
             return jsonify({"error": "Les IDs doivent être des UUID valides."}), 400
 
         # Récupérer la commande associée
-        SpringUrlGet = f"http://37.60.244.227/dao/commandes/{commandeId}"
+        SpringUrlGet = f"http://foodgo.smartcloudservices.cloud/dao/commandes/{commandeId}"
         commande = requests.get(SpringUrlGet, timeout=5)
         commande.raise_for_status()
         commande_data = commande.json()
@@ -56,7 +56,7 @@ def create_order():
         prestataireId = commande_data['idPrestataire']
 
         # Vérifier le solde du client
-        SpringUrlGet = f"http://37.60.244.227/dao/users/{userId}"
+        SpringUrlGet = f"http://foodgo.smartcloudservices.cloud/dao/users/{userId}"
         client = requests.get(SpringUrlGet, timeout=5)
         client.raise_for_status()
         client_data = client.json()
@@ -69,7 +69,7 @@ def create_order():
 
         # Mettre à jour le solde du client
         montant -= amount
-        SpringURL = f"http://37.60.244.227/dao/users/{userId}/update-montant"
+        SpringURL = f"http://foodgo.smartcloudservices.cloud/dao/users/{userId}/update-montant"
         response = requests.patch(SpringURL, json={"montantCompte": montant}, timeout=5)
         response.raise_for_status()
 
@@ -160,7 +160,7 @@ def verification():
                             conn.commit()
 
                             # Appeler le service externe pour récupérer le montant actuel du prestataire
-                            SpringUrlGet = f"http://37.60.244.227/dao/users/{prestataireId}"
+                            SpringUrlGet = f"http://foodgo.smartcloudservices.cloud/dao/users/{prestataireId}"
                             try:
                                 Prestataire = requests.get(SpringUrlGet)
                                 Prestataire.raise_for_status()
@@ -169,12 +169,12 @@ def verification():
                                 montant += orders['amount']
 
                                 # Envoyer le montant mis à jour
-                                SpringURL = f"http://37.60.244.227/dao/users/{prestataireId}/update-montant"
+                                SpringURL = f"http://foodgo.smartcloudservices.cloud/dao/users/{prestataireId}/update-montant"
                                 response = requests.patch(SpringURL, json={"montantCompte": montant})
 
                                 if response.status_code == 200:
                                     commandeId = orders['commandeId']
-                                    Spring = f"http://37.60.244.227/dao/commandes/{commandeId}/state-change"
+                                    Spring = f"http://foodgo.smartcloudservices.cloud/dao/commandes/{commandeId}/state-change"
                                     resp = requests.patch(Spring,json={"etat":"FINALISE"})
                                     return jsonify({
                                         "message": "Commande validée avec succès",
@@ -206,7 +206,7 @@ def suggestionNom():
     if not isinstance(nom, str) or not nom.strip():
         return jsonify({"noms": None}), 400  # Bad Request
 
-    SpringURL = "http://37.60.244.227/dao/produits/all"
+    SpringURL = "http://foodgo.smartcloudservices.cloud/dao/produits/all"
 
     try:
         # Requête vers le service Spring

@@ -3,8 +3,8 @@
 FROM python:3.10-slim
 
 WORKDIR /app/service_payment
-# ENV PYTHONPATH="${PYTHONPATH}:/home/Appli_FoodGo/RestauService"
-
+ENV PYTHONPATH="${PYTHONPATH}:/home/Appli_FoodGo/RestauService"
+RUN export PYTHONPATH=/home/Appli_FoodGo/RestauService:$PYTHONPATH
 # Installer les dépendances système nécessaires
 RUN apt-get update && \
     apt-get install -y \

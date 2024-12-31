@@ -9,7 +9,7 @@ services:
     volumes:
       - ./service_geolocalisation/logs:/app/logs
     environment:
-      - EUREKA_SERVER=http://37.60.244.227:8761
+      - EUREKA_SERVER=http://eureka:8761/
       - EUREKA_APP_NAME=ServiceGeolocalisation
       - EUREKA_INSTANCE_HOST=geolocalisation
       - EUREKA_PORT=5001
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./service_payment/logs:/app/logs
     environment:
-      - EUREKA_SERVER=http://37.60.244.227:8761
+      - EUREKA_SERVER=http://eureka:8761/
       - EUREKA_APP_NAME=ServicePayment
       - EUREKA_INSTANCE_HOST=payment
       - EUREKA_PORT=5002
@@ -41,7 +41,7 @@ services:
       POSTGRES_PASSWORD: prosper
       POSTGRES_DB: prosper
     ports:
-      - "5432:5432"
+      - "5430:5432"
     networks:
       - foodgo
     volumes:
