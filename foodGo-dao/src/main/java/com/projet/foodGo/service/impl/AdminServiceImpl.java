@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
             return adminConverter.toDto(admin);
         }
         else if(adminList.getFirst().getEntryKey().equals(adminDto.getEntryKey())){
+            adminDto.setRole(RoleUser.ADMIN);
             Admin admin=adminRepository.save(adminConverter.toEntity(adminDto));
             return adminConverter.toDto(admin);
         }

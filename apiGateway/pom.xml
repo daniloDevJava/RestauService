@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.foodGo</groupId>
 	<artifactId>apiGateway</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>apiGateway</name>
 	<description>developpement d&apos;une api gateway prenant en compte le load balancer</description>
 	<url/>
@@ -99,6 +99,23 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+			    <groupId>com.spotify</groupId>
+				    <artifactId>docker-maven-plugin</artifactId>
+				    <version>1.2.2</version>
+				    <configuration>
+					<imageName>apiGateway</imageName>
+					<dockerDirectory>${project.basedir}</dockerDirectory>
+					<resources>
+					    <resource>
+						<targetPath>/apiGateway</targetPath>
+						<directory>${project.build.directory}</directory>
+						<include>*.jar</include>
+					    </resource>
+					</resources>
+				    </configuration>
+			</plugin>
+		</plugins>
 		</plugins>
 	</build>
 

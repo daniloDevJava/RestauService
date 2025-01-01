@@ -12,6 +12,7 @@ public class AdminConverter {
         Admin admin=new Admin();
         admin.setNom(adminDto.getNom());
         admin.setAdresseMail(adminDto.getAdresseMail());
+        admin.setRole(adminDto.getRole());
         admin.setEntryKey(adminDto.getEntryKey());
         admin.setMotDePasse(adminDto.getMotDePasse());
         
@@ -29,6 +30,7 @@ public class AdminConverter {
         adminDto.setCreateAt(admin.getCreateAt());
         adminDto.setUpdateAt(admin.getUpdateAt());
         adminDto.setMontantCompte(admin.getMontantCompte());
+        adminDto.setRole(admin.getRole());
         return adminDto;
     }
 }

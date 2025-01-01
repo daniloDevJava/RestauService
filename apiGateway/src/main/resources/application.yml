@@ -43,7 +43,7 @@ debug: true # Mode débogage activé
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://eureka:8761/eureka/
     register-with-eureka: true
     instance:
       prefer-ip-address: false
@@ -54,7 +54,6 @@ routes:
     predicates:
       - Path=/dao/**
     
-
   - id: user_account
     uri: lb://FOODGO-CONNEXIONETCOMPTES
     predicates:
@@ -69,3 +68,4 @@ routes:
     uri: lb://PAYMENT-SERVICE
     predicates:
       - Path=/payment/**
+      
