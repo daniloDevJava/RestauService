@@ -24,6 +24,19 @@ client = EurekaClient(
 from uuid import UUID
 
 # Route pour la creation d'un code qr
+'''
+    Elle recupere:
+        - L'id de la commade(commandeId) et le montant de cette commande(amount)
+    Elle renvois:
+        - Si tout c'est bien passer(reponse 200):
+            - un message(message),
+            - un QR code en base64(code) 
+                C'est un texte brute pour afficher on fait:
+                    <img src="data:image/png;base64,{{ code }}" alt="QR Code">
+        - Si une erreur survient(reponse 400 ou 500):
+            - un message d'erreur(error)
+
+'''
 @app.route('/payment/create_order', methods=['POST'])
 def create_order():
     """
@@ -65,7 +78,7 @@ def create_order():
         if montant is None:
             return jsonify({"error": "Le compte utilisateur n'a pas de montant défini."}), 400
         if montant < amount:
-            return jsonify({"message": "Montant insuffisant."}), 400
+            return jsonify({"error": "Montant insuffisant."}), 400
 
         # Mettre à jour le solde du client
         montant -= amount
@@ -100,8 +113,8 @@ def create_order():
         # Retourner le QR code au client
         return jsonify({
             "message": "Commande payée avec succès.",
-            "clientId": userId,
-            "amount": amount,
+            # "clientId": userId,
+            # "amount": amount
             "code": qr_b64
         }), 200
 
@@ -114,7 +127,9 @@ def create_order():
 
 # Route pour afficher les qr des commandes d'un client
 '''
-    Elle recupere l'id de la commande et affiche le code qr associer en cours 
+    - Elle recupere l'id de la commande(commandeId)
+    - Elle renvois le code qr associer a la commande en cours(code)
+        Pour afficher c'est: <img src="data:image/png;base64,{{ code }}" alt="QR Code">
 '''
 @app.route('/payment/show_qr', methods=['POST'])
 def show_qr():
@@ -123,7 +138,7 @@ def show_qr():
         cursor.execute("SELECT qr_code FROM orders WHERE commandeId = %s and etat = 'en cours'", (commande_id,))
         qr_codes = cursor.fetchall()
         return jsonify({
-            "qr_codes":qr_codes
+            "code":qr_codes
         }),200
     except requests.exceptions.RequestException as e:
         return jsonify({"error": f"Erreur lors de la récupération des coordonnées : {str(e)}"}), 500
@@ -132,26 +147,35 @@ def show_qr():
 
 '''
     Ce service utilise deux donnee envoyer en post:
-    - le code_qr(qr_code): qui est le text associer au code_qr scanner
-    - l'id du prestataire qui scanne le code(prestataireId)
+    - l'id de la commande(commandeId): qui est l'id de la commande associer au code_qr scanner
+    - l'id du prestataire(prestataireId) qui scanne le code(prestataireId)
+    
+    Il renvois:
+        - Si tout c'est bien passer(reponse 200):
+            - un message(message)
+            - le montant de la commande(amount)
+        - En cas d'erreur:
+            - un message d'erreur(error)
+
 '''
 @app.route('/payment/verification_qr', methods=['POST'])
 def verification():
     if request.method == 'POST':
         data = request.get_json()
-        qr_code = data.get('qr_code')
+        commandeId = data.get('commandeId')
         prestataireId = data.get('prestataireId')
 
         # Vérification UUID
         try:
             UUID(prestataireId)  # Vérifie que prestataireId est un UUID valide
+            UUID(commandeId)
         except ValueError:
             return jsonify({"error": "L'ID doit être un UUID valide."}), 400
 
         if prestataireId:
             try:
                 with conn.cursor() as cursor:
-                    cursor.execute("SELECT * FROM orders WHERE qr_code = %s AND etat = 'en cours'", (qr_code,))
+                    cursor.execute("SELECT * FROM orders WHERE commandeid = %s AND etat = 'en cours'", (commandeId,))
                     orders = cursor.fetchone()
 
                     if orders:
@@ -178,7 +202,7 @@ def verification():
                                     resp = requests.patch(Spring,json={"etat":"FINALISE"})
                                     return jsonify({
                                         "message": "Commande validée avec succès",
-                                        "prestataireId": prestataireId,
+                                        # "prestataireId": prestataireId,
                                         "amount": orders['amount']
                                     }), 200
                                 else:
@@ -188,15 +212,26 @@ def verification():
                                 app.logger.error(f"Erreur externe : {str(e)}")
                                 return jsonify({"error": "Erreur lors de la communication avec le service externe."}), 502
                         else:
-                            return jsonify({"message": "Le prestataire n'est pas le bon"}), 403
+                            return jsonify({"error": "Le prestataire n'est pas le bon"}), 403
                     else:
-                        return jsonify({"message": "Code QR inconnu ou commande déjà validée"}), 404
+                        return jsonify({"error": "Code QR inconnu ou commande déjà validée"}), 404
             except Exception as e:
                 app.logger.error(f"Erreur SQL : {str(e)}")
                 return jsonify({"error": "Erreur lors de la vérification dans la base de données."}), 500
         else:
-            return jsonify({"message": "Le prestataire ne peut pas être vide"}), 400
+            return jsonify({"error": "Le prestataire ne peut pas être vide"}), 400
 
+# Route qui suggere  un nom d'aliment entrer par un client
+
+'''
+    Elle prend en entrer:
+        - le nom du repas qu'il veut rechercher(nom)
+    Elle ressort:
+        - si tout c'est bien passer(reponse 200):
+            - une liste de noms(noms) commancent par le nom que le client est entrain de taper
+        - En cas d'erreur:
+            - un message d'erreur(error)
+'''
 @app.route('/payment/suggestion', methods=['POST'])
 def suggestionNom():
     data = request.get_json()
@@ -228,6 +263,17 @@ def suggestionNom():
     ]
 
     return jsonify({"noms": noms})
+
+# from flask import render_template
+# @app.route('/affichage_qr', methods=['GET', 'POST'])
+# def affiche_qr():
+#     if request.method == 'POST':
+#         user_id = request.form['commandeId']
+#         cursor.execute("SELECT * FROM orders WHERE commandeid = %s", (user_id,))
+#         orders = cursor.fetchall()
+#         return render_template('show_qr.html', orders=orders)
+#     return render_template('affiche_qr.html')
+
 
 import asyncio
 
